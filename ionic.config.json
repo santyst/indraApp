@@ -1,5 +1,7 @@
 {
   "name": "indraApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

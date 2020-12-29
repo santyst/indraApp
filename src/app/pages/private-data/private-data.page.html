@@ -1,0 +1,36 @@
+<ion-header>
+ 
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="div1">
+      <h2><ion-icon name="newspaper-outline"></ion-icon>
+        Captura de Datos</h2>
+    </div>
+    <form [formGroup]="datasForm">
+    <div class="section_attach" *ngIf="userData.foto === ''">
+      <ion-button fill="clear" class="images" (click)="takePhoto()">
+        <img src="../../assets/images/avatar-profile.png" width="35%">
+      </ion-button>
+      <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
+      <p class="adj-foto">Tomar fotografía</p>
+    </div>
+    <div class="section_attach" *ngIf="userData.foto">
+        <img [src]="userData.foto" width="35%"> 
+      <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
+    </div>
+    <ion-row class="row-form">
+      <ion-col size="12">
+        <div class="form-group">
+          <ion-label class="grey">Numero de Carnet</ion-label>
+          <ion-input class="form-control" formControlName="carnet" [(ngModel)]="userData.carnet" type="number"></ion-input>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-button expand="block" [disabled]="!datasForm.valid || userData.foto === ''" class="boton1" (click)="addUserDetails()">Registrar</ion-button>
+  </form>
+  </div>
+  
+
+</ion-content>

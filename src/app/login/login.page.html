@@ -1,0 +1,19 @@
+<ion-content mode="ios">
+  <div id="container">
+    <div class="div1">
+      <h2> <ion-icon name="lock-closed-outline"></ion-icon>Login</h2>
+    </div>
+    <form #form="ngForm"  novalidate>
+    <ion-list>
+    <ion-item>
+      <ion-input type="email" name="email" [(ngModel)]="credenciales.email" placeholder="Usuario"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" name="password" [(ngModel)]="credenciales.password" placeholder="Contraseña"></ion-input>
+    </ion-item>
+    <ion-button class="btn-continue" expand="block"  (click)="login()">INGRESAR</ion-button>
+  </ion-list>
+</form>
+  </div>
+</ion-content>
+

@@ -1,0 +1,148 @@
+ion-header {
+    --background: #009bd7 !important;
+    --ion-background-color-rgb: 0, 155, 215;
+}
+ion-content {
+    --ion-background-color: #fff;
+    --ion-background-color-rgb: 236, 235, 238;
+}
+.div-header {
+    background-color: #015670;
+    padding-bottom: 30px;
+}
+.header-styles {
+    --background: #015670 !important;
+    padding-top: 30px;
+    padding-bottom: -100px;
+    text-align: center;
+}
+h2{
+    margin-top: 18px;
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+}
+.pannel{
+    background-color: #eeeef1;
+    padding: 40px;
+    border-radius: 20px;
+}
+.paragrafo{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: justify;
+}
+.boton1{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    --background: #015670 !important;
+    font-weight: 600 !important;
+    font-size: 22px !important;
+    width: 100% !important;
+    margin-top: 26px;
+    --border-radius: 8px !important;
+}
+.boton2{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    --background: #c31f05 !important;
+    font-weight: 600 !important;
+    font-size: 22px !important;
+    width: 100% !important;
+    --border-radius: 8px !important;
+}
+.col2{
+    padding-top: 27px;
+}
+.grabacion{
+    margin-top: 18px;
+    font-size: 24px;
+    color: rgb(4, 165, 4);
+    font-weight: bold;
+}
+.row_buttons{
+    margin-top: -20px;
+}
+h1 {
+    color: #fff;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+ion-item{
+    --background: #eeeef1;
+}
+
+.term{
+    font-size: 25px;
+}
+
+@media(min-width: 600px) and (min-height: 900px){
+    
+    ion-radio{
+        height: 30px;
+        width: 30px;
+    }
+    .term{
+        font-size: 35px;
+    }
+    .div-header {
+        background-color: #015670;
+        padding-bottom: 30px;
+    }
+    .header-styles {
+        --background: #015670 !important;
+        padding-top: 30px;
+        padding-bottom: -100px;
+        text-align: center;
+    }
+    h1{
+        color: #fff;
+        font-size: 45px;
+        font-weight: 600;
+    }
+    h2{
+        margin-top: 18px;
+        font-size: 24px;
+        color: red;
+        font-weight: bold;
+    }
+    .pannel{
+        background-color: #eeeef1;
+        padding: 40px;
+        border-radius: 20px;
+    }
+    .paragrafo{
+        font-weight: bold;
+        font-size: 25px;
+        text-align: justify;
+    }
+    
+    .boton1{
+        margin-left: auto !important;
+        margin-right: auto !important;
+        --background: #015670 !important;
+        font-weight: 600 !important;
+        font-size: 32px !important;
+        width: 100% !important;
+        --border-radius: 8px !important;
+    }
+    .boton2{
+        margin-left: auto !important;
+        margin-right: auto !important;
+        --background: #c31f05 !important;
+        font-weight: 600 !important;
+        font-size: 32px !important;
+        width: 100% !important;
+        --border-radius: 8px !important;
+    }
+    .col2{
+        padding-top: 27px;
+    }
+    .grabacion{
+        margin-top: 18px;
+        font-size: 24px;
+        color: rgb(4, 165, 4);
+        font-weight: bold;
+    }
+}

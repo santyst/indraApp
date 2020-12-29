@@ -1,0 +1,62 @@
+<ion-header >
+  
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="div1">
+      <h2><ion-icon name="newspaper-outline"></ion-icon>
+        Verificación de Datos</h2>
+    </div>
+  
+    <div class="section_attach">
+      <img [src]="userData.foto" width="35%"> 
+    <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
+  </div>
+    
+      <ion-row class="row-form">
+        <ion-col size="12">
+          <div class="form-group">
+            <ion-label class="grey">Nombres</ion-label>
+            <ion-input class="form-control" [(ngModel)]="userData.nombre" type="text"></ion-input>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <div class="form-group">
+            <ion-label class="grey">Apellidos</ion-label>
+            <ion-input class="form-control" [(ngModel)]="userData.apellido" type="text"></ion-input>
+          </div>
+        </ion-col>
+        <ion-col size="5">
+          <div class="form-group">
+            <ion-label class="grey">Tipo de Documento</ion-label>
+            <ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.documento">
+              <ion-select-option *ngFor="let type of documentType" [value]="type">{{type}}</ion-select-option>
+            </ion-select>
+          </div>
+        </ion-col>
+        <ion-col size="7">
+          <div class="form-group">
+            <ion-label class="grey">Numero de Documento</ion-label>
+            <ion-input class="form-control" [(ngModel)]="userData.numeroDoc" type="number"></ion-input>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <div class="form-group">
+            <ion-label class="grey">Carnet</ion-label>
+            <ion-input class="form-control" [(ngModel)]="userData.carnet" type="number"></ion-input>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <h3>¿Los datos son correctos?</h3>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="block" class="boton1" (click)="sendUser()">Si</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="block" class="boton1" (click)="dontSendUser()">No</ion-button>
+        </ion-col>
+      </ion-row>
+      
+  </div>
+</ion-content>
