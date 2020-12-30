@@ -81,7 +81,7 @@
     <ion-col size="12"> 
       <ion-card *ngFor="let user of usersT" >
         <img [src]="user.foto" width="35%" *ngIf="user.foto !== ''">
-        <p *ngIf="user.foto === ''">No hay foto</p>
+        <p *ngIf="user.foto === ''">No hay fotografía</p>
         <h3>Nombre: {{ user.nombre }}</h3>
         <p>Apellido: {{ user.apellido }}</p>
         <p>Documento: {{ user.documento }}</p>
