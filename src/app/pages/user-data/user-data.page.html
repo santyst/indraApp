@@ -6,7 +6,7 @@
   <div class="container">
     <div class="div1">
       <h2><ion-icon name="newspaper-outline"></ion-icon>
-        Captura de Datos</h2>
+        Captura de datos</h2>
     </div>
     <!--<div class="section_attach">
       <ion-button fill="clear" class="images" (click)="takePhoto()">
@@ -21,27 +21,27 @@
         <ion-col size="12">
           <div class="form-group">
             <ion-label class="grey">Nombres</ion-label>
-            <ion-input class="form-control" formControlName="nombres" [(ngModel)]="userData.nombre" type="text"></ion-input>
+            <ion-input class="form-control" formControlName="FirstName" [(ngModel)]="userData.FirstName" type="text"></ion-input>
           </div>
         </ion-col>
         <ion-col size="12">
           <div class="form-group">
             <ion-label class="grey">Apellidos</ion-label>
-            <ion-input class="form-control" formControlName="apellidos" [(ngModel)]="userData.apellido" type="text"></ion-input>
+            <ion-input class="form-control" formControlName="LastName" [(ngModel)]="userData.LastName" type="text"></ion-input>
           </div>
         </ion-col>
         <ion-col size="5">
           <div class="form-group">
-            <ion-label class="grey">Tipo de Documento</ion-label>
-            <ion-select placeholder="Tipo de documento" formControlName="documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.documento" >
+            <ion-label class="grey">Tipo de documento</ion-label>
+            <ion-select placeholder="Tipo de documento" formControlName="tipo_documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipo_documento" >
               <ion-select-option *ngFor="let type of documentType">{{type}}</ion-select-option>
             </ion-select>
           </div>
         </ion-col>
         <ion-col size="7">
           <div class="form-group">
-            <ion-label class="grey">Numero de Documento</ion-label>
-            <ion-input class="form-control" formControlName="numeroDoc" [(ngModel)]="userData.numeroDoc" type="number"></ion-input>
+            <ion-label class="grey">Número de documento</ion-label>
+            <ion-input class="form-control" formControlName="documento" [(ngModel)]="userData.documento" type="number"></ion-input>
           </div>
         </ion-col>
         <!--
@@ -80,15 +80,16 @@
   <ion-row>
     <ion-col size="12"> 
       <ion-card *ngFor="let user of usersT" >
-        <img [src]="user.foto" width="35%" *ngIf="user.foto !== ''">
-        <p *ngIf="user.foto === ''">No hay fotografía</p>
-        <h3>Nombre: {{ user.nombre }}</h3>
-        <p>Apellido: {{ user.apellido }}</p>
-        <p>Documento: {{ user.documento }}</p>
-        <p>Número Documento: {{ user.numeroDoc }}</p>
-        <p>Número de carnet: {{ user.carnet }}</p>
-        <P>Términos: {{ user.terminos }}</P>
-        <p></p>
+        <img [src]="base64 + user.imageUrl" width="35%" *ngIf="user.imageUrl !== 'No'">
+        <p *ngIf="user.imageUrl === 'No'">No hay fotografía</p>
+        <h3>Nombre: {{ user.FirstName }}</h3>
+        <p>Apellido: {{ user.LastName }}</p>
+        <p>Documento: {{ user.tipo_documento }}</p>
+        <p>Número documento: {{ user.documento }}</p>
+        <p>Número de carné: {{ user.badgeId }}</p>
+        <P>Términos: {{ user.acepta_terminos }}</P>
+        <P>Empresa: {{ user.empresa }}</P>
+        <p>Metadatos: {{user.metaDatos}}</p>
       </ion-card>
     </ion-col>
   </ion-row>
