@@ -43,8 +43,8 @@ protected app_version: string;
           tipo_documento: this.user.tipo_documento,
           documento: this.user.documento,
           acepta_terminos: '',
-          badgeId: 'No',
-          imageUrl: 'No',
+          badgeId: '',
+          imageUrl: '',
           metaDatos: {},
           empresa: 'Ecopetrol'
         };
