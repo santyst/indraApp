@@ -9,26 +9,26 @@
         Captura de Datos</h2>
     </div>
     <form [formGroup]="datasForm">
-    <div class="section_attach" *ngIf="userData.foto === ''">
+    <div class="section_attach" *ngIf="base64_2 === ''">
       <ion-button fill="clear" class="images" (click)="takePhoto()">
         <img src="../../assets/images/avatar-profile.png" width="35%">
       </ion-button>
       <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
       <p class="adj-foto">Tomar fotografía</p>
     </div>
-    <div class="section_attach" *ngIf="userData.foto">
-        <img [src]="userData.foto" width="35%"> 
+    <div class="section_attach1" *ngIf="base64_2 !== ''">
+        <img [src]="base64_2" class="foto_user"> 
       <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
     </div>
     <ion-row class="row-form">
       <ion-col size="12">
         <div class="form-group">
-          <ion-label class="grey">Numero de Carnet</ion-label>
-          <ion-input class="form-control" formControlName="carnet" [(ngModel)]="userData.carnet" type="number"></ion-input>
+          <ion-label class="grey">Numero carné de Ecopetrol</ion-label>
+          <ion-input class="form-control" formControlName="badgeId" [(ngModel)]="userData.badgeId" type="number"></ion-input>
         </div>
       </ion-col>
     </ion-row>
-    <ion-button expand="block" [disabled]="!datasForm.valid || userData.foto === ''" class="boton1" (click)="addUserDetails()">Registrar</ion-button>
+    <ion-button expand="block" [disabled]="!datasForm.valid || userData.imageUrl === ''" class="boton1" (click)="addUserDetails()">Registrar</ion-button>
   </form>
   </div>
   
