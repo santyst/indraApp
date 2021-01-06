@@ -5,15 +5,19 @@ import { HttpClient } from '@angular/common/http';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+
+
 export interface User {
   userId: number;
-  nombre: string;
-  apellido: string;
-  documento: string;
-  numeroDoc: string;
-  carnet: number;
-  terminos: string;
-  foto: string;
+  FirstName: string;
+  LastName: string;
+  tipo_documento: string;
+  documento: number;
+  acepta_terminos: string;
+  badgeId: number;
+  imageUrl: string;
+  metaDatos: string;
+  empresa: string;
 }
 
 @Injectable({
@@ -24,8 +28,8 @@ export class DatabaseService {
   private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   users = new BehaviorSubject([]);
-
-  constructor(private plt: Platform, private sqlitePorter: SQLitePorter, private sqlite: SQLite, private http: HttpClient) {
+  constructor(private plt: Platform, private sqlitePorter: SQLitePorter, private sqlite: SQLite, private http: HttpClient,
+              ) {
     this.plt.ready().then(() => {
       this.sqlite.create({
         name: 'userDatabase.db',
@@ -65,22 +69,24 @@ export class DatabaseService {
         for (let i = 0; i < data.rows.length; i++) {
           users.push({
             userId: data.rows.item(i).userId,
-            nombre: data.rows.item(i).nombre,
-            apellido: data.rows.item(i).apellido,
+            FirstName: data.rows.item(i).FirstName,
+            LastName: data.rows.item(i).LastName,
+            tipo_documento: data.rows.item(i).tipo_documento,
             documento: data.rows.item(i).documento,
-            numeroDoc: data.rows.item(i).numeroDoc,
-            carnet: data.rows.item(i).carnet,
-            terminos: data.rows.item(i).terminos,
-            foto: data.rows.item(i).foto,
+            acepta_terminos: data.rows.item(i).acepta_terminos,
+            badgeId: data.rows.item(i).badgeId,
+            imageUrl: data.rows.item(i).imageUrl,
+            metaDatos: data.rows.item(i).metaDatos,
+            empresa: data.rows.item(i).empresa,
           });
         }
       }
       this.users.next(users);
     });
   }
-  addUserData(userNombre, userApellido, userDocumento, userNumeroDoc, userCarnet, UserTerminos, userFoto ) {
-    let data = [userNombre, userApellido, userDocumento, userNumeroDoc, userCarnet, UserTerminos, userFoto];
-    return this.database.executeSql('INSERT INTO Users (nombre, apellido, documento, numeroDoc, carnet, terminos, foto) VALUES (?, ?, ?, ?, ?, ?, ?)', data).then(data => {
+  addUserData(userFirstName, userLastName, usertipo_documento, userdocumento, useracepta_terminos, userbadgeId, userimageUrl, usermetaDatos, userempresa) {
+    let data = [userFirstName, userLastName, usertipo_documento, userdocumento, useracepta_terminos, userbadgeId, userimageUrl, usermetaDatos, userempresa];
+    return this.database.executeSql('INSERT INTO Users (FirstName, LastName, tipo_documento, documento, acepta_terminos, badgeId, imageUrl, metaDatos, empresa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', data).then(data => {
       this.loadUsers();
     });
   }
@@ -88,19 +94,21 @@ export class DatabaseService {
     return this.database.executeSql('SELECT * FROM Users WHERE userId = ?', [id]).then(data => {
       return {
         userId: data.rows.item(0).userId,
-        nombre: data.rows.item(0).nombre,
-        apellido: data.rows.item(0).apellido,
-        documento: data.rows.item(0).apellido,
-        numeroDoc: data.rows.item(0).numeroDoc,
-        carnet: data.rows.item(0).carnet,
-        terminos: data.rows.item(0).terminos,
-        foto: data.rows.item(0).foto,
+        FirstName: data.rows.item(0).FirstName,
+        LastName: data.rows.item(0).LastName,
+        tipo_documento: data.rows.item(0).tipo_documento,
+        documento: data.rows.item(0).documento,
+        acepta_terminos: data.rows.item(0).acepta_terminos,
+        badgeId: data.rows.item(0).badgeId,
+        imageUrl: data.rows.item(0).imageUrl,
+        metaDatos: data.rows.item(0).metaDatos,
+        empresa: data.rows.item(0).empresa,
       };
     });
   }
   updateUser(user: User) {
-    let data = [user.nombre, user.apellido, user.documento, user.numeroDoc, user.carnet, user.terminos, user.foto];
-    return this.database.executeSql(`UPDATE Users SET nombre = ?, apellido = ?, documento = ?, numeroDoc = ?, carnet = ?, terminos = ?, foto = ? WHERE userId = ${user.userId}`, data).then(data => {
+    let data = [user.FirstName, user.LastName, user.tipo_documento, user.documento, user.acepta_terminos, user.badgeId, user.imageUrl, user.metaDatos, user.empresa];
+    return this.database.executeSql(`UPDATE Users SET FirstName = ?, LastName = ?, tipo_documento = ?, documento = ?, acepta_terminos = ?, badgeId = ?, imageUrl = ?, metaDatos = ?, empresa = ? WHERE userId = ${user.userId}`, data).then(data => {
       this.loadUsers();
     });
   }
