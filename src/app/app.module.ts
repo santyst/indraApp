@@ -14,6 +14,10 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { Network } from '@ionic-native/network/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +30,9 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
     Camera,
     SQLitePorter,
     SQLite,
+    UniqueDeviceID,
+    Network,
+    AppVersion,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
