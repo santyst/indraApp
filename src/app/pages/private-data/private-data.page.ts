@@ -85,11 +85,14 @@ export class PrivateDataPage implements OnInit {
 
   takePhoto() {
     const options: CameraOptions = {
-      quality: 40,
+      quality: 50,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.CAMERA
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      correctOrientation: true,
+      targetWidth: 1152,
+      targetHeight: 2048
     }
 
     this.camera.getPicture(options).then((imageData) => {
