@@ -21,6 +21,7 @@ export class PrivateDataPage implements OnInit {
   base64_3: any; 
   base64_2: any = ''; 
   estado: any; 
+  motivos: any;
 
   constructor(private toast: ToastController,private camera: Camera, private http: HttpClient, private fileTransfer: FileTransfer,
     private db: DatabaseService, private route: ActivatedRoute, private router: Router, private alertCtrl: AlertController,
@@ -145,12 +146,15 @@ export class PrivateDataPage implements OnInit {
       .then(async(data) => {
         loading.dismiss();
         this.base64 = data.response;
+        
         this.base64_1 = JSON.parse(this.base64);
         console.log(this.base64_1);
+        this.motivos = this.base64_1.motivos;
         this.estado = this.base64_1.status;
+
         if(this.estado === 'rechazado'){
           const alert = await this.alertCtrl.create({
-            header: 'Imagen rechazada, por favor tome una nueva fotografía.',
+            header: 'Imagen rechazada, por favor tome una nueva fotografía.\n' + this.motivos,
             buttons: ['OK'],
             mode: 'ios'
           });
