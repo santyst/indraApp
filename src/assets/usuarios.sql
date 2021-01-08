@@ -1,1 +1,1 @@
-CREATE TABLE IF NOT EXISTS Users(userId INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT,apellido TEXT,documento TEXT,numeroDoc TEXT, terminos TEXT, carnet TEXT,  foto TEXT);
+CREATE TABLE IF NOT EXISTS Users(userId INTEGER PRIMARY KEY AUTOINCREMENT,FirstName TEXT,LastName TEXT,tipo_documento TEXT,documento NUMERIC, acepta_terminos TEXT, badgeId NUMERIC, imageUrl TEXT, metaDatos TEXT, empresa TEXT);

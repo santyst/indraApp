@@ -26,9 +26,25 @@ h2 {
     background: #015670;
     border-radius: 30px !important;
     padding: 20px 0px !important;
-    width: 70%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+.section_attach1 {
+    margin-top: 30px !important;
+    align-self: center !important;
+    text-align: center !important;
+    background: #015670;
+    //border-radius: 30px !important;
+    //padding: 20px 0px !important;
+    width: 210px;
+    height: 280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.foto_user{
+    width: 210px;
+    height: 280px;
 }
 .images {
     height: auto;
@@ -89,6 +105,10 @@ ion-datetime {
     margin-right: auto;
 }
 @media (min-width: 600px) and (min-height: 850px) {
+    .foto_user{
+        width: 300px;
+        height: 400px;
+    }
     .row-form {
         margin-top: 60px;
         width: 98%;
@@ -132,7 +152,19 @@ ion-datetime {
         background: #015670;
         border-radius: 30px !important;
         padding: 30px 0px !important;
-        width: 70%;
+        width: 0%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .section_attach1 {
+        margin-top: 30px !important;
+        align-self: center !important;
+        text-align: center !important;
+        background: #015670;
+        // border-radius: 30px !important;
+        // padding: 30px 0px !important;
+        width: 300px;
+        height: 400px;
         margin-left: auto;
         margin-right: auto;
     }

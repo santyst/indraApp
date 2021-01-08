@@ -38,12 +38,12 @@
     -->
     <ion-radio-group [(ngModel)]="terminos" >
       <ion-item lines="none">
-        <ion-label class="term">Si</ion-label>
-        <ion-radio slot="start" value="Acepta terminos" mode="md"></ion-radio>
+        <ion-label class="term">Si acepto</ion-label>
+        <ion-radio slot="start" value="true" mode="md"></ion-radio>
       </ion-item>
       <ion-item lines="none">
-        <ion-label class="term">No</ion-label>
-        <ion-radio slot="start" value="No Acepta terminos" mode="md"></ion-radio>
+        <ion-label class="term">No acepto</ion-label>
+        <ion-radio slot="start" value="false" mode="md"></ion-radio>
       </ion-item>
     </ion-radio-group>
       <ion-button (click)="Formulario()" expand="block" class="boton1">Aceptar</ion-button> 

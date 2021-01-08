@@ -10,7 +10,7 @@
     </div>
   
     <div class="section_attach">
-      <img [src]="userData.foto" width="35%"> 
+      <img [src]="userData.imageUrl" class="foto_user"> 
     <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
   </div>
     
@@ -18,19 +18,19 @@
         <ion-col size="12">
           <div class="form-group">
             <ion-label class="grey">Nombres</ion-label>
-            <ion-input class="form-control" [(ngModel)]="userData.nombre" type="text"></ion-input>
+            <ion-input class="form-control" [(ngModel)]="userData.FirstName" type="text"></ion-input>
           </div>
         </ion-col>
         <ion-col size="12">
           <div class="form-group">
             <ion-label class="grey">Apellidos</ion-label>
-            <ion-input class="form-control" [(ngModel)]="userData.apellido" type="text"></ion-input>
+            <ion-input class="form-control" [(ngModel)]="userData.LastName" type="text"></ion-input>
           </div>
         </ion-col>
         <ion-col size="5">
           <div class="form-group">
             <ion-label class="grey">Tipo de Documento</ion-label>
-            <ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.documento">
+            <ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipo_documento">
               <ion-select-option *ngFor="let type of documentType" [value]="type">{{type}}</ion-select-option>
             </ion-select>
           </div>
@@ -38,13 +38,13 @@
         <ion-col size="7">
           <div class="form-group">
             <ion-label class="grey">Numero de Documento</ion-label>
-            <ion-input class="form-control" [(ngModel)]="userData.numeroDoc" type="number"></ion-input>
+            <ion-input class="form-control" [(ngModel)]="userData.documento" type="number"></ion-input>
           </div>
         </ion-col>
         <ion-col size="12">
           <div class="form-group">
-            <ion-label class="grey">Carnet</ion-label>
-            <ion-input class="form-control" [(ngModel)]="userData.carnet" type="number"></ion-input>
+            <ion-label class="grey">Numero carné de Ecopetrol</ion-label>
+            <ion-input class="form-control" [(ngModel)]="userData.badgeId" type="number"></ion-input>
           </div>
         </ion-col>
         <ion-col size="12">

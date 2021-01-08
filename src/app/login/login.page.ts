@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Network } from '@ionic-native/network/ngx';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 
@@ -15,9 +16,10 @@ export class LoginPage implements OnInit {
     password: ''
   };
 
-  constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController) { }
+  constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController, public network: Network) { }
 
   ngOnInit() {
+   
   }
   
   login() {

@@ -14,7 +14,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./user-data.page.scss'],
 })
 export class UserDataPage implements OnInit {
-
+ base64 = 'data:image/png;base64,';
   userData = {};
   documentType = ['CC', 'CE', 'Pasaporte'];
   usersT:  User[] = [];
@@ -33,10 +33,10 @@ export class UserDataPage implements OnInit {
   }
  
   datasForm = this.formBuilder.group({
-    nombres: ['', [Validators.required]],
-    apellidos: ['', [Validators.required]],
-    documento: ['', [Validators.required]],
-    numeroDoc: ['', [Validators.required]]
+    FirstName: ['', [Validators.required]],
+    LastName: ['', [Validators.required]],
+    tipo_documento: ['', [Validators.required]],
+    documento: ['', [Validators.required]]
   });
 
   sendUser(){
