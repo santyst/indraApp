@@ -43,7 +43,7 @@ export class AuthService {
 
   login(credenciales: {email: string, password: string }) {
     // Normally make a POST request to your APi with your login credentials
-    if (credenciales.email != 'enrolamiento@qaingenieros.com' || credenciales.password != 'B103CP21') {
+    if (credenciales.email != 'enrolamiento01@qaingenieros.com' || credenciales.password != 'B103CP21') {
       return of(null);
     }
  
