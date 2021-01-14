@@ -6,7 +6,7 @@
   <div class="container">
     <div class="div1">
       <h2><ion-icon name="newspaper-outline"></ion-icon>
-        Verificación de Datos</h2>
+        Verificación de datos</h2>
     </div>
   
     <div class="section_attach">
@@ -29,7 +29,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="form-group">
-            <ion-label class="grey">Tipo de Documento</ion-label>
+            <ion-label class="grey">Tipo de documento</ion-label>
             <ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipo_documento">
               <ion-select-option *ngFor="let type of documentType" [value]="type">{{type}}</ion-select-option>
             </ion-select>
@@ -37,13 +37,13 @@
         </ion-col>
         <ion-col size="7">
           <div class="form-group">
-            <ion-label class="grey">Numero de Documento</ion-label>
+            <ion-label class="grey">Número de documento</ion-label>
             <ion-input class="form-control" [(ngModel)]="userData.documento" type="number"></ion-input>
           </div>
         </ion-col>
         <ion-col size="12">
           <div class="form-group">
-            <ion-label class="grey">Numero carné de Ecopetrol</ion-label>
+            <ion-label class="grey">Número de carné de Ecopetrol</ion-label>
             <ion-input class="form-control" [(ngModel)]="userData.badgeId" type="number"></ion-input>
           </div>
         </ion-col>

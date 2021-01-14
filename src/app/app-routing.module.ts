@@ -33,6 +33,15 @@ const routes: Routes = [
     path: 'confirm-data',
     loadChildren: () => import('./pages/confirm-data/confirm-data.module').then( m => m.ConfirmDataPageModule)// , canActivate: [AuthGuard]
   },
+  {
+    path: 'bioseguridad',
+    loadChildren: () => import('./pages/bioseguridad/bioseguridad.module').then( m => m.BioseguridadPageModule)// , canActivate: [AuthGuard]
+  },
+  {
+    path: 'herramientas',
+    loadChildren: () => import('./pages/herramientas/herramientas.module').then( m => m.HerramientasPageModule)// , canActivate: [AuthGuard]
+  },
+
 ];
 
 @NgModule({

@@ -10,6 +10,19 @@ h2 {
     padding: 20px 26px;
     margin-bottom: 30px;
 }
+.div1 {
+    margin-top: -17px;
+}
+.logout {
+    width: 27%;
+    height: 22%;
+    border-radius: 100% !important;
+    margin-left: 82%;
+    margin-top: -26px;
+    font-size: 24px;
+    color: #fb1313;
+    font-weight: bold;
+}
 .container {
     margin-left: auto !important;
     margin-right: auto !important;
@@ -17,7 +30,7 @@ h2 {
     max-width: 99% !important;
     padding-bottom: 50px;
     border-radius: 10px;
-    height: 100%;
+    height: 98%;
 }
 .section_attach {
     margin-top: 30px !important;
@@ -42,7 +55,7 @@ h2 {
     margin-left: auto;
     margin-right: auto;
 }
-.foto_user{
+.foto_user {
     width: 210px;
     height: 280px;
 }
@@ -105,7 +118,7 @@ ion-datetime {
     margin-right: auto;
 }
 @media (min-width: 600px) and (min-height: 850px) {
-    .foto_user{
+    .foto_user {
         width: 300px;
         height: 400px;
     }
@@ -132,7 +145,17 @@ ion-datetime {
         max-width: 99% !important;
         padding-bottom: 50px;
         border-radius: 10px;
-        height: 100%;
+        height: 98%;
+    }
+    .logout {
+        width: 27%;
+        height: 22%;
+        border-radius: 100% !important;
+        margin-left: 75%;
+        margin-top: -52px;
+        font-size: 40px;
+        color: #fb1313;
+        font-weight: bold;
     }
     .boton1 {
         margin-left: auto !important;
@@ -151,8 +174,8 @@ ion-datetime {
         text-align: center !important;
         background: #015670;
         border-radius: 30px !important;
-        padding: 30px 0px !important;
-        width: 0%;
+        padding: 20px 0px !important;
+        width: 80%;
         margin-left: auto;
         margin-right: auto;
     }

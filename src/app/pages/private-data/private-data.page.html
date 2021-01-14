@@ -6,7 +6,13 @@
   <div class="container">
     <div class="div1">
       <h2><ion-icon name="newspaper-outline"></ion-icon>
-        Captura de Datos</h2>
+        Captura de datos
+        <ion-buttons>
+          <ion-button class="logout" mode="ios" (click)="logOut()">
+            Salir
+          </ion-button>
+        </ion-buttons>
+      </h2>
     </div>
     <form [formGroup]="datasForm">
     <div class="section_attach" *ngIf="base64_2 === ''">
@@ -23,7 +29,7 @@
     <ion-row class="row-form">
       <ion-col size="12">
         <div class="form-group">
-          <ion-label class="grey">Numero carné de Ecopetrol</ion-label>
+          <ion-label class="grey">Número de carné de Ecopetrol</ion-label>
           <ion-input class="form-control" formControlName="badgeId" [(ngModel)]="userData.badgeId" type="number"></ion-input>
         </div>
       </ion-col>
