@@ -1,0 +1,41 @@
+<ion-header class="ion-no-border" mode="ios">
+  <div class="div-header">
+    <ion-toolbar class="header-styles">
+      <h1>Uso responsable de las herramientas</h1>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="herramientasForm">
+<ion-row>
+  <ion-col size="12">
+    <div class="pannel" style="font-size: 100%;">
+      <p class="paragrafo">
+        5. ¿Usted se obliga a hacer uso responsable de las herramientas que Ecopetrol y/o su empleador han puesto a su disposición, las cuales deberán ser usadas solo para propósitos corporativos y de negocio de Ecopetrol S.A.?
+        <br>
+        <br>
+        Tenga en cuenta que esto incluye todas las obligaciones que adquiere en materia de custodia y uso de los equipos y recursos materiales o inmateriales que le son asignados, las cuales aplican dentro y fuera de las Instalaciones. Igualmente, se refieren a los equipos y elementos cuyo uso se habilita a quienes están en las Instalaciones. Recuerde que, además del Código de Ética y Conducta de Ecopetrol S.A., existen lineamientos corporativos orientados al uso y protección de la información de la compañía, los cuales son de obligatorio cumplimiento. Esto incluye, por ejemplo, la Circular de Presidencia “Premisas y Lineamientos sobre propiedad, responsabilidad y protección de la información que se gestiona en Ecopetrol” (SSI-J-001), el Manual de Seguridad de la Información (SGY-M-002), la Guía de uso de herramientas corporativas y protección de información (SGY-J-001), el Manual de Tratamiento de Datos Personales (SGY-M-001), la Guía de Seguridad para Sistemas y Servicios Informáticos (SGY-G002), entre otros.      </p>
+      <h2>V 0.1</h2>
+      <!--<p class="grabacion">Grabando</p>
+      <ion-row class="row_buttons">
+        <ion-col size="6"><ion-button class="boton1"><ion-icon name="mic-outline"></ion-icon>Grabar</ion-button></ion-col>
+        <ion-col size="6" class="col2"><ion-button class="boton2"><ion-icon name="stop-circle-outline"></ion-icon>Detener</ion-button></ion-col>
+      </ion-row>
+    -->
+    <ion-radio-group [(ngModel)]="herramientas" formControlName="herramientas">
+      <ion-item lines="none">
+        <ion-label class="term">Si acepto</ion-label>
+        <ion-radio slot="start" value="true" mode="md"></ion-radio>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="term">No acepto</ion-label>
+        <ion-radio slot="start" value="false" mode="md"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+      <ion-button (click)="Formulario()" expand="block" class="boton1" [disabled]="!herramientasForm.valid">Siguiente</ion-button> 
+    </div>
+  </ion-col>
+</ion-row>
+</form>
+</ion-content>
