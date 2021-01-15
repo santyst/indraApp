@@ -60,7 +60,7 @@ protected app_version: string;
       }
     });
     this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas`).subscribe((res: any) => {
-      this.txt = res.data[3];
+      this.txt = res.data[2];
       console.log(this.txt);
       this.texto = this.txt.texto;
       var texto1 = this.texto.replace('\r\n',"</br>");

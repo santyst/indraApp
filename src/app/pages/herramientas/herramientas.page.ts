@@ -38,7 +38,7 @@ export class HerramientasPage implements OnInit {
     }
   });
   this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas`).subscribe((res: any) => {
-      this.txt = res.data[2];
+      this.txt = res.data[0];
       console.log(this.txt);
       this.texto = this.txt.texto;
       this.pregunta = this.txt.pregunta;
