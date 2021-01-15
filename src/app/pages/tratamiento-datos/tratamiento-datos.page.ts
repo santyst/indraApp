@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { FormBuilder, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -18,11 +19,17 @@ export class TratamientoDatosPage implements OnInit {
 user: any; 
 terminos: any = '';
 userData: any;
-uniqueDeviceId: any
+uniqueDeviceId: any;
+txt: any;
+texto: any;
+texto2: any;
+pregunta: any;
+version: any;
 protected app_version: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private db: DatabaseService,
-              private alertCtrl: AlertController, private appVersion: AppVersion, private udid: UniqueDeviceID, private formBuilder: FormBuilder) { }
+              private alertCtrl: AlertController, private appVersion: AppVersion, private udid: UniqueDeviceID, 
+              private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
     this.appVersion.getVersionNumber().then(versionNumber => {
@@ -52,7 +59,15 @@ protected app_version: string;
         };
       }
     });
-  
+    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas`).subscribe((res: any) => {
+      this.txt = res.data[3];
+      console.log(this.txt);
+      this.texto = this.txt.texto;
+      var texto1 = this.texto.replace('\r\n',"</br>");
+      this.texto2 = texto1;
+      this.pregunta = this.txt.pregunta;
+      this.version = this.txt.version; 
+    });
   }
   terminosForm = this.formBuilder.group({
     terminos: ['', [Validators.required]]
