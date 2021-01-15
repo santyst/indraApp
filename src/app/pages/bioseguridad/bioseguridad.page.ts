@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -11,7 +12,11 @@ export class BioseguridadPage implements OnInit {
 user: any;
 userData: any;
 bioseguridad: any = '';
-  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+txt: any;
+texto: any;
+pregunta: any;
+version: any;
+  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -30,6 +35,13 @@ bioseguridad: any = '';
           empresa: 'Ecopetrol'
         };
       }
+    });
+    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas`).subscribe((res: any) => {
+      this.txt = res.data[1];
+      console.log(this.txt);
+      this.texto = this.txt.texto;
+      this.pregunta = this.txt.pregunta;
+      this.version = this.txt.version; 
     });
   }
   bioseguridadForm = this.formBuilder.group({

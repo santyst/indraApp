@@ -17,11 +17,11 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserDataPage implements OnInit {
  base64 = 'data:image/png;base64,';
   userData = {};
-  documentType = ['CC', 'CE', 'Pasaporte'];
   usersT:  User[] = [];
+  tipo: any;
 
   constructor(private toast: ToastController, private router: Router, private db: DatabaseService, private formBuilder: FormBuilder,
-              private auth: AuthService) { }
+              private auth: AuthService, private http: HttpClient) { }
 
   ngOnInit() {
     this.db.getDatabaseState().subscribe(rdy => {
@@ -31,6 +31,11 @@ export class UserDataPage implements OnInit {
           console.log(this.usersT);
         });
       }
+    });
+    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-tipos`).subscribe((res: any) => {
+     console.log(res);
+     this.tipo = res.data;
+     console.log(this.tipo);
     });
   }
  
