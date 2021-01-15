@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TratamientoDatosPageRoutingModule } from './tratamiento-datos-routing.module';
+import { HerramientasPageRoutingModule } from './herramientas-routing.module';
 
-import { TratamientoDatosPage } from './tratamiento-datos.page';
+import { HerramientasPage } from './herramientas.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     ReactiveFormsModule,
-    TratamientoDatosPageRoutingModule
+    IonicModule,
+    HerramientasPageRoutingModule
   ],
-  declarations: [TratamientoDatosPage]
+  declarations: [HerramientasPage]
 })
-export class TratamientoDatosPageModule {}
+export class HerramientasPageModule {}

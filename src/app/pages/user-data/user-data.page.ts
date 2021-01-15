@@ -6,6 +6,7 @@ import { ToastController } from '@ionic/angular';
 import { DatabaseService, User } from './../../services/database.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class UserDataPage implements OnInit {
   documentType = ['CC', 'CE', 'Pasaporte'];
   usersT:  User[] = [];
 
-  constructor(private toast: ToastController, private router: Router, private db: DatabaseService, private formBuilder: FormBuilder,) { }
+  constructor(private toast: ToastController, private router: Router, private db: DatabaseService, private formBuilder: FormBuilder,
+              private auth: AuthService) { }
 
   ngOnInit() {
     this.db.getDatabaseState().subscribe(rdy => {
@@ -45,7 +47,10 @@ export class UserDataPage implements OnInit {
         user: this.userData
       }
     };
-    this.router.navigate(['tratamiento-datos'], navigationExtras);
+    this.router.navigate(['bioseguridad'], navigationExtras);
     this.userData = {};
   }
+  logOut(){
+    this.auth.logout();
+   }
 }

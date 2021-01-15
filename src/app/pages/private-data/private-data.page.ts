@@ -7,6 +7,7 @@ import { DatabaseService, User } from './../../services/database.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-private-data',
@@ -25,7 +26,7 @@ export class PrivateDataPage implements OnInit {
 
   constructor(private toast: ToastController,private camera: Camera, private http: HttpClient, private fileTransfer: FileTransfer,
     private db: DatabaseService, private route: ActivatedRoute, private router: Router, private alertCtrl: AlertController,
-    private formBuilder: FormBuilder, private loadingController: LoadingController) { }
+    private formBuilder: FormBuilder, private loadingController: LoadingController, private auth: AuthService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -49,7 +50,9 @@ export class PrivateDataPage implements OnInit {
   datasForm = this.formBuilder.group({
     badgeId: ['', [Validators.required]]
   });
-
+  logOut(){
+    this.auth.logout();
+  }
 /* takePhoto() {
     const options: CameraOptions = {
       quality: 20,

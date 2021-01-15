@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
-import { AuthService } from '../../services/auth.service';
 import * as moment from 'moment';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -16,13 +16,13 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 export class TratamientoDatosPage implements OnInit {
 
 user: any; 
-terminos: any;
+terminos: any = '';
 userData: any;
 uniqueDeviceId: any
 protected app_version: string;
 
-  constructor(private router: Router, private auth: AuthService, private route: ActivatedRoute, private db: DatabaseService,
-              private alertCtrl: AlertController, private appVersion: AppVersion, private udid: UniqueDeviceID) { }
+  constructor(private router: Router, private route: ActivatedRoute, private db: DatabaseService,
+              private alertCtrl: AlertController, private appVersion: AppVersion, private udid: UniqueDeviceID, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.appVersion.getVersionNumber().then(versionNumber => {
@@ -43,6 +43,8 @@ protected app_version: string;
           tipo_documento: this.user.tipo_documento,
           documento: this.user.documento,
           acepta_terminos: '',
+          acepta_herramientas: this.user.acepta_herramientas,
+          acepta_bioseguridad: this.user.acepta_bioseguridad,
           badgeId: '',
           imageUrl: '',
           metaDatos: {},
@@ -52,7 +54,9 @@ protected app_version: string;
     });
   
   }
-  
+  terminosForm = this.formBuilder.group({
+    terminos: ['', [Validators.required]]
+  });
 async alert(){
   const alert = await this.alertCtrl.create({
     header: 'Registramos su decisión, muchas gracias.',
@@ -64,7 +68,7 @@ async alert(){
 
   Formulario(){
     this.userData.acepta_terminos = JSON.parse(this.terminos);
-    if(this.userData.acepta_terminos === true){
+    if(this.userData.acepta_terminos === true && this.userData.acepta_bioseguridad === true && this.userData.acepta_herramientas === true){
       let navigationExtras: NavigationExtras = {
         state: {
           user: this.userData
@@ -95,11 +99,6 @@ async alert(){
         this.router.navigate(['user-data']);
         console.log(this.userData);
     }
-  }
-
-  
-  logOut(){
-   this.auth.logout();
   }
 
 }

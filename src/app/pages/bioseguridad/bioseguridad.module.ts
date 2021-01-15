@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TratamientoDatosPageRoutingModule } from './tratamiento-datos-routing.module';
+import { BioseguridadPageRoutingModule } from './bioseguridad-routing.module';
 
-import { TratamientoDatosPage } from './tratamiento-datos.page';
+import { BioseguridadPage } from './bioseguridad.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { TratamientoDatosPage } from './tratamiento-datos.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    TratamientoDatosPageRoutingModule
+    BioseguridadPageRoutingModule
   ],
-  declarations: [TratamientoDatosPage]
+  declarations: [BioseguridadPage]
 })
-export class TratamientoDatosPageModule {}
+export class BioseguridadPageModule {}

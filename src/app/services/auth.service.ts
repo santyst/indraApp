@@ -43,14 +43,13 @@ export class AuthService {
 
   login(credenciales: {email: string, password: string }) {
     // Normally make a POST request to your APi with your login credentials
-    if (credenciales.email != 'santysierra0@gmail.com' || credenciales.password != 'sas') {
+    if (credenciales.email != 'enrolamiento01@qaingenieros.com' || credenciales.password != 'B103CP21') {
       return of(null);
     }
  
     return this.http.get('https://jsonplaceholder.typicode.com/posts').pipe(
       take(1),
       map(res => {
-        // Extract the JWT, here we just fake it
         return `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkluZHJhIiwiaWF0IjoxNTE2MjM5MDIyfQ.k04Nd9xY6rNeVi5kWiKehMOT0JwUmssFJssfLxsnJdw`;
       }),
       switchMap(token => {
