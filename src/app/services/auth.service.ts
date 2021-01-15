@@ -59,6 +59,7 @@ export class AuthService {
         let storageObs = from(this.storage.set(TOKEN_KEY, token));
         return storageObs;
       })
+      
     );
   }
  
