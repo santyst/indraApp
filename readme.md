@@ -74,7 +74,11 @@ Aplicación móvil para realizar el registro de datos personales y metadatos rel
 
 ## Instalación del proyecto y pruebas ⚙️
 
-* Extraer archivo .zip descargado de GitHub
+* Extraer archivo .zip descargado de GitHub o clonar el proyecto
+
+```
+   $ git clone https://github.com/QAingenieros/indraApp.git
+```
 
 * Instalar dependencias npm
 
