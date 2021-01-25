@@ -32,7 +32,7 @@ export class UserDataPage implements OnInit {
         });
       }
     });
-    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-tipos`).subscribe((res: any) => {
+    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-tipos?apiKey=cfdc7593-7124-4e9e-b078-f44c18cacef4`).subscribe((res: any) => {
      console.log(res);
      this.tipo = res.data;
      console.log(this.tipo);
