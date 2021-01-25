@@ -59,7 +59,7 @@ protected app_version: string;
         };
       }
     });
-    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas`).subscribe((res: any) => {
+    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas?apiKey=cfdc7593-7124-4e9e-b078-f44c18cacef4`).subscribe((res: any) => {
       this.txt = res.data[2];
       console.log(this.txt);
       this.texto = this.txt.texto;
@@ -74,8 +74,16 @@ protected app_version: string;
   });
 async alert(){
   const alert = await this.alertCtrl.create({
+    cssClass: 'alerta1',
     header: 'Registramos su decisión, muchas gracias.',
-    buttons: ['OK'],
+    message: '<img src = "../../assets/images/avatar-profile.png" class="alertimg">',
+    buttons: [{
+      text: 'OK',
+      cssClass: 'boton',
+      handler: data => {
+        console.log('presioné ok');
+      }
+    }],
     mode: 'ios'
   });
   await alert.present();
