@@ -74,8 +74,16 @@ protected app_version: string;
   });
 async alert(){
   const alert = await this.alertCtrl.create({
+    cssClass: 'alerta1',
     header: 'Registramos su decisión, muchas gracias.',
-    buttons: ['OK'],
+    message: '<img src = "../../assets/images/avatar-profile.png" class="alertimg">',
+    buttons: [{
+      text: 'OK',
+      cssClass: 'boton',
+      handler: data => {
+        console.log('presioné ok');
+      }
+    }],
     mode: 'ios'
   });
   await alert.present();
