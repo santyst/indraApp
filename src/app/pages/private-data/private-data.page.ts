@@ -23,6 +23,7 @@ export class PrivateDataPage implements OnInit {
   base64_2: any = ''; 
   estado: any; 
   motivos: any;
+  apiKey = 'cfdc7593-7124-4e9e-b078-f44c18cacef4';
 
   constructor(private toast: ToastController,private camera: Camera, private http: HttpClient, private fileTransfer: FileTransfer,
     private db: DatabaseService, private route: ActivatedRoute, private router: Router, private alertCtrl: AlertController,
@@ -148,7 +149,7 @@ export class PrivateDataPage implements OnInit {
     });
     await loading.present();
 
-     Transfer.upload(this.userData.imageUrl, ('https://bio01.qaingenieros.com/api/img'), options)
+     Transfer.upload(this.userData.imageUrl, (`https://bio01.qaingenieros.com/api/img?apiKey=${this.apiKey}`), options)
       .then(async(data) => {
         loading.dismiss();
         this.base64 = data.response;
