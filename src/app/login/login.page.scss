@@ -1,9 +1,9 @@
 ion-content {
-    --ion-background-color:#397b94;
-    --ion-background-color-rgb: 0, 155, 215;
+    --ion-background-color:#383672;
+    --ion-background-color-rgb: 38, 35, 74;
 }
 h2{
-    background-color: #015670;
+    background-color: #4C529A;
     border-radius: 20px 20px 0 0;
     color: #fff;
     font-size: 29px;
@@ -14,12 +14,12 @@ h2{
 #container {
     margin-left: auto !important;
     margin-right: auto !important;
-    background: white;
-    --ion-background-color: #fff;
+    background: #4C529A;
+    --ion-background-color: #4C529A;
     max-width: 85% !important;
-    padding-bottom: 50px;
-    margin-top: 30%;
-    border-radius: 35px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 3px 3px 20px 0.5px rgba(0, 0, 0, 0.5);
 }
 ion-item {
     --padding-start: 0px;
@@ -37,17 +37,24 @@ ion-input {
     border: 1px solid #d0cfcf;
     border-radius: 16px;
     padding-left: 10px !important;
+    --ion-background-color: #fff;
+    background-color: #fff;
 }
 
 .btn-continue {
     margin-top: 10% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    --background: #015670 !important;
+    --border-radius: 0px !important;
+    --background: #69B054 !important;
+    --pading-start: 0px;
+    --pading-end: 0px;
+    margin: 0px 0px;
+    --background-color: #69B054 !important;
     font-weight: bold;
     letter-spacing: 0.5px;
-    width: 50%;
-    --border-radius: 16px !important;
+    font-size: 29px;
+    width: 100%;
+    height: 1.8em;
+    --border-border-radius: 0px !important;
 }
 
 p {
@@ -62,15 +69,29 @@ a {
 
 // SVG Logo de Ecopetrol
 .svg-ecopetrol {
-  font-size: 64px;
+  font-size: 256px;
+}
+
+// header
+.header {
+  height: 25%;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+// footer
+.footer {
+  height: 25%;
 }
 
 @media (min-width: 600px) and (min-height: 950px){
     #container {
         margin-left: auto !important;
         margin-right: auto !important;
-        background: white;
-        --ion-background-color: #fff;
+        background: #4C529A;
+        --ion-background-color: #4C529A;
         max-width: 85% !important;
         padding-bottom: 50px;
         margin-top: 30%;
@@ -91,7 +112,7 @@ a {
         margin-bottom: auto;
     }
     h2{
-        background-color: #015670;
+        background-color: #4C529A;
             -webkit-border-radius: 20px 20px 0 0;
             -moz-border-radius: 20px 20px 0 0;
             border-radius: 20px 20px 0 0;
@@ -111,18 +132,8 @@ a {
         margin-top: 12px;
         min-height: 60px !important;
         font-size: 25px;
-    }
-    .btn-continue {
-        margin-top: 5% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        --background: #015670 !important;
-        font-weight: bold;
-        letter-spacing: 0.5px;
-        width: 55%;
-        --border-radius: 16px !important;
-        font-size: 32px;
-        height: 80px;
+        --ion-background-color: #fff;
+        background-color: #fff;
     }
     a {
         margin-top: 3%;
