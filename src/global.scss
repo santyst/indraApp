@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -25,9 +25,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
-:root{
-    .popover-content{
+:root {
+    .popover-content {
         width: 60%;
     }
     .sc-ion-select-popover-h ion-label.sc-ion-select-popover {
@@ -38,8 +37,8 @@
         font-size: 20px;
     }
 
-    @media(min-width: 650px) and (min-height: 850px){
-        .popover-content{
+    @media (min-width: 650px) and (min-height: 850px) {
+        .popover-content {
             width: 60%;
         }
         .sc-ion-select-popover-h ion-label.sc-ion-select-popover {
@@ -50,5 +49,48 @@
             font-size: 34px;
         }
     }
-    
 }
+/*  Estructura de diseño de alertas:  clase de alerta, clase del boton, alert_message para mensaje, alert_title para header  */
+.alerta1{
+    --background: #009bd7 !important;
+    --min-width: 80% !important;
+    --max-width: 80% !important;     
+}
+.boton {
+  color: white !important;
+  background-color: #015670 !important;
+  border-radius: 10px !important;
+  margin-bottom: 20px !important;
+  min-width: 80% !important;
+  max-width: 80% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.alert-message {
+    color: white !important;
+   
+  }
+  .alert-title {
+    color: white !important;
+    font-size: 15px !important;
+  }
+  .alertimg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+}
+
+//////////////////////////////////////////// estructura de estilo para el loading controller /////////////////////7
+
+.loading {
+    --background: #009bd7 !important;
+    --spinner-color: #fff;
+    --min-width: 80%;
+    --max-width: 80%;
+  }
+  .loading-content {
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+  }
