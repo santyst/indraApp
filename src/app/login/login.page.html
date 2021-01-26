@@ -1,12 +1,13 @@
 <ion-content mode="ios">
-  <div class="header">
-    <ion-icon src="assets/svg/logoEcopetrolLight.svg" [ngStyle]="{ 'height.px': styleLogo.height, 'width.px': styleLogo.width }" class="svg-ecopetrol"></ion-icon>
+  <div class="header" #headerLogin>
+    <ion-icon src="assets/svg/logoEcopetrolLight.svg" [ngStyle]="{ 'height.px': styleSvgs.heightLogo, 'width.px': styleSvgs.widthLogo }" class="svg-ecopetrol"></ion-icon>
   </div>
-  <div id="container" #containerForm>
-    <div class="div1">
-      <h2><ion-icon name="lock-closed-outline"></ion-icon>Login</h2>
+  <div id="container" #containerLogin>
+    <div class="form-header">
+      <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
+      <!--<h2><ion-icon name="lock-closed-outline"></ion-icon>Login</h2>-->
     </div>
-    <form #form="ngForm"  novalidate>
+    <form #form="ngForm"  novalidate class="form-login">
       <ion-list>
         <ion-item>
           <ion-input type="email" name="email" [(ngModel)]="credenciales.email" placeholder="Usuario"></ion-input>

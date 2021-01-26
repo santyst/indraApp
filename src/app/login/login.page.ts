@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Network } from '@ionic-native/network/ngx';
 import { AlertController, LoadingController } from '@ionic/angular';
@@ -11,15 +11,19 @@ import { AnimationController } from '@ionic/angular';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit, AfterViewInit {
-  @ViewChild('containerForm', { read: ElementRef }) containerForm: ElementRef;
+export class LoginPage implements OnInit {
+  @ViewChild('containerLogin', { read: ElementRef }) containerLogin: ElementRef;
+  @ViewChild('headerLogin', { read: ElementRef }) headerLogin: ElementRef;
+
   /**
-   * los estilos del logo ecopetrol
+   * los dimensiones del logo ecopetrol, y header del formulario, se adapta al
+   * size de la pantalla del dispositivo.
    */
-  styleLogo: {
-    width: number;
-    height: number;
-    marginHorizontal: number;
+  styleSvgs: {
+    widthLogo: number;
+    heightLogo: number;
+    widthHeader: number;
+    heightHeader: number;
   };
 
   credenciales = {
@@ -29,34 +33,81 @@ export class LoginPage implements OnInit, AfterViewInit {
 
   constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController, public network: Network,
               private loadingController: LoadingController, private animationCtrl: AnimationController) {
-                this.styleLogo = {
-                  width: window.innerWidth / 2,
-                  height: (window.innerWidth / 2) / 2.5,
-                  marginHorizontal: window.innerWidth / 4
+                this.styleSvgs = {
+                  widthLogo: window.innerWidth / 2,
+                  heightLogo: (window.innerWidth / 2) / 2.5,
+                  widthHeader: (window.innerWidth * 90) / 100,
+                  heightHeader: ((window.innerHeight * 80) / 100) / 2.5
                 };
               }
 
-  ngOnInit() {
+  // Start lifecycle events
+  ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.animationStart();
   }
 
-  async ngAfterViewInit() {
-    // animations
-    await this.animationStart();
+  ionViewWillLeave() {
+    this.animationEnd();
+  }
+  // End lifecycle events
+
+  /**
+   * @description Se encarga de correr las animaciones de entrada de los
+   * elementos del login.page
+   */
+  animationStart() {
+    if (this.containerLogin && this.headerLogin) {
+      const headerUpAnimation = this.animationCtrl.create('animation-container-login')
+        .addElement(this.headerLogin.nativeElement)
+        .keyframes([
+          { offset: 0, transform: 'rotateY(90deg)' },
+          { offset: 1, transform: 'rotateY(0deg)' }
+        ]);
+
+      const containerUpAnimation = this.animationCtrl.create('animation-container-login')
+        .addElement(this.containerLogin.nativeElement)
+        .keyframes([
+          { offset: 0, transform: 'rotateY(90deg)' },
+          { offset: 1, transform: 'rotateY(0deg)' }
+        ]);
+
+      const animationUp = this.animationCtrl.create('animationUp')
+        .addAnimation([ containerUpAnimation, headerUpAnimation ])
+        .duration(400)
+        .easing('ease-in');
+
+      animationUp.play();
+    }
   }
 
-  async animationStart() {
-    if (this.containerForm) {
-      console.log('entro entro');
-      const loadingAnimation = this.animationCtrl.create('loading-animation')
-        .addElement(this.containerForm.nativeElement)
-        .duration(500)
-        .delay(2500)
-        .iterations(1)
-        .fromTo('transform', 'scale(0.4)', 'scale(1)');
-        // Don't forget to start the animation!
-      loadingAnimation.play();
-    } else {
-      console.log('no entro');
+  /**
+   * @description Se encarga de correr las animaciones de salida de los
+   * elementos del login.page
+   */
+  animationEnd() {
+    if (this.containerLogin && this.headerLogin) {
+      const headerUpAnimation = this.animationCtrl.create('animation-container-login')
+        .addElement(this.headerLogin.nativeElement)
+        .keyframes([
+          { offset: 0, transform: 'rotateY(0deg)' },
+          { offset: 1, transform: 'rotateY(90deg)' }
+        ]);
+
+      const containerUpAnimation = this.animationCtrl.create('animation-container-login')
+        .addElement(this.containerLogin.nativeElement)
+        .keyframes([
+          { offset: 0, transform: 'rotateY(0deg)' },
+          { offset: 1, transform: 'rotateY(90deg)' }
+        ]);
+
+      const animationUp = this.animationCtrl.create('animationUp')
+        .addAnimation([ containerUpAnimation, headerUpAnimation ])
+        .duration(400)
+        .easing('ease-out');
+
+      animationUp.play();
     }
   }
 
