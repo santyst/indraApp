@@ -3,8 +3,8 @@ ion-header {
     --ion-background-color-rgb: 0, 155, 215;
 }
 ion-content {
-    --ion-background-color: #fff;
-    --ion-background-color-rgb: 236, 235, 238;
+  --ion-background-color:#383672;
+  --ion-background-color-rgb: 38, 35, 74;
 }
 .div-header {
     background-color: #015670;
@@ -23,8 +23,9 @@ h2{
     font-weight: bold;
 }
 .pannel{
-    background-color: #eeeef1;
-    padding: 40px;
+    //background-color: #eeeef1;
+    //padding: 40px;
+    width: 98%;
     border-radius: 20px;
 }
 .paragrafo{
@@ -77,6 +78,35 @@ ion-item{
     font-size: 25px;
 }
 
+.container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  background: #4C529A;
+  --ion-background-color: #4C529A;
+  max-width: 80% !important;
+  border-radius: 20px;
+  box-shadow: 3px 3px 20px 0.5px rgba(0, 0, 0, 0.5);
+}
+
+// header
+.header {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.questionText {
+  width: 95%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+// p
+p {
+  color: white;
+}
+
 @media(min-width: 600px) and (min-height: 900px){
     
     ion-radio{
@@ -108,8 +138,8 @@ ion-item{
         font-weight: bold;
     }
     .pannel{
-        background-color: #eeeef1;
-        padding: 40px;
+        //background-color: #eeeef1;
+        //padding: 40px;
         border-radius: 20px;
     }
     .paragrafo{
