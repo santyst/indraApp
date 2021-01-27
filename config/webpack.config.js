@@ -15,7 +15,8 @@ useDefaultConfig[env].resolve.alias = {
   "@pages": path.resolve('./src/app/pages/'),
   "@services": path.resolve('./src/app/services/'),
   "@theme": path.resolve('./src/theme/'),
-  "@models": path.resolve('./src/app/models/')
+  "@models": path.resolve('./src/app/models/'),
+  "@constantsAPP": path.resolve('src/app/configs/Constants.ts')
 };
 
 function environmentPath(env) {

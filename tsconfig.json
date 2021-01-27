@@ -22,7 +22,8 @@
       "@env/*": ["src/environments/environment"],
       "@services/*": ["src/app/services/*"],
       "@pages/*": ["src/app/pages/*"],
-      "@theme/*": ["src/theme/*"]
+      "@theme/*": ["src/theme/*"],
+      "@constantsAPP": ["src/app/configs/Constants.ts"]
     }
   },
   "angularCompilerOptions": {
