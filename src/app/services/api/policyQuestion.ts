@@ -8,7 +8,7 @@ import api from '@services/api';
  * @description toda las conexiones relacionadas a los cursos en el API.
  * @method getAllCategories obtiene todas las categorías.
  */
-class PolicyQuestions {
+class PolicyQuestionProvider {
   /**
    * @method getPolicyEnrol
    * @description Se obtienen las preguntas que el enrolado tiene que aceptar
@@ -19,4 +19,4 @@ class PolicyQuestions {
   }
 }
 
-export default PolicyQuestions;
+export default PolicyQuestionProvider;

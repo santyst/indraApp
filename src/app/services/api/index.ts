@@ -19,7 +19,7 @@ interface ApiParams {
 const api = (params?: ApiParams) => {
   const apiCustom = axios.create({
     baseURL: params?.url ? params.url : URL_API,
-    timeout: 1000,
+    timeout: 60000,
     headers: { Accept: 'application/vnd.github.v3+json' },
     params: {  apiKey: 'cfdc7593-7124-4e9e-b078-f44c18cacef4' }
   });

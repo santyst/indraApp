@@ -1,17 +1,33 @@
 /**
  * Estructura del las políticas usada en la APP
  */
-export interface PolicyQuestionsModel {
+export interface PolicyQuestionModel {
+  /**
+   * descripción de la pregunta
+   */
   text: string;
+  /**
+   * version
+   */
   version: number;
+  /**
+   * pregunta
+   */
   question: string;
+  /**
+   * tipo de pregunta
+   */
   type: number;
+  /**
+   * acepta la pregunta por defecto es no
+   */
+  accept?: boolean;
 }
 
 /**
  * Estructura de las políticas que llegan del servidor
  */
-export interface PolicyQuestionsRServer {
+export interface PolicyQuestionRServer {
   texto: string;
   pregunta: string;
   version: number;
@@ -24,10 +40,10 @@ export interface PolicyQuestionsRServer {
  * @method formatData formate la data que llega del servidor a la que se
  * maneja en la APP. es Static.
  */
-class PolicyQuestions {
-  data: PolicyQuestionsModel;
+class PolicyQuestion {
+  data: PolicyQuestionModel;
 
-  constructor(data: PolicyQuestionsModel) {
+  constructor(data: PolicyQuestionModel) {
     this.data = data;
   }
 
@@ -36,9 +52,9 @@ class PolicyQuestions {
    * @description formatea la data que llega del servidor a la que se maneja en
    * la APP.
    */
-  static formatData(data: PolicyQuestionsRServer): PolicyQuestionsModel | undefined {
+  static formatData(data: PolicyQuestionRServer): PolicyQuestionModel | undefined {
     try {
-      const formattedData: PolicyQuestionsModel = {
+      const formattedData: PolicyQuestionModel = {
         text: data.texto,
         version: data.version,
         question: data.pregunta,
@@ -50,6 +66,22 @@ class PolicyQuestions {
       return undefined;
     }
   }
+
+  /**
+   * actcualiza en cambio de estado de la pregunta de si acepto a no acepto
+   * y viceversa.
+   */
+  handleAccept() {
+    this.data.accept = !this.data.accept;
+  }
+
+  reponseServer() {
+    return {
+      tipoTexto: this.data.text,
+      versionTexto: this.data.version,
+      aceptaTexto: this.data.accept
+    };
+  }
 }
 
-export default PolicyQuestions;
+export default PolicyQuestion;

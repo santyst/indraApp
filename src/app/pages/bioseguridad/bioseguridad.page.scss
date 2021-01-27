@@ -19,7 +19,7 @@ ion-content {
 h2{
     margin-top: 18px;
     font-size: 24px;
-    color: red;
+    color: white;
     font-weight: bold;
 }
 .pannel{
@@ -105,6 +105,24 @@ ion-item{
 // p
 p {
   color: white;
+}
+
+// Label
+label {
+  color: white;
+}
+
+// Strong
+strong {
+  color: white;
+}
+
+.input-radio {
+  flex-direction: row;
+}
+
+.options-radio {
+  width: 50%;
 }
 
 @media(min-width: 600px) and (min-height: 900px){

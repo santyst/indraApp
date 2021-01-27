@@ -5,7 +5,10 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AnimationController } from '@ionic/angular';
 
 // Models
-import PolicyQuestions from '@models/PolicyQuestions';
+import PolicyQuestion, { PolicyQuestionRServer } from '@models/policyQuestion';
+
+// Services
+import PolicyQuestionProvider from '@services/api/policyQuestion';
 
 @Component({
   selector: 'app-bioseguridad',
@@ -26,9 +29,17 @@ export class BioseguridadPage implements OnInit {
   };
 
   /**
-   * preguntas de las politicas
+   * preguntas de las políticas
    */
-  questions: Array<PolicyQuestions>;
+  questions: Array<PolicyQuestion>;
+  /**
+   * pregunta de la política actual donde esta el usuario
+   */
+  questionCurrent: PolicyQuestion;
+  /**
+   * index
+   */
+  index: number;
 
 user: any;
 userData: any;
@@ -39,6 +50,8 @@ pregunta: any;
 version: any;
   constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder,
               private http: HttpClient, private animationCtrl: AnimationController) {
+    this.questions = [];
+    this.index = 0;
     this.styleSvgs = {
       widthLogo: window.innerWidth / 2,
       heightLogo: (window.innerWidth / 2) / 2.5
@@ -64,6 +77,9 @@ version: any;
         };
       }
     });
+
+    this.loadQuestions();
+
     this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas?apiKey=cfdc7593-7124-4e9e-b078-f44c18cacef4`).subscribe((res: any) => {
       this.txt = res.data[1];
       console.log(this.txt);
@@ -81,6 +97,28 @@ version: any;
     this.animationEnd();
   }
   // End lifecycle events
+
+  /**
+   * @description carga las preguntas desde el servidor, que se le an de hacer
+   * al enrolado.
+   */
+  async loadQuestions() {
+    try {
+      const { data, status } = await PolicyQuestionProvider.getPolicyEnrol();
+      if (status === 200) {
+        console.log('{ data, status }', { data, status });
+        if (data.data.length) {
+          this.questions = data.data.map((question: PolicyQuestionRServer) => new PolicyQuestion(PolicyQuestion.formatData(question)));
+          this.questionCurrent = this.questions[this.index];
+          console.log('%%%%%%%%%', this.questions);
+        }
+      } else {
+        console.log('No fue posible optener las respuestas');
+      }
+    } catch (err) {
+        console.log('loadQuestions()', 'err', err);
+    }
+  }
 
   /**
    * @description Se encarga de correr las animaciones de entrada de los

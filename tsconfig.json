@@ -23,7 +23,7 @@
       "@services/*": ["src/app/services/*"],
       "@pages/*": ["src/app/pages/*"],
       "@theme/*": ["src/theme/*"],
-      "@constantsAPP": ["src/app/configs/Constants.ts"]
+      "@constantsAPP": ["src/app/configs/constants.ts"]
     }
   },
   "angularCompilerOptions": {
