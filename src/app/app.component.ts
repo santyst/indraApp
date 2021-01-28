@@ -29,7 +29,6 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.enrolamientos.enrol();
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
