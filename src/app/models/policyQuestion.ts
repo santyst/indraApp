@@ -24,6 +24,10 @@ export interface PolicyQuestionModel {
   accept?: boolean;
 }
 
+export interface PolicyQuestionStorage {
+  data: PolicyQuestionModel;
+}
+
 /**
  * Estructura de las políticas que llegan del servidor
  */
@@ -66,6 +70,10 @@ class PolicyQuestion {
       console.log('src/app/models/PolicyQuestions', 'formatData()', 'err', err);
       return undefined;
     }
+  }
+
+  static formatDataStorage(data: PolicyQuestionStorage) {
+     return data.data;
   }
 
   /**

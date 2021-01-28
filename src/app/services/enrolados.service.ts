@@ -14,6 +14,7 @@ export class EnroladosService {
   users: User[];
   userPost: any;
   respuesta1: any;
+  statusRequest = true;
   respuesta: any;
   apiKey = 'cfdc7593-7124-4e9e-b078-f44c18cacef4';
   constructor(private db: DatabaseService,
@@ -21,24 +22,23 @@ export class EnroladosService {
     private http: HttpClient) { }
 
   enrol() {
-
-    this.rxjsTimer1.pipe(takeUntil(this.destroy1)).subscribe(() => {
-      if (this.network.type !== 'none') {
+      if (this.network.type !== 'none' && this.statusRequest) {
         console.log(this.network.type)
-
-        this.db.getDatabaseState().subscribe(rdy => {
+       this.db.getDatabaseState().subscribe(rdy => {
           if (rdy) {
-            this.db.getUsers().subscribe(usuarios => {
+            this.statusRequest = false;
+            this.db.getUsers().subscribe(async usuarios => {
               this.users = usuarios;
               console.log(this.users);
               if (this.users.length > 0 && this.network.type !== 'none') {
-                for (let us of this.users) {
+                this.statusRequest = false;
+                for await (let us of this.users) {
                   this.userPost = {
                     firstName: us.FirstName,
                     lastName: us.LastName,
                     tipoDocumento: us.tipo_documento,
                     documento: us.documento.toString(),
-                    aceptaTerminos: JSON.parse(us.acepta_terminos),
+                    aceptaTerminos: false,
                     badgeId: us.badgeId.toString(),
                     image: us.imageUrl,
                     metadatos: us.metaDatos,
@@ -53,7 +53,7 @@ export class EnroladosService {
                     ciudadOrigen: 'Bogota'
                   };
                   console.log(this.userPost);
-                  this.http.post(`https://bio01.qaingenieros.com/api/enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(res => {
+                  this.http.post(`https://bio01.qaingenieros.com/api/enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(async res => {
                     this.respuesta = res;
                     this.respuesta1 = this.respuesta.success;
                     console.log(this.respuesta);
@@ -65,18 +65,20 @@ export class EnroladosService {
                       });
                     }
                   });
+                 // break;
                 }
+               this.statusRequest = true;
               } else {
+                this.statusRequest = true;
                 console.log('el arreglo local es vacio');
-              }
+              } 
+              
             });
           }
         });
       } else {
         console.log('no hay conexion');
       }
-
-    });
   }
 
 }
