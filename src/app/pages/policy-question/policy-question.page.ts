@@ -5,12 +5,14 @@ import { AnimationController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import * as moment from 'moment';
+import { Storage } from '@ionic/storage';
 
 // DataBase
 import { DatabaseService } from '@services/database.service';
 
 // Models
-import PolicyQuestion, { PolicyQuestionRServer } from '@models/policyQuestion';
+import PolicyQuestion, { PolicyQuestionRServer, PolicyQuestionStorage } from '@models/policyQuestion';
 
 // Services
 import PolicyQuestionProvider from '@services/api/policyQuestion';
@@ -28,7 +30,7 @@ const URL_PATH = 'src/app/pages/policy-question/policy-question.page.ts';
 export class PolicyQuestionPage implements OnInit {
   @ViewChild('containerPolicyQuestion', { read: ElementRef }) containerPolicyQuestion: ElementRef;
   @ViewChild('headerPolicyQuestion', { read: ElementRef }) headerPolicyQuestion: ElementRef;
-  @ViewChild('titleQuestion', { read: ElementRef })  titleQuestion: ElementRef;
+  @ViewChild('titleQuestion', { read: ElementRef }) titleQuestion: ElementRef;
   @ViewChild('descriptionQuestion', { read: ElementRef }) descriptionQuestion: ElementRef;
   @ViewChild('versionQuestion', { read: ElementRef }) versionQuestion: ElementRef;
 
@@ -69,7 +71,7 @@ export class PolicyQuestionPage implements OnInit {
     LastName: string;
     tipo_documento: string;
     documento: number | string;
-    policyQuestions: PolicyQuestion[];
+    policyQuestions: any;
     badgeId: string;
     imageUrl: string;
     metaDatos: any;
@@ -85,8 +87,8 @@ export class PolicyQuestionPage implements OnInit {
   uniqueDeviceId: string | number;
 
   constructor(private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController,
-              private animationCtrl: AnimationController, private appVersion: AppVersion, private db: DatabaseService,
-              private udid: UniqueDeviceID) {
+    private animationCtrl: AnimationController, private appVersion: AppVersion, private db: DatabaseService,
+    private udid: UniqueDeviceID, private storage: Storage) {
     this.questions = [];
     this.questionCurrent = undefined;
     this.index = 0;
@@ -119,7 +121,7 @@ export class PolicyQuestionPage implements OnInit {
           LastName: this.user.LastName,
           tipo_documento: this.user.tipo_documento,
           documento: this.user.documento,
-          policyQuestions: [],
+          policyQuestions: '',
           badgeId: '',
           imageUrl: '',
           metaDatos: {},
@@ -152,12 +154,18 @@ export class PolicyQuestionPage implements OnInit {
         if (data.data.length) {
           this.questions = data.data.map((question: PolicyQuestionRServer) => new PolicyQuestion(PolicyQuestion.formatData(question)));
           this.questionCurrent = this.questions[this.index];
+          this.storage.set('policy', data.data.map((question: PolicyQuestionRServer) => new PolicyQuestion(PolicyQuestion.formatData(question))))
         }
       } else {
         console.log(URL_PATH, 'loadQuestions()', 'No fue posible obtener las respuestas');
       }
     } catch (err) {
+      this.storage.get('policy').then((res: PolicyQuestionStorage[]) => {
+        this.questions = res.map(question => new PolicyQuestion(PolicyQuestion.formatDataStorage(question)))
+        console.log('this.questions: ', this.questions);
+        this.questionCurrent = this.questions[this.index];
         console.log(URL_PATH, 'loadQuestions()', 'err', err);
+      });
     }
   }
 
@@ -183,7 +191,7 @@ export class PolicyQuestionPage implements OnInit {
         ]);
 
       const animationUp = this.animationCtrl.create('animationUp')
-        .addAnimation([ containerUpAnimation, headerUpAnimation ])
+        .addAnimation([containerUpAnimation, headerUpAnimation])
         .duration(TIME_ANIMATION_GENERAL)
         .easing('ease-in');
 
@@ -212,7 +220,7 @@ export class PolicyQuestionPage implements OnInit {
         ]);
 
       const animationUp = this.animationCtrl.create('animationUp')
-        .addAnimation([ containerUpAnimation, headerUpAnimation ])
+        .addAnimation([containerUpAnimation, headerUpAnimation])
         .duration(TIME_ANIMATION_GENERAL)
         .easing('ease-out');
 
@@ -247,7 +255,7 @@ export class PolicyQuestionPage implements OnInit {
         ]);
 
       const animationUp = this.animationCtrl.create('animationUpQuestion')
-        .addAnimation([ titleUpAnimation, descriptionUpAnimation, versionUpAnimation ])
+        .addAnimation([titleUpAnimation, descriptionUpAnimation, versionUpAnimation])
         .duration(TIME_ANIMATION_GENERAL)
         .easing('ease-in');
 
@@ -296,7 +304,7 @@ export class PolicyQuestionPage implements OnInit {
     this.isDisableSendData = !this.questions.every((question) => question.data.accept !== undefined);
   }
 
-  async alert(){
+  async alert() {
     const alert = await this.alertCtrl.create({
       cssClass: 'alerta1',
       header: 'Registramos su decisión, muchas gracias.',
@@ -317,8 +325,9 @@ export class PolicyQuestionPage implements OnInit {
    * @description Envía la data a la siguiente screen para ser
    * procesada
    */
-   processForm() {
-    this.userData.policyQuestions = this.questions;
+  processForm() {
+
+    this.userData.policyQuestions = this.questions.map(res => res.reponseServer());
     const isAcceptAllPolicyQuestions = this.questions.every(question => question.data.accept === true);
     // this.userData.acepta_terminos = JSON.parse(this.terminos);
     if (isAcceptAllPolicyQuestions) {
@@ -351,13 +360,13 @@ export class PolicyQuestionPage implements OnInit {
           this.userData.LastName,
           this.userData.tipo_documento,
           this.userData.documento,
-          this.userData.policyQuestions,
+          JSON.stringify(this.userData.policyQuestions),
           this.userData.badgeId,
           this.userData.imageUrl,
           this.userData.metaDatos,
           this.userData.empresa
         )
-        .then((_) => {});
+        .then((_) => { });
 
       this.alert();
       this.router.navigate(['user-data']);
