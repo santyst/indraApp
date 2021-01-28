@@ -154,7 +154,7 @@ export class PolicyQuestionPage implements OnInit {
         if (data.data.length) {
           this.questions = data.data.map((question: PolicyQuestionRServer) => new PolicyQuestion(PolicyQuestion.formatData(question)));
           this.questionCurrent = this.questions[this.index];
-          this.storage.set('policy', data.data.map((question: PolicyQuestionRServer) => new PolicyQuestion(PolicyQuestion.formatData(question))))
+          this.storage.set('policy', this.questions);
         }
       } else {
         console.log(URL_PATH, 'loadQuestions()', 'No fue posible obtener las respuestas');
