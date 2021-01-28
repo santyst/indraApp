@@ -34,12 +34,14 @@ export class PrivateDataPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.user = this.router.getCurrentNavigation().extras.state.user;
         console.log(this.user);
+        // Se recomienda manejar esto con una clase o una interfaz
         this.userData = {
           FirstName: this.user.FirstName,
           LastName: this.user.LastName,
           tipo_documento: this.user.tipo_documento,
           documento: this.user.documento,
-          acepta_terminos: this.user.acepta_terminos,
+          acepta_terminos: this.user.policyQuestions,
+          //acepta_terminos: this.user.acepta_terminos,
           badgeId: this.user.badgeId,
           imageUrl: '', 
           empresa: 'Ecopetrol'

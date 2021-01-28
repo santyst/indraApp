@@ -1,6 +1,6 @@
 ion-content {
-  --ion-background-color: #ffffff;
-  --ion-background-color-rgb: 236, 235, 238;
+  --ion-background-color:#383672;
+  --ion-background-color-rgb: 38, 35, 74;
 }
 h2 {
   background-color: #015670;
@@ -13,23 +13,37 @@ h2 {
 .div1 {
   margin-top: -17px;
 }
-.boton1 {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  --background: #015670 !important;
-  font-weight: 600 !important;
-  font-size: 20px !important;
-  width: 64% !important;
-  --border-radius: 8px !important;
+.boton-register {
+  margin-top: 10% !important;
+  --border-radius: 0px !important;
+  --background: #69B054 !important;
+  --background-activated: #98C756 !important;
+  --background-focused: #56C760 !important;
+  --background-hover: #69B054 !important;
+  --pading-start: 0px;
+  --pading-end: 0px;
+  margin: 0px 0px;
+  --background-color: #69B054 !important;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-size: 29px;
+  width: 100%;
+  height: 1.8em;
+  --border-border-radius: 0px !important;
 }
 .container {
   margin-left: auto !important;
   margin-right: auto !important;
-  background: #eeeef1;
-  max-width: 99% !important;
-  padding-bottom: 50px;
-  border-radius: 10px;
-  height: 98%;
+  background: #4C529A;
+  --ion-background-color: #4C529A;
+  max-width: 80% !important;
+  border-radius: 20px;
+  box-shadow: 3px 3px 20px 0.5px rgba(0, 0, 0, 0.5);
+}
+// Formulario de los datos y button de registro
+.form-user-data {
+  overflow: hidden;
+  border-radius: 20px;
 }
 .section_attach {
   margin-top: 30px !important;
@@ -61,39 +75,14 @@ h2 {
   color: #000000 !important;
   font-size: 15px;
 }
-.logout {
-  width: 27%;
-  height: 22%;
-  border-radius: 100% !important;
-  margin-left: 82%;
-  margin-top: -26px;
-  font-size: 24px;
-  color: #fb1313;
-  font-weight: bold;
-}
-ion-input {
-  border: 1px solid #000000;
-  border-radius: 5px;
-  width: 100%;
-  font-size: 15px;
-  font-weight: 700;
-  color: #040404;
-  background-color: #cdcdcd;
-  background-clip: padding-box;
-  margin-top: 10px;
-}
+ion-input,
 ion-select,
 ion-datetime {
-  border: 1px solid #000000;
-  border-radius: 5px;
-  width: 100%;
-  font-size: 15px;
-  font-weight: 700;
-  color: #040404;
-  background-color: #cdcdcd;
-  background-clip: padding-box;
-  margin-top: 10px;
-  padding-left: 6px;
+  border: 1px solid #d0cfcf;
+  border-radius: 16px;
+  padding-left: 10px !important;
+  --ion-background-color: #fff;
+  background-color: #fff;
 }
 .row-form {
   margin-top: 10px;
@@ -101,6 +90,38 @@ ion-datetime {
   margin-left: auto;
   margin-right: auto;
 }
+
+// svg de la cabecera del formulario
+.svg-header-form {
+  margin-top: -10px;
+}
+
+// SVG Logo de Ecopetrol
+.svg-ecopetrol {
+  font-size: 256px;
+}
+
+// header
+.header {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+// logout
+.logout {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color:  #383672;
+  color: red;
+  font-size: 18px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 1;
+}
+
 @media (min-width: 330px) and (max-width: 350px) {
   .grey {
     color: #000000 !important;
@@ -117,26 +138,6 @@ ion-datetime {
     font-size: 45px;
     padding: 20px 26px;
     margin-bottom: 30px;
-  }
-  .boton1 {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    --background: #015670 !important;
-    font-weight: 600 !important;
-    font-size: 32px !important;
-    width: 75% !important;
-    --border-radius: 8px !important;
-    height: 70px;
-    margin-top: 70px;
-  }
-  .container {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    background: #eeeef1;
-    max-width: 99% !important;
-    padding-bottom: 50px;
-    border-radius: 10px;
-    height: 98%;
   }
   .section_attach {
     margin-top: 30px !important;
@@ -169,29 +170,14 @@ ion-datetime {
     color: #000000 !important;
     font-size: 27px;
   }
-  .logout {
-    width: 27%;
-    height: 22%;
-    border-radius: 100% !important;
-    margin-left: 75%;
-    margin-top: -52px;
-    font-size: 40px;
-    color: #fb1313;
-    font-weight: bold;
-  }
   ion-input,
   ion-select,
   ion-datetime {
-    border: 1px solid #000000;
-    border-radius: 5px;
-    width: 100%;
-    font-size: 30px;
-    font-weight: 700;
-    color: #040404;
-    background-color: #cdcdcd;
-    background-clip: padding-box;
-    padding-left: 5px !important;
-    margin-top: 10px;
+    border: 1px solid #d0cfcf;
+    border-radius: 16px;
+    padding-left: 10px !important;
+    --ion-background-color: #fff;
+    background-color: #fff;
   }
   .row-form {
     margin-top: 80px;
