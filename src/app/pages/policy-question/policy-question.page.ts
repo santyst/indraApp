@@ -5,6 +5,7 @@ import { AnimationController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import * as moment from 'moment';
 
 // DataBase
 import { DatabaseService } from '@services/database.service';
@@ -228,21 +229,21 @@ export class PolicyQuestionPage implements OnInit {
       const titleUpAnimation = this.animationCtrl.create('animation-title')
         .addElement(this.titleQuestion.nativeElement)
         .keyframes([
-          { offset: 0, opacity: '0' },
+          { offset: 0, opacity: '0.5' },
           { offset: 1, opacity: '1' }
         ]);
 
       const descriptionUpAnimation = this.animationCtrl.create('animation-description')
         .addElement(this.descriptionQuestion.nativeElement)
         .keyframes([
-          { offset: 0, opacity: '0' },
+          { offset: 0, opacity: '0.5' },
           { offset: 1, opacity: '1' }
         ]);
 
       const versionUpAnimation = this.animationCtrl.create('animation-description')
         .addElement(this.versionQuestion.nativeElement)
         .keyframes([
-          { offset: 0, opacity: '0' },
+          { offset: 0, opacity: '0.5' },
           { offset: 1, opacity: '1' }
         ]);
 
