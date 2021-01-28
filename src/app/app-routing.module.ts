@@ -41,7 +41,11 @@ const routes: Routes = [
     path: 'herramientas',
     loadChildren: () => import('./pages/herramientas/herramientas.module').then( m => m.HerramientasPageModule)// , canActivate: [AuthGuard]
   },
-
+  {
+    path: 'policy-question',
+    loadChildren: () => import('./pages/policy-question/policy-question.module')
+      .then( m => m.PolicyQuestionPageModule)// , canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

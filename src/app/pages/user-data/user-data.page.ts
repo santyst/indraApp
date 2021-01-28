@@ -9,6 +9,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { AnimationController } from '@ionic/angular';
 
+// Constants
+import { TIME_ANIMATION_GENERAL } from '@constantsAPP';
+
 @Component({
   selector: 'app-user-data',
   templateUrl: './user-data.page.html',
@@ -99,7 +102,7 @@ export class UserDataPage implements OnInit {
 
       const animationUp = this.animationCtrl.create('animationUp')
         .addAnimation([ containerUpAnimation, headerUpAnimation ])
-        .duration(400)
+        .duration(TIME_ANIMATION_GENERAL)
         .easing('ease-in');
 
       animationUp.play();
@@ -128,7 +131,7 @@ export class UserDataPage implements OnInit {
 
       const animationUp = this.animationCtrl.create('animationUp')
         .addAnimation([ containerUpAnimation, headerUpAnimation ])
-        .duration(400)
+        .duration(TIME_ANIMATION_GENERAL)
         .easing('ease-out');
 
       animationUp.play();
@@ -136,12 +139,12 @@ export class UserDataPage implements OnInit {
   }
 
   sendUser(){
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       state: {
         user: this.userData
       }
     };
-    this.router.navigate(['bioseguridad'], navigationExtras);
+    this.router.navigate(['policy-question'], navigationExtras);
     this.userData = {};
   }
   logOut(){

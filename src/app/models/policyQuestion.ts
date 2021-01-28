@@ -58,7 +58,8 @@ class PolicyQuestion {
         text: data.texto,
         version: data.version,
         question: data.pregunta,
-        type: data.tipo
+        type: data.tipo,
+        accept: undefined
       };
       return formattedData;
     } catch (err) {
@@ -71,8 +72,8 @@ class PolicyQuestion {
    * actcualiza en cambio de estado de la pregunta de si acepto a no acepto
    * y viceversa.
    */
-  handleAccept() {
-    this.data.accept = !this.data.accept;
+  handleAccept(value?: boolean) {
+    this.data.accept = value;
   }
 
   reponseServer() {
