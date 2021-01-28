@@ -11,6 +11,7 @@ import { AnimationController } from '@ionic/angular';
 
 // Constants
 import { TIME_ANIMATION_GENERAL } from '@constantsAPP';
+import { EnroladosService } from '@app/services/enrolados.service';
 
 @Component({
   selector: 'app-user-data',
@@ -45,7 +46,7 @@ export class UserDataPage implements OnInit {
   });
 
   constructor(private toast: ToastController, private router: Router, private db: DatabaseService, private formBuilder: FormBuilder,
-              private auth: AuthService, private http: HttpClient, private animationCtrl: AnimationController) {
+              private auth: AuthService, private http: HttpClient, private animationCtrl: AnimationController, private enrolamientos: EnroladosService) {
                 this.styleSvgs = {
                   widthLogo: window.innerWidth / 2,
                   heightLogo: (window.innerWidth / 2) / 2.5,
@@ -56,14 +57,6 @@ export class UserDataPage implements OnInit {
 
   // Start lifecycle events
   ngOnInit() {
-    this.db.getDatabaseState().subscribe(rdy => {
-      if (rdy) {
-        this.db.getUsers().subscribe(usuarios => {
-          this.usersT = usuarios;
-          console.log(this.usersT);
-        });
-      }
-    });
     this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-tipos?apiKey=cfdc7593-7124-4e9e-b078-f44c18cacef4`).subscribe((res: any) => {
      console.log(res);
      this.tipo = res.data;
@@ -73,6 +66,7 @@ export class UserDataPage implements OnInit {
 
   ionViewWillEnter() {
     this.animationStart();
+    // this.enrolamientos.enrol();
   }
 
   ionViewWillLeave() {
