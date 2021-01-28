@@ -1,0 +1,68 @@
+ion-content {
+  --ion-background-color:#383672;
+  --ion-background-color-rgb: 38, 35, 74;
+}
+
+ion-button {
+  --background: #69B054 !important;
+  --background-activated: #98C756 !important;
+  --background-focused: #56C760 !important;
+  --background-hover: #69B054 !important;
+  --pading-start: 0px;
+  --pading-end: 0px;
+  margin: 0px 0px;
+  --background-color: #69B054 !important;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-size: 22px;
+  width: 100%;
+  height: 1.8em;
+}
+
+h2, p {
+  color: white;
+}
+
+strong {
+  color: red;
+}
+
+// header
+.header {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+// contenedor del la pregunta de la política
+.container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  background: #4C529A;
+  --ion-background-color: #4C529A;
+  border-radius: 20px;
+  box-shadow: 3px 3px 20px 0.5px rgba(0, 0, 0, 0.5);
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  overflow: hidden;
+  transition: height 400ms ease;
+  -webkit-transition: height 400ms ease;
+  -moz-transition: height 400ms ease;
+  -o-transition: height 400ms ease;
+}
+
+.button-navigation {
+  flex-direction: row;
+}
+
+.btn-line {
+  width: 50% !important;
+  --border-radius: 0px !important;
+}
+
+.btn-send {
+  --background: #4B7D3C !important;
+}
