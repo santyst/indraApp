@@ -149,7 +149,7 @@ export class PolicyQuestionPage implements OnInit {
           tipo_documento: this.user.tipo_documento,
           documento: this.user.documento,
           policyQuestions: "",
-          badgeId: "",
+          badgeId: this.user.badgeId,
           imageUrl: "",
           metaDatos: {},
           empresa: "Ecopetrol",
