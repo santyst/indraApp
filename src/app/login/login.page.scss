@@ -1,80 +1,42 @@
 ion-content {
-    --ion-background-color:#383672;
-    --ion-background-color-rgb: 38, 35, 74;
-}
-h2{
-    background-color: #4C529A;
-    border-radius: 20px 20px 0 0;
-    color: #fff;
-    font-size: 29px;
-    padding: 20px 26px;
-    margin-bottom: 30px;
-}
-
-#container {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    background: #4C529A;
-    --ion-background-color: #4C529A;
-    border-radius: 20px;
-    box-shadow: 3px 3px 20px 0.5px rgba(0, 0, 0, 0.5);
-}
-ion-item {
-    --padding-start: 0px;
-    --border-style: none;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-item-form-login {
-  background: #4C529A !important;
-}
-
-ion-list {
-  background: #4C529A !important;
-}
-
-ion-label {
-    --color: #b4b4b4 !important;
+  --ion-background-color:#383672;
+  --ion-background-color-rgb: 38, 35, 74;
 }
 
 ion-input {
-    border: 1px solid #d0cfcf;
-    border-radius: 16px;
-    padding-left: 10px !important;
-    --ion-background-color: #fff;
-    background-color: #fff;
+  border: 1px solid #d0cfcf;
+  border-radius: 16px;
+  --ion-background-color: #fff;
+  background-color: #fff;
+}
+
+ion-item {
+  --padding-start: 0px;
+  --inner-padding-end: 0px;
+}
+
+.item-native {
+  background: #4C529A !important;
 }
 
 .btn-continue {
-    margin-top: 10% !important;
-    --border-radius: 0px !important;
-    --background: #69B054 !important;
-    --background-activated: #98C756 !important;
-    --background-focused: #56C760 !important;
-    --background-hover: #69B054 !important;
-    --pading-start: 0px;
-    --pading-end: 0px;
-    margin: 0px 0px;
-    --background-color: #69B054 !important;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    font-size: 29px;
-    width: 100%;
-    height: 1.8em;
-    --border-border-radius: 0px !important;
-    border-bottom-left-radius: 30px !important;
-}
-
-p {
-    font-weight: bold;
-    color: #7e7e7e;
-}
-a {
-    margin-top: 3%;
-    font-size: 14px;
-    color: #b4b4b4;
+  margin-top: 10% !important;
+  --border-radius: 0px !important;
+  --background: #69B054 !important;
+  --background-activated: #98C756 !important;
+  --background-focused: #56C760 !important;
+  --background-hover: #69B054 !important;
+  --pading-start: 0px;
+  --pading-end: 0px;
+  margin: 0px 0px;
+  --background-color: #69B054 !important;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-size: 29px;
+  width: 100%;
+  height: 1.8em;
+  --border-border-radius: 0px !important;
+  border-bottom-left-radius: 30px !important;
 }
 
 // Formulario del login
@@ -82,11 +44,6 @@ a {
   overflow: hidden;
   border-radius: 20px;
   background-color: #4C529A;
-}
-
-// cabecera del formulario contiene el svg
-.form-header {
-  width: 80%;
 }
 
 .svg-header-form {
@@ -102,6 +59,17 @@ a {
   justify-content: center;
 }
 
-.item-native {
+.item-form-login {
   background: #4C529A !important;
+}
+
+#container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  background: #4C529A;
+  --ion-background-color: #4C529A;
+  border-radius: 20px;
+  box-shadow: 3px 3px 20px 0.5px rgba(0, 0, 0, 0.5);
+  padding: 0px;
+  --padding: 0px;
 }

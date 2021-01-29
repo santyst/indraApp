@@ -7,20 +7,15 @@
         </div>
       </ion-col>
       <ion-col size="11" id="container" #containerLogin>
-        <div class="form-header">
-          <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
-          <!--<h2><ion-icon name="lock-closed-outline"></ion-icon>Login</h2>-->
-        </div>
+        <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
         <form #form="ngForm" novalidate class="form-login">
-          <ion-list>
-            <ion-item class="item-form-login">
-              <ion-input type="email" name="email" [(ngModel)]="credenciales.email" placeholder="Usuario"></ion-input>
-            </ion-item>
-            <ion-item class="item-form-login">
-              <ion-input type="password" name="password" [(ngModel)]="credenciales.password" placeholder="Contraseña"></ion-input>
-            </ion-item>
-            <ion-button class="btn-continue" expand="block" (click)="login()">INGRESAR</ion-button>
-          </ion-list>
+          <ion-item class="ion-margin-horizontal">
+            <ion-input class="ion-margin-vertical" type="email" name="email" [(ngModel)]="credenciales.email" placeholder="Usuario"></ion-input>
+          </ion-item>
+          <ion-item class="ion-margin-horizontal">
+            <ion-input class="ion-margin-vertical" type="password" name="password" [(ngModel)]="credenciales.password" placeholder="Contraseña"></ion-input>
+          </ion-item>
+          <ion-button class="btn-continue" expand="block" (click)="login()">INGRESAR</ion-button>
         </form>
       </ion-col>
       <ion-col size="12">
