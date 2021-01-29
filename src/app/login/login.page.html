@@ -9,11 +9,11 @@
       <ion-col size="11" id="container" #containerLogin>
         <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
         <form #form="ngForm" novalidate class="form-login">
-          <ion-item class="ion-margin-horizontal">
-            <ion-input class="ion-margin-vertical" type="email" name="email" [(ngModel)]="credenciales.email" placeholder="Usuario"></ion-input>
+          <ion-item lines="none">
+            <ion-input type="email" name="email" [(ngModel)]="credenciales.email" placeholder="Usuario"></ion-input>
           </ion-item>
-          <ion-item class="ion-margin-horizontal">
-            <ion-input class="ion-margin-vertical" type="password" name="password" [(ngModel)]="credenciales.password" placeholder="Contraseña"></ion-input>
+          <ion-item lines="none">
+            <ion-input type="password" name="password" [(ngModel)]="credenciales.password" placeholder="Contraseña"></ion-input>
           </ion-item>
           <ion-button class="btn-continue" expand="block" (click)="login()">INGRESAR</ion-button>
         </form>

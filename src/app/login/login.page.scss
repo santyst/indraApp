@@ -1,3 +1,10 @@
+.ios body {
+  --ion-item-background: white;
+  --ion-card-background: white;
+  --ion-background-color: white;
+  --ion-text-color: black;
+}
+
 ion-content {
   --ion-background-color:#383672;
   --ion-background-color-rgb: 38, 35, 74;
@@ -8,11 +15,16 @@ ion-input {
   border-radius: 16px;
   --ion-background-color: #fff;
   background-color: #fff;
+  color: #000;
+  margin: 5px 0;
+  padding: 0px 10px !important;
 }
 
 ion-item {
   --padding-start: 0px;
   --inner-padding-end: 0px;
+  margin: 0 16px;
+  --ion-item-background: #4C529A !important;
 }
 
 .item-native {
@@ -36,7 +48,6 @@ ion-item {
   width: 100%;
   height: 1.8em;
   --border-border-radius: 0px !important;
-  border-bottom-left-radius: 30px !important;
 }
 
 // Formulario del login
@@ -47,8 +58,7 @@ ion-item {
 }
 
 .svg-header-form {
-  margin-right: -200px;
-  margin-top: -50px;
+  margin-top: -10px;
 }
 
 // header
@@ -57,10 +67,7 @@ ion-item {
   flex: 1;
   align-items: center;
   justify-content: center;
-}
-
-.item-form-login {
-  background: #4C529A !important;
+  margin: 10px 0px;
 }
 
 #container {
@@ -72,4 +79,20 @@ ion-item {
   box-shadow: 3px 3px 20px 0.5px rgba(0, 0, 0, 0.5);
   padding: 0px;
   --padding: 0px;
+}
+
+@media (min-width: 600px) and (min-height: 850px) {
+  ion-item {
+    margin: 0 50px;
+  }
+  ion-input {
+    margin: 16px 0;
+    padding: 10px 10px;
+    font-size: 30px !important;
+  }
+  .btn-continue {
+    margin-top: 10% !important;
+    height: 2em;
+    font-size: 40px !important;
+  }
 }

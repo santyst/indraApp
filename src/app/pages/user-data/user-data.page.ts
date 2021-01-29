@@ -48,8 +48,8 @@ export class UserDataPage implements OnInit {
   constructor(private toast: ToastController, private router: Router, private db: DatabaseService, private formBuilder: FormBuilder,
               private auth: AuthService, private http: HttpClient, private animationCtrl: AnimationController, private enrolamientos: EnroladosService) {
                 this.styleSvgs = {
-                  widthLogo: window.innerWidth / 2,
-                  heightLogo: (window.innerWidth / 2) / 2.5,
+                  widthLogo: (window.innerWidth / 4) * 3,
+                  heightLogo: ((window.innerWidth / 4) * 3) / 2.5,
                   widthHeader: (window.innerWidth * 89) / 100,
                   heightHeader: ((window.innerHeight * 89) / 100) / 4
                 };
@@ -141,6 +141,7 @@ export class UserDataPage implements OnInit {
     this.router.navigate(['policy-question'], navigationExtras);
     this.userData = {};
   }
+
   logOut(){
     this.auth.logout();
    }

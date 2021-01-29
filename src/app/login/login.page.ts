@@ -35,8 +35,8 @@ export class LoginPage implements OnInit {
   constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController, public network: Network,
               private loadingController: LoadingController, private animationCtrl: AnimationController, private enrolamientos: EnroladosService) {
                 this.styleSvgs = {
-                  widthLogo: window.innerWidth / 2,
-                  heightLogo: (window.innerWidth / 2) / 2.5,
+                  widthLogo: (window.innerWidth / 4) * 3,
+                  heightLogo: ((window.innerWidth / 4) * 3) / 2.5,
                   widthHeader: (window.innerWidth * 90) / 100,
                   heightHeader: ((window.innerHeight * 80) / 100) / 2.5
                 };

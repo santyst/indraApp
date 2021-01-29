@@ -15,6 +15,7 @@ import { DatabaseService } from '@services/database.service';
 import PolicyQuestion, { PolicyQuestionRServer, PolicyQuestionStorage } from '@models/policyQuestion';
 
 // Services
+import { AuthService } from '@services/auth.service';
 import PolicyQuestionProvider from '@services/api/policyQuestion';
 
 // Constants
@@ -28,6 +29,8 @@ const URL_PATH = 'src/app/pages/policy-question/policy-question.page.ts';
   styleUrls: ["./policy-question.page.scss"],
 })
 export class PolicyQuestionPage implements OnInit {
+  @ViewChild("scrollPolicyQuestion", { read: ElementRef })
+  scrollPolicyQuestion: ElementRef;
   @ViewChild("containerPolicyQuestion", { read: ElementRef })
   containerPolicyQuestion: ElementRef;
   @ViewChild("headerPolicyQuestion", { read: ElementRef })
@@ -43,8 +46,18 @@ export class PolicyQuestionPage implements OnInit {
    * dispositivo
    */
   styleSvgs: {
+    windowH: number;
+    windowW: number;
     widthLogo: number;
     heightLogo: number;
+    /**
+     * ancho de cargando
+     */
+    wL: number;
+    /**
+     * alto de cargando
+     */
+    hL: number;
   };
 
   /**
@@ -60,9 +73,9 @@ export class PolicyQuestionPage implements OnInit {
    */
   index: number;
   /**
-   * valida si esta habilitado el botón de envió de data al siguiente screen
+   * Da paso a la siguiente pregunta si es false, deja pasar si no no.
    */
-  isDisableSendData: boolean;
+  isDisableNext: boolean;
   /**
    * data del usuario pasada atreves de los parámetros de navegación.
    */
@@ -98,15 +111,20 @@ export class PolicyQuestionPage implements OnInit {
     private appVersion: AppVersion,
     private db: DatabaseService,
     private udid: UniqueDeviceID,
-    private storage: Storage
+    private storage: Storage,
+    private auth: AuthService
   ) {
     this.questions = [];
     this.questionCurrent = undefined;
     this.index = 0;
-    this.isDisableSendData = true;
+    this.isDisableNext = true;
     this.styleSvgs = {
-      widthLogo: window.innerWidth / 2,
-      heightLogo: window.innerWidth / 2 / 2.5
+      widthLogo: (window.innerWidth / 4) * 3,
+      heightLogo: ((window.innerWidth / 4) * 3) / 2.5,
+      hL: window.innerWidth / 4,
+      wL: window.innerWidth / 4,
+      windowW: window.innerWidth,
+      windowH: window.innerHeight
     };
   }
 
@@ -316,6 +334,10 @@ export class PolicyQuestionPage implements OnInit {
     this.index = index;
     this.questionCurrent = this.questions[index];
     this.entranceQuestionAnimation();
+
+    document.querySelector('.scrollPolicyQuestion').scrollIntoView({
+      behavior: 'smooth'
+    });
   }
 
   /**
@@ -338,9 +360,7 @@ export class PolicyQuestionPage implements OnInit {
 
     this.questionCurrent.handleAccept(value);
     this.questions[this.index].handleAccept(value);
-    this.isDisableSendData = !this.questions.every(
-      (question) => question.data.accept !== undefined
-    );
+    this.isDisableNext = undefined === value;
   }
 
   async alert() {
@@ -417,5 +437,9 @@ export class PolicyQuestionPage implements OnInit {
       this.router.navigate(["user-data"]);
       console.log(URL_PATH, "processForm()", "this.userData", this.userData);
     }
+  }
+
+  logOut(){
+    this.auth.logout();
   }
 }
