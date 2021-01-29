@@ -38,7 +38,7 @@
       <ion-col size="12">
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="documentTypes.length === 0">
+    <ion-row *ngIf="documentTypes.length === 0" class="spinner-container" [ngStyle]="{ 'height.px': styleSvgs.windowH, 'width.px': styleSvgs.windowW }">
       <div class="spinner" [ngStyle]="{ 'height.px': styleSvgs.hL, 'width.px': styleSvgs.wL }"></div>
     </ion-row>
   </ion-grid>
