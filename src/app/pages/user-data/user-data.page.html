@@ -1,6 +1,6 @@
 <ion-content mode="ios">
   <ion-grid>
-    <ion-row>
+    <ion-row *ngIf="documentTypes.length > 0">
       <ion-col size="12">
         <button (click)="logOut()" class="logout">Salir</button>
         <div class="header" #headerLogin>
@@ -21,12 +21,15 @@
           <ion-item lines="none">
             <ion-select placeholder="Tipo de documento" formControlName="tipo_documento"
               interface="popover" [(ngModel)]="userData.tipo_documento">
-              <ion-select-option *ngFor="let type of tipo">{{type.codigo}}</ion-select-option>
+              <ion-select-option *ngFor="let type of documentTypes">{{type.data.code}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item lines="none">
             <ion-input formControlName="documento" placeholder="Número de documento:" [(ngModel)]="userData.documento" type="text">
             </ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-input formControlName="badgeId" placeholder="Número de carné de Ecopetrol:" [(ngModel)]="userData.badgeId" type="number"></ion-input>
           </ion-item>
           <ion-button expand="block" [disabled]="!datasForm.valid" class="boton-register" (click)="sendUser()">Registrar
           </ion-button>
@@ -34,6 +37,9 @@
       </ion-col>
       <ion-col size="12">
       </ion-col>
+    </ion-row>
+    <ion-row *ngIf="documentTypes.length === 0" class="spinner-container" [ngStyle]="{ 'height.px': styleSvgs.windowH, 'width.px': styleSvgs.windowW }">
+      <div class="spinner" [ngStyle]="{ 'height.px': styleSvgs.hL, 'width.px': styleSvgs.wL }"></div>
     </ion-row>
   </ion-grid>
 </ion-content>

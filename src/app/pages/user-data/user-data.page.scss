@@ -111,6 +111,32 @@ ion-button {
   font-size: 30px;
 }
 
+.spinner {
+  align-self: center;
+  border: 10px solid rgba(0, 0, 0, .1);
+  border-radius: 50%;
+  border-left-color: white;
+
+  animation: spin 1s linear infinite;
+}
+
+.spinner-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media (min-width: 330px) and (max-width: 350px) {
   .grey {
     color: #000000 !important;

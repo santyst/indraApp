@@ -149,7 +149,7 @@ export class PolicyQuestionPage implements OnInit {
           tipo_documento: this.user.tipo_documento,
           documento: this.user.documento,
           policyQuestions: "",
-          badgeId: "",
+          badgeId: this.user.badgeId,
           imageUrl: "",
           metaDatos: {},
           empresa: "Ecopetrol",
@@ -284,24 +284,24 @@ export class PolicyQuestionPage implements OnInit {
         .create("animation-title")
         .addElement(this.titleQuestion.nativeElement)
         .keyframes([
-          { offset: 0, opacity: "0.5" },
-          { offset: 1, opacity: "1" },
+          { offset: 0, opacity: '0.5' },
+          { offset: 1, opacity: '1' }
         ]);
 
       const descriptionUpAnimation = this.animationCtrl
         .create("animation-description")
         .addElement(this.descriptionQuestion.nativeElement)
         .keyframes([
-          { offset: 0, opacity: "0.5" },
-          { offset: 1, opacity: "1" },
+          { offset: 0, opacity: '0.5' },
+          { offset: 1, opacity: '1' }
         ]);
 
       const versionUpAnimation = this.animationCtrl
         .create("animation-description")
         .addElement(this.versionQuestion.nativeElement)
         .keyframes([
-          { offset: 0, opacity: "0.5" },
-          { offset: 1, opacity: "1" },
+          { offset: 0, opacity: '0.5' },
+          { offset: 1, opacity: '1' }
         ]);
 
       const animationUp = this.animationCtrl
