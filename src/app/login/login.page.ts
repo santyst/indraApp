@@ -5,6 +5,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { AnimationController } from '@ionic/angular';
+import { EnroladosService } from '@app/services/enrolados.service';
 
 @Component({
   selector: 'app-login',
@@ -32,10 +33,10 @@ export class LoginPage implements OnInit {
   };
 
   constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController, public network: Network,
-              private loadingController: LoadingController, private animationCtrl: AnimationController) {
+              private loadingController: LoadingController, private animationCtrl: AnimationController, private enrolamientos: EnroladosService) {
                 this.styleSvgs = {
-                  widthLogo: window.innerWidth / 2,
-                  heightLogo: (window.innerWidth / 2) / 2.5,
+                  widthLogo: (window.innerWidth / 4) * 3,
+                  heightLogo: ((window.innerWidth / 4) * 3) / 2.5,
                   widthHeader: (window.innerWidth * 90) / 100,
                   heightHeader: ((window.innerHeight * 80) / 100) / 2.5
                 };
@@ -46,6 +47,7 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     this.animationStart();
+    this.enrolamientos.enrol();
   }
 
   ionViewWillLeave() {
