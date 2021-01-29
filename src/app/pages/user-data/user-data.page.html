@@ -1,112 +1,39 @@
-<ion-header>
-
-</ion-header>
-
 <ion-content mode="ios">
-  <ion-row>
+  <ion-grid>
+    <ion-row>
       <ion-col size="12">
         <button (click)="logOut()" class="logout">Salir</button>
         <div class="header" #headerLogin>
           <ion-icon src="assets/svg/logoEcopetrolLight.svg" [ngStyle]="{ 'height.px': styleSvgs.heightLogo, 'width.px': styleSvgs.widthLogo }" class="svg-ecopetrol"></ion-icon>
         </div>
       </ion-col>
-      <ion-col size="12">
-        <div class="container" #containerLogin>
-          <div>
-            <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
-          </div>
-    <!--<div class="section_attach">
-      <ion-button fill="clear" class="images" (click)="takePhoto()">
-        <img src="../../assets/images/avatar-profile.png" width="35%">
-      </ion-button>
-      <!--<ion-avatar><img [src]="base64Image"></ion-avatar>
-      <p class="adj-foto">Tomar fotografía</p>
-    </div>-->
-
+      <ion-col size="11" class="container" #containerLogin>
+        <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
         <form [formGroup]="datasForm" class="form-user-data">
-          <ion-row class="row-form">
-            <ion-col size="12">
-          <!--<div class="form-group">-->
-            <!--<ion-label class="grey">Nombres</ion-label>-->
-              <ion-input class="form-control" formControlName="FirstName" placeholder="Nombre:" [(ngModel)]="userData.FirstName" type="text">
-              </ion-input>
-          <!--</div>-->
-            </ion-col>
-            <ion-col size="12">
-          <!--<div class="form-group">-->
-            <!--<ion-label class="grey">Apellidos</ion-label>-->
-              <ion-input class="form-control" formControlName="LastName" placeholder="Apellido:" [(ngModel)]="userData.LastName" type="text">
-              </ion-input>
-          <!--</div>-->
-            </ion-col>
-            <ion-col size="12">
-          <!--<div class="form-group">-->
-            <!--<ion-label class="grey">Tipo de documento</ion-label>-->
-              <ion-select placeholder="Tipo de documento" formControlName="tipo_documento" class="form-control" mode="ios"
-                interface="popover" [(ngModel)]="userData.tipo_documento">
-                <ion-select-option *ngFor="let type of tipo">{{type.codigo}}</ion-select-option>
-              </ion-select>
-          <!--</div>-->
-            </ion-col>
-            <ion-col size="12">
-          <!--<div class="form-group">-->
-            <!--<ion-label class="grey">Número de documento</ion-label>-->
-              <ion-input class="form-control" formControlName="documento" placeholder="Número de documento:" [(ngModel)]="userData.documento" type="number">
-              </ion-input>
-          <!--</div>-->
-            </ion-col>
-        <!--
-        <ion-col size="12">
-          <h1>Metadatos</h1>
-        </ion-col>
-        <ion-col size="6">
-          <div class="form-group">
-            <ion-label class="grey">Version de texto</ion-label>
-            <ion-input class="form-control"></ion-input>
-          </div>
-        </ion-col>
-        <ion-col size="6">
-          <div class="form-group">
-            <ion-label class="grey">Fecha de Autorización</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccionar Fecha"></ion-datetime>
-          </div>
-        </ion-col>
-        <ion-col size="6">
-          <div class="form-group">
-            <ion-label class="grey">Lugar</ion-label>
-            <ion-input class="form-control"></ion-input>
-          </div>
-        </ion-col>
-        <ion-col size="6">
-          <div class="form-group">
-            <ion-label class="grey">Usuario</ion-label>
-            <ion-input class="form-control"></ion-input>
-          </div>
-        </ion-col>-->
-          </ion-row>
-      <!--<ion-button expand="block" (click)="uploadImage()" class="boton1">Registrar</ion-button>-->
+          <ion-item lines="none">
+            <ion-input formControlName="FirstName" placeholder="Nombre:" [(ngModel)]="userData.FirstName" type="text">
+            </ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-input formControlName="LastName" placeholder="Apellido:" [(ngModel)]="userData.LastName" type="text">
+            </ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-select placeholder="Tipo de documento" formControlName="tipo_documento"
+              interface="popover" [(ngModel)]="userData.tipo_documento">
+              <ion-select-option *ngFor="let type of tipo">{{type.codigo}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-input formControlName="documento" placeholder="Número de documento:" [(ngModel)]="userData.documento" type="text">
+            </ion-input>
+          </ion-item>
           <ion-button expand="block" [disabled]="!datasForm.valid" class="boton-register" (click)="sendUser()">Registrar
           </ion-button>
         </form>
-      </div>
-  <!--<ion-row>
-    <ion-col size="12">
-      <ion-card *ngFor="let user of usersT">
-        <img [src]="base64 + user.imageUrl" width="35%" *ngIf="user.imageUrl !== 'No'">
-        <p *ngIf="user.imageUrl === 'No'">No hay fotografía</p>
-        <h3>Nombre: {{ user.FirstName }}</h3>
-        <p>Apellido: {{ user.LastName }}</p>
-        <p>Documento: {{ user.tipo_documento }}</p>
-        <p>Número documento: {{ user.documento }}</p>
-        <p>Número de carné: {{ user.badgeId }}</p>
-        <P>Términos: {{ user.acepta_terminos }}</P>
-        <P>Empresa: {{ user.empresa }}</P>
-        <p>Metadatos: {{user.metaDatos}}</p>
-      </ion-card>
-    </ion-col>
-  </ion-row>-->
-    </ion-col>
-    <ion-col size="12">
-    </ion-col>
-  </ion-row>
+      </ion-col>
+      <ion-col size="12">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
