@@ -37,7 +37,7 @@ const api = (params?: ApiParams) => {
   }
 
   // Usado en caso de tener tokens en la solicitudes
-  // apiCustom.defaults.headers.common['Authorization'] = ;
+  // apiCustom.defaults.headers.common['Authorization'] = `Bearer ${TOKEN}`;
 
   return apiCustom;
 };
