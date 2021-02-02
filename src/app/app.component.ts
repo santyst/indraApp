@@ -3,12 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { DatabaseService, User } from './services/database.service';
-
-import { Subject, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Network } from '@ionic-native/network/ngx';
-import { HttpClient } from '@angular/common/http';
 import { EnroladosService } from './services/enrolados.service';
 
 @Component({
@@ -30,6 +25,11 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.enrolamientos.enrol();
+      this.network.onConnect().subscribe(() => {
+        console.log(': Hay wifi en la app', );
+        this.enrolamientos.enrol();
+       });
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
