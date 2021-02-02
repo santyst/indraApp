@@ -36,24 +36,24 @@ export class EnroladosService {
                   this.userPost = {
                     firstName: us.FirstName,
                     lastName: us.LastName,
-                    tipoDocumento: us.tipo_documento,
+                    tipoDoc: us.tipo_documento,
                     documento: us.documento.toString(),
-                    aceptaTerminos: false,
+                    aceptaTerminos: JSON.parse(us.acepta_terminos),
                     badgeId: us.badgeId.toString(),
                     image: us.imageUrl,
                     metadatos: us.metaDatos,
                     empresa: us.empresa,
+                    regional: us.regional,
+                    instalacion: us.instalacion,
+                    origen: 2,
+                   /*  ciudadOrigen: 'Bogota',
+                    ciudad: 'Bogota',
                     ssno: `${us.tipo_documento}${us.documento.toString()}`,
                     idStatus: '',
-                    status: '',
-                    regional: 1,
-                    instalacion: 1,
-                    ciudad: 'Bogota',
-                    origen: 'App',
-                    ciudadOrigen: 'Bogota'
+                    status: '', */
                   };
                   console.log(this.userPost);
-                  this.http.post(`https://bio01.qaingenieros.com/api/enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(async res => {
+                   this.http.post(`https://bio01.qaingenieros.com/api/enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(async res => {
                     this.respuesta = res;
                     this.respuesta1 = this.respuesta.success;
                     console.log(this.respuesta);
@@ -64,7 +64,7 @@ export class EnroladosService {
                       this.db.deleteUser(us.userId).then(_ => {
                       });
                     }
-                  });
+                  }); 
                  // break;
                 }
                this.statusRequest = true;

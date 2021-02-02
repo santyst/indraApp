@@ -17,7 +17,9 @@ export interface User {
   badgeId: number;
   imageUrl: string;
   metaDatos: string;
-  empresa: string;
+  empresa: number;
+  regional: number;
+  instalacion: number;
 }
 
 @Injectable({
@@ -78,15 +80,17 @@ export class DatabaseService {
             imageUrl: data.rows.item(i).imageUrl,
             metaDatos: data.rows.item(i).metaDatos,
             empresa: data.rows.item(i).empresa,
+            regional: data.rows.item(i).regional,
+            instalacion: data.rows.item(i).instalacion,
           });
         }
       }
       this.users.next(users);
     });
   }
-  addUserData(userFirstName, userLastName, usertipo_documento, userdocumento, useracepta_terminos, userbadgeId, userimageUrl, usermetaDatos, userempresa) {
-    let data = [userFirstName, userLastName, usertipo_documento, userdocumento, useracepta_terminos, userbadgeId, userimageUrl, usermetaDatos, userempresa];
-    return this.database.executeSql('INSERT INTO Users (FirstName, LastName, tipo_documento, documento, acepta_terminos, badgeId, imageUrl, metaDatos, empresa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', data).then(data => {
+  addUserData(userFirstName, userLastName, usertipo_documento, userdocumento, useracepta_terminos, userbadgeId, userimageUrl, usermetaDatos, userempresa, userregional, userinstalacion) {
+    let data = [userFirstName, userLastName, usertipo_documento, userdocumento, useracepta_terminos, userbadgeId, userimageUrl, usermetaDatos, userempresa, userregional, userinstalacion];
+    return this.database.executeSql('INSERT INTO Users (FirstName, LastName, tipo_documento, documento, acepta_terminos, badgeId, imageUrl, metaDatos, empresa, regional, instalacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', data).then(data => {
       this.loadUsers();
     });
   }
@@ -103,12 +107,14 @@ export class DatabaseService {
         imageUrl: data.rows.item(0).imageUrl,
         metaDatos: data.rows.item(0).metaDatos,
         empresa: data.rows.item(0).empresa,
+        regional: data.rows.item(0).regional,
+        instalacion: data.rows.item(0).instalacion,
       };
     });
   }
   updateUser(user: User) {
-    let data = [user.FirstName, user.LastName, user.tipo_documento, user.documento, user.acepta_terminos, user.badgeId, user.imageUrl, user.metaDatos, user.empresa];
-    return this.database.executeSql(`UPDATE Users SET FirstName = ?, LastName = ?, tipo_documento = ?, documento = ?, acepta_terminos = ?, badgeId = ?, imageUrl = ?, metaDatos = ?, empresa = ? WHERE userId = ${user.userId}`, data).then(data => {
+    let data = [user.FirstName, user.LastName, user.tipo_documento, user.documento, user.acepta_terminos, user.badgeId, user.imageUrl, user.metaDatos, user.empresa, user.regional, user.instalacion];
+    return this.database.executeSql(`UPDATE Users SET FirstName = ?, LastName = ?, tipo_documento = ?, documento = ?, acepta_terminos = ?, badgeId = ?, imageUrl = ?, metaDatos = ?, empresa = ?, regional = ?, instalacion = ? WHERE userId = ${user.userId}`, data).then(data => {
       this.loadUsers();
     });
   }
