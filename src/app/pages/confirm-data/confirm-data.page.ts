@@ -52,7 +52,9 @@ export class ConfirmDataPage implements OnInit {
           imageUrl: this.user.imageUrl,
           imagen: this.user.imagensinbase64,
           metaDatos: {},
-          empresa: this.user.empresa
+          empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.intalacion
         };
         this.userPost = {
           firstName: this.user.FirstName,
@@ -64,14 +66,14 @@ export class ConfirmDataPage implements OnInit {
           image: this.user.imagensinbase64,
           metadatos: '',
           empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion,
+          origen: 2,
+          /* ciudadOrigen: 'Bogota',
+          ciudad: 'Bogota',
           ssno: `${this.user.tipo_documento}${this.user.documento.toString()}`,
           idStatus: '',
-          status: '',
-          regional: 1,
-          instalacion: 1,
-          ciudad: 'Bogota',
-          origen: 'App',
-          ciudadOrigen: 'Bogota'
+          status: '', */
         };
         this.documentType.push(this.userData.tipo_documento);
       }
@@ -97,8 +99,8 @@ export class ConfirmDataPage implements OnInit {
     /*this.http.post('https://bio01.qaingenieros.com/api/enrol/create_enrol', this.userPost).subscribe(res => {
       console.log(res);
     })*/
-    this.db.addUserData(this.userData.FirstName, this.userData.LastName, this.userData.tipo_documento, this.userData.documento, this.userData.acepta_terminos,
-      this.userData.badgeId, this.userData.imagen, this.userData.metaDatos, this.userData.empresa).then(_ => {
+    this.db.addUserData(this.userData.FirstName, this.userData.LastName, this.userData.tipo_documento, this.userData.documento, JSON.stringify(this.userData.acepta_terminos),
+      this.userData.badgeId, this.userData.imagen, this.userData.metaDatos, this.userData.empresa, this.userData.regional, this.userData.instalacion).then(_ => {
         
         this.userData = {
           FirstName: '',
@@ -121,14 +123,14 @@ export class ConfirmDataPage implements OnInit {
           image: '',
           metadatos: '',
           empresa: '',
-          ssno: '',
-          idStatus: '',
-          status: '',
           regional: '',
           instalacion: '',
-          ciudad: '',
           origen: '',
-          ciudadOrigen: ''
+          /* ciudadOrigen: '',
+          ssno: '',
+          ciudad: '',
+          idStatus: '',
+          status: '', */
         };
       });
     const alert = await this.alertCtrl.create({
