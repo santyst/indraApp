@@ -10,10 +10,10 @@
         <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
         <form #form="ngForm" novalidate class="form-login">
           <ion-item lines="none">
-            <ion-input type="email" name="email" [(ngModel)]="credenciales.email" placeholder="Usuario"></ion-input>
+            <ion-input type="email" name="email" [(ngModel)]="credenciales.client_id" placeholder="Usuario"></ion-input>
           </ion-item>
           <ion-item lines="none">
-            <ion-input type="password" name="password" [(ngModel)]="credenciales.password" placeholder="Contraseña"></ion-input>
+            <ion-input type="password" name="password" [(ngModel)]="credenciales.client_secret" placeholder="Contraseña"></ion-input>
           </ion-item>
           <ion-button class="btn-continue" expand="block" (click)="login()">INGRESAR</ion-button>
         </form>

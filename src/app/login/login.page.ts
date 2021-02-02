@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { AnimationController } from '@ionic/angular';
 import { EnroladosService } from '@app/services/enrolados.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginPage implements OnInit {
    * los dimensiones del logo ecopetrol, y header del formulario, se adapta al
    * size de la pantalla del dispositivo.
    */
-  styleSvgs: {
+   expiration: any;
+   styleSvgs: {
     widthLogo: number;
     heightLogo: number;
     widthHeader: number;
@@ -28,8 +30,8 @@ export class LoginPage implements OnInit {
   };
 
   credenciales = {
-    email: '',
-    password: ''
+    client_id: '',
+    client_secret: ''
   };
 
   constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController, public network: Network,
@@ -47,7 +49,6 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     this.animationStart();
-    this.enrolamientos.enrol();
   }
 
   ionViewWillLeave() {
@@ -114,22 +115,33 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    const loading = await this.loadingController.create({
-      message: 'Por favor espere...',
-      mode: 'ios',
-      spinner: 'dots'
-    });
-
-    this.auth.login(this.credenciales)
-    .pipe(
-      finalize(() => {
-        loading.dismiss();
-      })
-    )
-    .
+    this.auth.login(this.credenciales).
     subscribe(async res => {
       if (res) {
         this.router.navigate(['user-data']);
+        this.credenciales = {
+          client_secret: '',
+          client_id: ''
+        };
+        let expirationMin = 60/60;
+        let expireDate = moment().add(expirationMin, 'minute');
+        this.expiration = setInterval(async() => {
+          let now = moment();
+          let timeleft = 0;
+          timeleft = expireDate.diff(now);
+          console.log('timeleft: ', timeleft);
+          if(timeleft < 0){
+            this.auth.logout();
+            const alert = await this.alertCtrl.create({
+              header: 'Sesión expirada',
+              message: 'Su sesión ha expirado, por favor ingrese nuevamente',
+              buttons: ['OK'],
+              mode: 'ios'
+            });
+            await alert.present();
+            clearInterval(this.expiration);
+          }
+        }, 60000);
       } else {
         const alert = await this.alertCtrl.create({
           header: 'Login Failed',
