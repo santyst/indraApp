@@ -60,10 +60,10 @@
     <ion-icon name="newspaper-outline"></ion-icon>
     Verificación de datos
   </h2>
-  <ion-item>
+  <ion-item lines="none" class="phone-user" size="11">
     <img [src]="userData.imageUrl" class="foto_user"> 
   </ion-item>
-  <ion-row class="row-form">
+  <ion-row class="row-form" size="11">
     <ion-col size="12">
       <div class="form-group">
         <ion-label>Nombres</ion-label>
@@ -78,7 +78,7 @@
     </ion-col>
     <ion-col size="5">
       <div class="form-group">
-        <ion-label>Tipo de documento</ion-label>
+        <ion-label>Tipo de Doc.</ion-label>
         <ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipo_documento">
           <ion-select-option *ngFor="let type of documentType" [value]="type">{{type}}</ion-select-option>
         </ion-select>
@@ -100,11 +100,9 @@
     <ion-col size="12">
       <h3>¿Los datos son correctos?</h3>
     </ion-col>
-    <ion-col size="6">
-      <ion-button expand="block" class="boton1" (click)="sendUser()">Si</ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button expand="block" class="boton1" (click)="dontSendUser()">No</ion-button>
-    </ion-col>
   </ion-row>
+  <div class="option-button">
+    <ion-button class="boton1" (click)="sendUser()">Si</ion-button>
+    <ion-button class="boton1" (click)="dontSendUser()">No</ion-button>
+  </div>
 </app-container>
