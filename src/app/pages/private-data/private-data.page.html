@@ -1,32 +1,30 @@
-<ion-header>
- 
-</ion-header>
 
-<ion-content>
-  <div class="container">
-    <div class="div1">
-      <h2><ion-icon name="newspaper-outline"></ion-icon>
-        Captura de datos
-        <ion-buttons>
-          <ion-button class="logout" mode="ios" (click)="logOut()">
-            Salir
-          </ion-button>
-        </ion-buttons>
-      </h2>
-    </div>
-    <div class="section_attach" *ngIf="base64_2 === ''">
-      <ion-button fill="clear" class="images" (click)="takePhoto()">
-        <img src="../../assets/images/avatar-profile.png" width="35%">
+<app-container [styleContent]="stylesContainer" [conditionalContent]="this.userData">
+  <div class="content">
+    <h2>Captura de datos</h2>
+    <ion-item class="options-container" size="11" lines="none" *ngIf="base64_2 === ''">
+      <ion-button class="option-button" expand="block" fill="solid" (click)="takePhoto()">
+        TOMAR FOTO
       </ion-button>
-      <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
-      <p class="adj-foto">Tomar fotografía</p>
-    </div>
-    <div class="section_attach1" *ngIf="base64_2 !== ''">
-        <img [src]="base64_2" class="foto_user"> 
-      <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
-    </div>
-    <ion-button expand="block" [disabled]="base64_2 === ''" class="boton1" (click)="addUserDetails()">Registrar</ion-button>
-  </div>
-  
+    </ion-item>
+    <ion-item-group lines="none" *ngIf="base64_2 !== ''">
+      <ion-item lines="none" class="item-photo-user">
+        <button (click)="addUserDetails()" class="button-confirm">
+          <ion-icon name="newspaper-sharp"></ion-icon>
+        </button>
+        <img [src]="base64_2" class="photo_user">
+      </ion-item>
+      <ion-item lines="none">
+        <ion-button class="option-button" fill="solid" [disabled]="base64_2 === ''" (click)="sendUser()">
+          SUBIR FOTO
+        </ion-button>
+      </ion-item>
 
-</ion-content>
+      <ion-item lines="none">
+        <ion-button class="option-button" fill="solid" (click)="takePhoto()">
+          REPETIR FOTO
+        </ion-button>
+      </ion-item>
+    </ion-item-group>
+  </div>
+</app-container>

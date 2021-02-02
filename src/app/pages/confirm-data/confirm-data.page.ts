@@ -78,7 +78,6 @@ export class ConfirmDataPage implements OnInit {
         this.documentType.push(this.userData.tipo_documento);
       }
     });
-
   }
 
   async sendUser() {
