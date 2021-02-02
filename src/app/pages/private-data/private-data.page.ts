@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { HttpClient } from '@angular/common/http';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
-import { DatabaseService, User } from './../../services/database.service';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -25,9 +22,9 @@ export class PrivateDataPage implements OnInit {
   motivos: any;
   apiKey = 'cfdc7593-7124-4e9e-b078-f44c18cacef4';
 
-  constructor(private toast: ToastController,private camera: Camera, private http: HttpClient, private fileTransfer: FileTransfer,
-    private db: DatabaseService, private route: ActivatedRoute, private router: Router, private alertCtrl: AlertController,
-    private formBuilder: FormBuilder, private loadingController: LoadingController, private auth: AuthService) { }
+  constructor(private camera: Camera, private http: HttpClient, private fileTransfer: FileTransfer,
+    private route: ActivatedRoute, private router: Router, private alertCtrl: AlertController,
+    private loadingController: LoadingController, private auth: AuthService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -44,15 +41,13 @@ export class PrivateDataPage implements OnInit {
           //acepta_terminos: this.user.acepta_terminos,
           badgeId: this.user.badgeId,
           imageUrl: '', 
-          empresa: 'Ecopetrol'
+          empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion
         };
       }
     });
   }
-  
-  datasForm = this.formBuilder.group({
-    badgeId: ['', [Validators.required]]
-  });
   logOut(){
     this.auth.logout();
   }

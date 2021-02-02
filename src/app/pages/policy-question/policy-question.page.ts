@@ -92,7 +92,9 @@ export class PolicyQuestionPage implements OnInit {
     badgeId: string;
     imageUrl: string;
     metaDatos: any;
-    empresa: string;
+    empresa: number;
+    instalacion: number;
+    regional: number;
   };
   /**
    * version de la app
@@ -152,7 +154,9 @@ export class PolicyQuestionPage implements OnInit {
           badgeId: this.user.badgeId,
           imageUrl: "",
           metaDatos: {},
-          empresa: "Ecopetrol",
+          empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion
         };
         // console.log(URL_PATH, 'ngOnInit()', 'this.userData', this.userData);
       }
@@ -429,7 +433,9 @@ export class PolicyQuestionPage implements OnInit {
           this.userData.badgeId,
           this.userData.imageUrl,
           this.userData.metaDatos,
-          this.userData.empresa
+          this.userData.empresa,
+          this.userData.regional,
+          this.userData.instalacion,
         )
         .then((_) => {});
 

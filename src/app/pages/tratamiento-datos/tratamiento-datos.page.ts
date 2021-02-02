@@ -55,7 +55,9 @@ protected app_version: string;
           badgeId: '',
           imageUrl: '',
           metaDatos: {},
-          empresa: 'Ecopetrol'
+          empresa: 'Ecopetrol',
+          regional: '',
+          instalacion: ''
         };
       }
     });
@@ -116,7 +118,7 @@ async alert(){
 
       this.router.navigate(['user-data']);
         this.db.addUserData(this.userData.FirstName, this.userData.LastName, this.userData.tipo_documento, this.userData.documento, this.userData.acepta_terminos,
-          this.userData.badgeId, this.userData.imageUrl, this.userData.metaDatos, this.userData.empresa).then(_ => {
+          this.userData.badgeId, this.userData.imageUrl, this.userData.metaDatos, this.userData.empresa, this.userData.regional, this.userData.instalacion).then(_ => {
         });
         this.alert();
         this.router.navigate(['user-data']);

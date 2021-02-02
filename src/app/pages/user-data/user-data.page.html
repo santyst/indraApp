@@ -25,11 +25,32 @@
             </ion-select>
           </ion-item>
           <ion-item lines="none">
-            <ion-input formControlName="documento" placeholder="Número de documento:" [(ngModel)]="userData.documento" type="text">
+            <ion-input formControlName="documento" placeholder="Número de documento:" [(ngModel)]="userData.documento" type="number">
             </ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-input formControlName="badgeId" placeholder="Número de carné de Ecopetrol:" [(ngModel)]="userData.badgeId" type="number"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-select placeholder="Empresa" formControlName="empresa"
+              interface="popover" [(ngModel)]="userData.empresa">
+              <ion-select-option *ngFor="let empresa of empresasArr" [value]="empresa.codigo">{{empresa.descripcion}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-select placeholder="Regional" formControlName="regional"
+              interface="popover" [(ngModel)]="userData.regional" (ionChange)="EventRegional($event)">
+              <ion-select-option *ngFor="let region of regionalesArr" [value]="region.codigo">{{region.descripcion}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item lines="none" *ngIf="instalacionShow === true">
+            <ion-select placeholder="Instalación" formControlName="instalacion"
+              interface="popover" [(ngModel)]="userData.instalacion">
+              <ion-select-option *ngFor="let instalacion of instalacionesArr" [value]="instalacion.codigo">{{instalacion.descripcion}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item lines="none" *ngIf="instalacionShow === false">
+            <p>Seleccione una regional</p>
           </ion-item>
           <ion-button expand="block" [disabled]="!datasForm.valid" class="boton-register" (click)="sendUser()">Registrar
           </ion-button>
