@@ -1,62 +1,110 @@
-<ion-header >
+<!--<ion-content>-->
+  <!--<div class="container">-->
+    <!--<div class="div1">-->
+      <!--<h2><ion-icon name="newspaper-outline"></ion-icon>-->
+        <!--Verificación de datos</h2>-->
+    <!--</div>-->
   
-</ion-header>
-
-<ion-content>
-  <div class="container">
-    <div class="div1">
-      <h2><ion-icon name="newspaper-outline"></ion-icon>
-        Verificación de datos</h2>
-    </div>
-  
-    <div class="section_attach">
-      <img [src]="userData.imageUrl" class="foto_user"> 
-    <!--<ion-avatar><img [src]="base64Image"></ion-avatar>-->
-  </div>
+    <!--<div class="section_attach">-->
+      <!--<img [src]="userData.imageUrl" class="foto_user"> -->
+    <!--[><ion-avatar><img [src]="base64Image"></ion-avatar><]-->
+  <!--</div>-->
     
-      <ion-row class="row-form">
-        <ion-col size="12">
-          <div class="form-group">
-            <ion-label class="grey">Nombres</ion-label>
-            <ion-input class="form-control" [(ngModel)]="userData.FirstName" type="text"></ion-input>
-          </div>
-        </ion-col>
-        <ion-col size="12">
-          <div class="form-group">
-            <ion-label class="grey">Apellidos</ion-label>
-            <ion-input class="form-control" [(ngModel)]="userData.LastName" type="text"></ion-input>
-          </div>
-        </ion-col>
-        <ion-col size="5">
-          <div class="form-group">
-            <ion-label class="grey">Tipo de documento</ion-label>
-            <ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipo_documento">
-              <ion-select-option *ngFor="let type of documentType" [value]="type">{{type}}</ion-select-option>
-            </ion-select>
-          </div>
-        </ion-col>
-        <ion-col size="7">
-          <div class="form-group">
-            <ion-label class="grey">Número de documento</ion-label>
-            <ion-input class="form-control" [(ngModel)]="userData.documento" type="number"></ion-input>
-          </div>
-        </ion-col>
-        <ion-col size="12">
-          <div class="form-group">
-            <ion-label class="grey">Número de carné de Ecopetrol</ion-label>
-            <ion-input class="form-control" [(ngModel)]="userData.badgeId" type="number"></ion-input>
-          </div>
-        </ion-col>
-        <ion-col size="12">
-          <h3>¿Los datos son correctos?</h3>
-        </ion-col>
-        <ion-col size="6">
-          <ion-button expand="block" class="boton1" (click)="sendUser()">Si</ion-button>
-        </ion-col>
-        <ion-col size="6">
-          <ion-button expand="block" class="boton1" (click)="dontSendUser()">No</ion-button>
-        </ion-col>
-      </ion-row>
-      
-  </div>
-</ion-content>
+      <!--<ion-row class="row-form">-->
+        <!--<ion-col size="12">-->
+          <!--<div class="form-group">-->
+            <!--<ion-label class="grey">Nombres</ion-label>-->
+            <!--<ion-input class="form-control" [(ngModel)]="userData.FirstName" type="text"></ion-input>-->
+          <!--</div>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="12">-->
+          <!--<div class="form-group">-->
+            <!--<ion-label class="grey">Apellidos</ion-label>-->
+            <!--<ion-input class="form-control" [(ngModel)]="userData.LastName" type="text"></ion-input>-->
+          <!--</div>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="5">-->
+          <!--<div class="form-group">-->
+            <!--<ion-label class="grey">Tipo de documento</ion-label>-->
+            <!--<ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipo_documento">-->
+              <!--<ion-select-option *ngFor="let type of documentType" [value]="type">{{type}}</ion-select-option>-->
+            <!--</ion-select>-->
+          <!--</div>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="7">-->
+          <!--<div class="form-group">-->
+            <!--<ion-label class="grey">Número de documento</ion-label>-->
+            <!--<ion-input class="form-control" [(ngModel)]="userData.documento" type="number"></ion-input>-->
+          <!--</div>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="12">-->
+          <!--<div class="form-group">-->
+            <!--<ion-label class="grey">Número de carné de Ecopetrol</ion-label>-->
+            <!--<ion-input class="form-control" [(ngModel)]="userData.badgeId" type="number"></ion-input>-->
+          <!--</div>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="12">-->
+          <!--<h3>¿Los datos son correctos?</h3>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="6">-->
+          <!--<ion-button expand="block" class="boton1" (click)="sendUser()">Si</ion-button>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="6">-->
+          <!--<ion-button expand="block" class="boton1" (click)="dontSendUser()">No</ion-button>-->
+        <!--</ion-col>-->
+      <!--</ion-row>-->
+  <!--</div>-->
+<!--</ion-content>-->
+<app-container [styleContent]="stylesContainer" [conditionalContent]="this.userData">
+  <h2>
+    <ion-icon name="newspaper-outline"></ion-icon>
+    Verificación de datos
+  </h2>
+  <ion-item>
+    <img [src]="userData.imageUrl" class="foto_user"> 
+  </ion-item>
+  <ion-row class="row-form">
+    <ion-col size="12">
+      <div class="form-group">
+        <ion-label>Nombres</ion-label>
+        <ion-input class="form-control" [(ngModel)]="userData.FirstName" type="text"></ion-input>
+      </div>
+    </ion-col>
+    <ion-col size="12">
+      <div class="form-group">
+        <ion-label>Apellidos</ion-label>
+        <ion-input class="form-control" [(ngModel)]="userData.LastName" type="text"></ion-input>
+      </div>
+    </ion-col>
+    <ion-col size="5">
+      <div class="form-group">
+        <ion-label>Tipo de documento</ion-label>
+        <ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipo_documento">
+          <ion-select-option *ngFor="let type of documentType" [value]="type">{{type}}</ion-select-option>
+        </ion-select>
+      </div>
+    </ion-col>
+    <ion-col size="7">
+      <div class="form-group">
+        <ion-label>Número de documento</ion-label>
+        <ion-input class="form-control" [(ngModel)]="userData.documento" type="number"></ion-input>
+      </div>
+    </ion-col>
+    <ion-col size="12">
+      <div class="form-group">
+        <ion-label>Número de carné de Ecopetrol</ion-label>
+        <ion-input class="form-control" [(ngModel)]="userData.badgeId" type="number"></ion-input>
+      </div>
+    </ion-col>
+
+    <ion-col size="12">
+      <h3>¿Los datos son correctos?</h3>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button expand="block" class="boton1" (click)="sendUser()">Si</ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button expand="block" class="boton1" (click)="dontSendUser()">No</ion-button>
+    </ion-col>
+  </ion-row>
+</app-container>
