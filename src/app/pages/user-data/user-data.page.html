@@ -43,14 +43,11 @@
               <ion-select-option *ngFor="let region of regionalesArr" [value]="region.codigo">{{region.descripcion}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item lines="none" *ngIf="instalacionShow === true">
+          <ion-item lines="none">
             <ion-select placeholder="Instalación" formControlName="instalacion"
-              interface="popover" [(ngModel)]="userData.instalacion">
+              interface="popover" [(ngModel)]="userData.instalacion" [disabled]="instalacionShow === false">
               <ion-select-option *ngFor="let instalacion of instalacionesArr" [value]="instalacion.codigo">{{instalacion.descripcion}}</ion-select-option>
             </ion-select>
-          </ion-item>
-          <ion-item lines="none" *ngIf="instalacionShow === false">
-            <p>Seleccione una regional</p>
           </ion-item>
           <ion-button expand="block" [disabled]="!datasForm.valid" class="boton-register" (click)="sendUser()">Registrar
           </ion-button>

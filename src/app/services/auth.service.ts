@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { take, map, switchMap } from 'rxjs/operators';
@@ -23,7 +23,8 @@ export class AuthService {
   userInfo: any;
   AuthUrl = `https://bio01.qaingenieros.com/api/sec/auth`;
 
-  constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router) { 
+  constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router,
+              private alertCtrl: AlertController) { 
     this.loadStoredToken();
   }
 
@@ -56,14 +57,20 @@ export class AuthService {
         expiresin: res.expiresin
       }
       this.userInfo = this.respuesta;
-    }, res => {}, () => {
+    }, res => {}, async() => {
       if (this.respuestaF === false || credenciales.client_id === '' || credenciales.client_secret === '') {
         console.log(': ', this.respuestaF);
+        const alert = await this.alertCtrl.create({
+          header: 'Login Failed',
+          message: 'Credenciales invalidas',
+          buttons: ['OK'],
+          mode: 'ios'
+        });
+        await alert.present();
         return of(null);
       }else{
         this.respuestaF = true; 
-        console.log('this.respuesta: ', this.respuesta);
-        return true;
+        console.log('this.respuesta: ', this.respuesta, this.respuestaF);
       }
     });
     
@@ -76,7 +83,7 @@ export class AuthService {
         let decoded = helper.decodeToken(token);
         /* console.log('decoded: ', decoded); */
         this.userData.next(decoded);
-        if(this.respuestaF === false){
+        if(this.respuestaF === false  || credenciales.client_id === '' || credenciales.client_secret === ''){
           return of (null);
         }
         let storageObs = from(this.storage.set(TOKEN_KEY, token));

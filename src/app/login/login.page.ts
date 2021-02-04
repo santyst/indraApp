@@ -123,7 +123,7 @@ export class LoginPage implements OnInit {
           client_secret: '',
           client_id: ''
         };
-        let expirationMin = 60/60;
+        let expirationMin = 3000/60;
         let expireDate = moment().add(expirationMin, 'minute');
         this.expiration = setInterval(async() => {
           let now = moment();
