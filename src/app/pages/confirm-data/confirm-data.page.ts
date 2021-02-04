@@ -54,7 +54,7 @@ export class ConfirmDataPage implements OnInit {
           metaDatos: {},
           empresa: this.user.empresa,
           regional: this.user.regional,
-          instalacion: this.user.intalacion
+          instalacion: this.user.instalacion
         };
         this.userPost = {
           firstName: this.user.FirstName,

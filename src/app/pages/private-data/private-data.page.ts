@@ -84,6 +84,25 @@ export class PrivateDataPage implements OnInit {
           regional: this.user.regional,
           instalacion: this.user.instalacion
         };
+        this.userPost = {
+          firstName: this.user.FirstName,
+          lastName: this.user.LastName,
+          tipoDocumento: this.user.tipo_documento,
+          documento:  this.user.documento.toString(),
+          aceptaTerminos: this.user.policyQuestions,
+          badgeId: this.user.badgeId.toString(),
+          image: '',
+          metadatos: '',
+          empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion,
+          origen: 2,
+          /* ciudadOrigen: 'Bogota',
+          ciudad: 'Bogota',
+          ssno: `${this.user.tipo_documento}${this.user.documento.toString()}`,
+          idStatus: '',
+          status: '', */
+        };
       }
     });
   }
@@ -244,7 +263,8 @@ export class PrivateDataPage implements OnInit {
       udid: this.uniqueDeviceId
     };
     this.userData.metaDatos = JSON.stringify(metaDatos);
-    this.userPost.Metadatos = JSON.stringify(metaDatos);
+    this.userPost.metadatos = JSON.stringify(metaDatos);
+    this.userPost.image = this.base64_3;
     console.log(this.userPost);
     /*this.http.post('https://bio01.qaingenieros.com/api/enrol/create_enrol', this.userPost).subscribe(res => {
       console.log(res);
@@ -255,9 +275,9 @@ export class PrivateDataPage implements OnInit {
         this.userData.LastName,
         this.userData.tipo_documento,
         this.userData.documento,
-        this.userData.acepta_terminos,
+        JSON.stringify(this.userData.acepta_terminos),
         this.userData.badgeId,
-        this.userData.imagen,
+        this.base64_3,
         this.userData.metaDatos,
         this.userData.empresa,
         this.userData.regional,
@@ -285,14 +305,9 @@ export class PrivateDataPage implements OnInit {
           image: "",
           metadatos: "",
           empresa: "",
-          ssno: "",
-          idStatus: "",
-          status: "",
           regional: "",
           instalacion: "",
-          ciudad: "",
-          origen: "",
-          ciudadOrigen: "",
+          origen: ""
         };
       });
     const alert = await this.alertCtrl.create({
