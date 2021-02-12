@@ -70,7 +70,7 @@ version: any;
           tipo_documento: this.user.tipo_documento,
           documento: this.user.documento,
           acepta_bioseguridad: '',
-          badgeId: '',
+          ssno: '',
           imageUrl: '',
           metaDatos: {},
           empresa: 'Ecopetrol'

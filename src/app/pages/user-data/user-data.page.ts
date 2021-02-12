@@ -73,7 +73,7 @@ export class UserDataPage implements OnInit {
     LastName: ["", [Validators.required]],
     tipo_documento: ["", [Validators.required]],
     documento: ["", [Validators.required]],
-    badgeId: ["", [Validators.required]],
+    ssno: ["", [Validators.required]],
     regional: ["", [Validators.required]],
     instalacion: ["", [Validators.required]],
     empresa: ["", [Validators.required]],
@@ -105,14 +105,16 @@ export class UserDataPage implements OnInit {
   }
 
   userData = {
-    FirstName: '',
-    LastName: '',
-    tipo_documento: '',
+    firstName: '',
+    lastName: '',
+    tipoDoc: '',
     documento: '',
-    badgeId: '',
+    ssno: '',
     empresa: '',
     regional: '',
-    instalacion: ''
+    instalacion: '',
+    origen: 2,
+    step_enrol: 1
   };
   // Start lifecycle events
   ngOnInit() {
@@ -159,7 +161,7 @@ export class UserDataPage implements OnInit {
     console.log('Seleccionaste la regional', event.target.value);
     if (this.network.type !== 'none') {
       this.http.get(`${this.baseUrl}${this.instalaciones}${this.apiKey}&regional=${event.target.value}`).subscribe((instalacion: any) => {
-        this.instalacionesArr = instalacion.data;
+        this.instalacionesArr = instalacion.data; 
         console.log('this.instalacionesArr: ', this.instalacionesArr);
       });
     } else {
@@ -268,14 +270,16 @@ export class UserDataPage implements OnInit {
     };
     this.router.navigate(["policy-question"], navigationExtras);
     this.userData = {
-      FirstName: '',
-      LastName: '',
-      tipo_documento: '',
+      firstName: '',
+      lastName: '',
+      tipoDoc: '',
       documento: '',
-      badgeId: '',
+      ssno: '',
       empresa: '',
       instalacion: '',
       regional: '',
+      origen: 2,
+      step_enrol: 1
     };
   }
 

@@ -121,9 +121,7 @@ export class DatabaseService {
   updateUser(user: User) {
     let data = [user.firstName, user.lastName, user.tipoDoc, user.documento, user.aceptaTerminos, user.ssno, user.imageUrl, user.metadatos, user.empresa, user.regional, user.instalacion, user.origen, user.step_enrol];
     return this.database.executeSql(`UPDATE Users SET firstName = ?, lastName = ?, tipoDoc = ?, documento = ?, aceptaTerminos = ?, ssno = ?, imageUrl = ?, metadatos = ?, empresa = ?, regional = ?, instalacion = ?, origen = ?, step_enrol = ? WHERE userId = ${user.userId}`, data).then(data => {
-      setTimeout(function() {
-        this.loadUsers();
-      }, 1000);
+      this.loadUsers();
     });
   }
   deleteUser(userId) {

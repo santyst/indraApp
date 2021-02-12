@@ -52,7 +52,7 @@ protected app_version: string;
           acepta_terminos: '',
           acepta_herramientas: this.user.acepta_herramientas,
           acepta_bioseguridad: this.user.acepta_bioseguridad,
-          badgeId: '',
+          ssno: '',
           imageUrl: '',
           metaDatos: {},
           empresa: 'Ecopetrol',
@@ -118,7 +118,7 @@ async alert(){
 
       this.router.navigate(['user-data']);
         this.db.addUserData(this.userData.FirstName, this.userData.LastName, this.userData.tipo_documento, this.userData.documento, this.userData.acepta_terminos,
-          this.userData.badgeId, this.userData.imageUrl, this.userData.metaDatos, this.userData.empresa, this.userData.regional, this.userData.instalacion).then(_ => {
+          this.userData.ssno, this.userData.imageUrl, this.userData.metaDatos, this.userData.empresa, this.userData.regional, this.userData.instalacion, this.userData.origen, this.userData.step_enrol).then(_ => {
         });
         this.alert();
         this.router.navigate(['user-data']);
