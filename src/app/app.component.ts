@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { EnroladosService } from './services/enrolados.service';
+import { DatabaseService } from './services/database.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public network: Network,
-    private enrolamientos: EnroladosService
+    private enrolamientos: EnroladosService,
+    private db: DatabaseService
   ) {
     this.initializeApp();
   }

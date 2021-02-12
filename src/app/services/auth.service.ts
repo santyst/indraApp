@@ -21,7 +21,7 @@ export class AuthService {
   respuesta: any;
   respuestaF = false;
   userInfo: any;
-  AuthUrl = `https://bio01.qaingenieros.com/api/sec/auth`;
+  AuthUrl = `https://bio01.qaingenieros.com/api/sec/autenticar_usuario`;
 
   constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router,
               private alertCtrl: AlertController) { 
@@ -83,9 +83,9 @@ export class AuthService {
         let decoded = helper.decodeToken(token);
         /* console.log('decoded: ', decoded); */
         this.userData.next(decoded);
-        if(this.respuestaF === false  || credenciales.client_id === '' || credenciales.client_secret === ''){
+        /* if(this.respuestaF === false  || credenciales.client_id === '' || credenciales.client_secret === ''){
           return of (null);
-        }
+        } */
         let storageObs = from(this.storage.set(TOKEN_KEY, token));
         return storageObs;
       })

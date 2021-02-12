@@ -10,7 +10,7 @@ export interface TypeDocumentModel {
  * Typo de cumento como llega del servidor
  */
 export interface TypeDocumentRServer {
-  codigo: string;
+  id: string;
   descripcion: string;
 }
 
@@ -33,7 +33,7 @@ class TypeDocument {
   static formatData(data: TypeDocumentRServer): TypeDocumentModel | undefined {
     try {
       const formattedData: TypeDocumentModel = {
-        code: data.codigo,
+        code: data.id,
         description: data.descripcion
       };
       return formattedData;
