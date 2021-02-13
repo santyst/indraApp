@@ -30,14 +30,14 @@ export class HerramientasPage implements OnInit {
         documento: this.user.documento,
         acepta_bioseguridad: this.user.acepta_bioseguridad,
         acepta_herramientas: '',
-        badgeId: '',
+        ssno: '',
         imageUrl: '',
         metaDatos: {},
         empresa: 'Ecopetrol'
       };
     }
   });
-  this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas`).subscribe((res: any) => {
+  this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas?apiKey=cfdc7593-7124-4e9e-b078-f44c18cacef4`).subscribe((res: any) => {
       this.txt = res.data[0];
       console.log(this.txt);
       this.texto = this.txt.texto;

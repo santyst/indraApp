@@ -1,8 +1,12 @@
+// Libs
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+
+// Components
+import { ContainerComponent } from '@components/container/container.component';
 
 import { PrivateDataPageRoutingModule } from './private-data-routing.module';
 
@@ -16,6 +20,6 @@ import { PrivateDataPage } from './private-data.page';
     ReactiveFormsModule,
     PrivateDataPageRoutingModule
   ],
-  declarations: [PrivateDataPage]
+  declarations: [PrivateDataPage, ContainerComponent]
 })
 export class PrivateDataPageModule {}

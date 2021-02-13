@@ -1,0 +1,82 @@
+ion-content {
+  --ion-background-color:#383672;
+  --ion-background-color-rgb: 38, 35, 74;
+  width: 100%;
+}
+
+.containerHeader {
+  width: 100%;
+  background: #454555;
+}
+
+// header
+.header {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+// logout
+.logout {
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color:  #383672;
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 1;
+}
+
+// contenedor del la pregunta de la política
+.container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  background: #4C529A;
+  --ion-background-color: #4C529A;
+  border-radius: 20px;
+  box-shadow: 3px 3px 20px 0.5px rgba(0, 0, 0, 0.5);
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  overflow: hidden;
+  transition: height 400ms ease;
+  -webkit-transition: height 400ms ease;
+  -moz-transition: height 400ms ease;
+  -o-transition: height 400ms ease;
+}
+
+.spinner {
+  align-self: center;
+  border: 10px solid rgba(0, 0, 0, .1);
+  border-radius: 50%;
+  border-left-color: white;
+
+  animation: spin 1s linear infinite;
+}
+
+.spinner-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 600px) and (min-height: 850px) {
+  .logout {
+    font-size: 30px;
+  }
+}

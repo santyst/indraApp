@@ -52,14 +52,16 @@ protected app_version: string;
           acepta_terminos: '',
           acepta_herramientas: this.user.acepta_herramientas,
           acepta_bioseguridad: this.user.acepta_bioseguridad,
-          badgeId: '',
+          ssno: '',
           imageUrl: '',
           metaDatos: {},
-          empresa: 'Ecopetrol'
+          empresa: 'Ecopetrol',
+          regional: '',
+          instalacion: ''
         };
       }
     });
-    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas`).subscribe((res: any) => {
+    this.http.get(`https://bio01.qaingenieros.com/api/enrol/get-politicas?apiKey=cfdc7593-7124-4e9e-b078-f44c18cacef4`).subscribe((res: any) => {
       this.txt = res.data[2];
       console.log(this.txt);
       this.texto = this.txt.texto;
@@ -74,8 +76,16 @@ protected app_version: string;
   });
 async alert(){
   const alert = await this.alertCtrl.create({
+    cssClass: 'alerta1',
     header: 'Registramos su decisión, muchas gracias.',
-    buttons: ['OK'],
+    message: '<img src = "../../assets/images/avatar-profile.png" class="alertimg">',
+    buttons: [{
+      text: 'OK',
+      cssClass: 'boton',
+      handler: data => {
+        console.log('presioné ok');
+      }
+    }],
     mode: 'ios'
   });
   await alert.present();
@@ -108,7 +118,7 @@ async alert(){
 
       this.router.navigate(['user-data']);
         this.db.addUserData(this.userData.FirstName, this.userData.LastName, this.userData.tipo_documento, this.userData.documento, this.userData.acepta_terminos,
-          this.userData.badgeId, this.userData.imageUrl, this.userData.metaDatos, this.userData.empresa).then(_ => {
+          this.userData.ssno, this.userData.imageUrl, this.userData.metaDatos, this.userData.empresa, this.userData.regional, this.userData.instalacion, this.userData.origen, this.userData.step_enrol).then(_ => {
         });
         this.alert();
         this.router.navigate(['user-data']);

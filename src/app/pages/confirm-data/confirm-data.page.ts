@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { HttpClient } from '@angular/common/http';
+import { Network } from '@ionic-native/network/ngx';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class ConfirmDataPage implements OnInit {
   protected app_version: string;
 
   constructor(private db: DatabaseService, private route: ActivatedRoute, private router: Router, private alertCtrl: AlertController,
-              private appVersion: AppVersion, private udid: UniqueDeviceID, private http: HttpClient) { }
+              private appVersion: AppVersion, private udid: UniqueDeviceID, private http: HttpClient, private network: Network) { }
 
   ngOnInit() {
     this.appVersion.getVersionNumber().then(versionNumber => {
@@ -43,40 +44,44 @@ export class ConfirmDataPage implements OnInit {
         console.log(this.user);
 
         this.userData = {
-          FirstName: this.user.FirstName,
-          LastName: this.user.LastName,
-          tipo_documento: this.user.tipo_documento,
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          tipoDoc: this.user.tipoDoc,
           documento: this.user.documento,
-          acepta_terminos: this.user.acepta_terminos,
-          badgeId: this.user.badgeId,
-          imageUrl: this.user.imageUrl,
+          aceptaTerminos: this.user.aceptaTerminos,
+          ssno: this.user.ssno,
+          image: this.user.image,
           imagen: this.user.imagensinbase64,
           metaDatos: {},
-          empresa: this.user.empresa
+          empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion,
+          origen: this.user.origen,
+          step_enrol: this.user.step_enrol
         };
         this.userPost = {
-          firstName: this.user.FirstName,
-          lastName: this.user.LastName,
-          tipoDocumento: this.user.tipo_documento,
-          documento:  this.user.documento.toString(),
-          aceptaTerminos: this.user.acepta_terminos,
-          badgeId: this.user.badgeId.toString(),
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          tipoDocumento: this.user.tipoDoc,
+          documento:  this.user.documento,
+          aceptaTerminos: this.user.aceptaTerminos,
+          ssno: this.user.ssno,
           image: this.user.imagensinbase64,
           metadatos: '',
           empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion,
+          origen: 2,
+          step_enrol: 1
+          /* ciudadOrigen: 'Bogota',
+          ciudad: 'Bogota',
           ssno: `${this.user.tipo_documento}${this.user.documento.toString()}`,
           idStatus: '',
-          status: '',
-          regional: 1,
-          instalacion: 1,
-          ciudad: 'Bogota',
-          origen: 'App',
-          ciudadOrigen: 'Bogota'
+          status: '', */
         };
-        this.documentType.push(this.userData.tipo_documento);
+        this.documentType.push(this.userData.tipoDoc);
       }
     });
-
   }
 
   async sendUser() {
@@ -91,25 +96,30 @@ export class ConfirmDataPage implements OnInit {
       app_version: this.app_version,
       udid: this.uniqueDeviceId
     }
-    this.userData.metaDatos = JSON.stringify(metaDatos);
+    this.userData.metadatos = JSON.stringify(metaDatos);
     this.userPost.Metadatos = JSON.stringify(metaDatos);
     console.log(this.userPost);
     /*this.http.post('https://bio01.qaingenieros.com/api/enrol/create_enrol', this.userPost).subscribe(res => {
       console.log(res);
     })*/
-    this.db.addUserData(this.userData.FirstName, this.userData.LastName, this.userData.tipo_documento, this.userData.documento, this.userData.acepta_terminos,
-      this.userData.badgeId, this.userData.imagen, this.userData.metaDatos, this.userData.empresa).then(_ => {
+    if(this.network.type !== 'none'){
+    this.db.addUserData(this.userData.firstName, this.userData.lastName, this.userData.tipoDoc, this.userData.documento, JSON.stringify(this.userData.aceptaTerminos),
+      this.userData.ssno, this.userData.imagen, this.userData.metadatos, this.userData.empresa, this.userData.regional, this.userData.instalacion, this.userData.origen, this.userData.step_enrol).then(_ => {
         
         this.userData = {
-          FirstName: '',
-          LastName: '',
-          tipo_documento: '',
+          firstName: '',
+          lastName: '',
+          tipoDoc: '',
           documento: '',
-          acepta_terminos: '',
-          badgeId: '',
-          imageUrl: '',
-          metaDatos: {},
-          empresa: ''
+          aceptaTerminos: '',
+          ssno: '',
+          image: '',
+          metadatos: {},
+          empresa: '',
+          regional: '',
+          instalacion: '',
+          origen: '',
+          step_enrol: ''
         };
         this.userPost = {
           firstName: '',
@@ -117,20 +127,62 @@ export class ConfirmDataPage implements OnInit {
           tipoDocumento: '',
           documento: '',
           aceptaTerminos: '',
-          badgeId: '',
+          ssno: '',
           image: '',
           metadatos: '',
           empresa: '',
-          ssno: '',
-          idStatus: '',
-          status: '',
           regional: '',
           instalacion: '',
-          ciudad: '',
           origen: '',
-          ciudadOrigen: ''
+          step_enrol: ''
+          /* ciudadOrigen: '',
+          ssno: '',
+          ciudad: '',
+          idStatus: '',
+          status: '', */
         };
       });
+    }else{
+      this.db.addUserData(this.userData.firstName, this.userData.lastName, this.userData.tipoDoc, this.userData.documento, JSON.stringify(this.userData.aceptaTerminos),
+      this.userData.ssno, this.userData.image, this.userData.metadatos, this.userData.empresa, this.userData.regional, this.userData.instalacion, this.userData.origen, this.userData.step_enrol).then(_ => {
+        
+        this.userData = {
+          firstName: '',
+          lastName: '',
+          tipoDoc: '',
+          documento: '',
+          aceptaTerminos: '',
+          ssno: '',
+          image: '',
+          metadatos: {},
+          empresa: '',
+          regional: '',
+          instalacion: '',
+          origen: '',
+          step_enrol: ''
+        };
+        this.userPost = {
+          firstName: '',
+          lastName: '',
+          tipoDocumento: '',
+          documento: '',
+          aceptaTerminos: '',
+          ssno: '',
+          image: '',
+          metadatos: '',
+          empresa: '',
+          regional: '',
+          instalacion: '',
+          origen: '',
+          step_enrol: ''
+          /* ciudadOrigen: '',
+          ssno: '',
+          ciudad: '',
+          idStatus: '',
+          status: '', */
+        };
+      });
+    }
     const alert = await this.alertCtrl.create({
       header: 'Los datos han sido registrados, muchas gracias.',
       buttons: ['OK'],
@@ -147,10 +199,14 @@ export class ConfirmDataPage implements OnInit {
       tipo_documento: '',
       documento: '',
       acepta_terminos: '',
-      badgeId: '',
+      ssno: '',
       imageUrl: '',
       metaDatos: {},
-      empresa: ''
+      empresa: '',
+      regional: '',
+      instalacion: '',
+      origen: '',
+      step_enrol: ''
     };
   }
 }

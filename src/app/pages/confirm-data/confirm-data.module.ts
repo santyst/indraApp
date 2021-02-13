@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
+// Components
+import { ContainerComponent } from '@components/container/container.component';
+
 import { ConfirmDataPageRoutingModule } from './confirm-data-routing.module';
 
 import { ConfirmDataPage } from './confirm-data.page';
@@ -15,6 +18,6 @@ import { ConfirmDataPage } from './confirm-data.page';
     IonicModule,
     ConfirmDataPageRoutingModule
   ],
-  declarations: [ConfirmDataPage]
+  declarations: [ConfirmDataPage, ContainerComponent]
 })
 export class ConfirmDataPageModule {}
