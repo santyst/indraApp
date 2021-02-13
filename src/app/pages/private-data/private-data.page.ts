@@ -142,7 +142,7 @@ export class PrivateDataPage implements OnInit {
     }
     const loading = await this.loadingController.create({
       cssClass: 'loading',
-      message: 'Por favor espere...',
+      message: 'Por favor espere   ...',
       spinner: 'dots',
       mode: 'ios'
     });
