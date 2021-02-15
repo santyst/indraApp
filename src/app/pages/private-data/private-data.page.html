@@ -1,9 +1,10 @@
+
 <app-container [styleContent]="stylesContainer" [conditionalContent]="this.userData">
   <div class="content">
     <h2>Captura de datos</h2>
     <ion-item class="options-container" size="11" lines="none" *ngIf="base64_2 === ''">
-      <ion-button class="option-button" expand="block" fill="solid" (click)="takePhoto()">
-        TOMAR FOTO
+      <ion-button class="option-button" expand="block" fill="solid" (click)="takePhoto()" mode="ios">
+        Tomar fotografía
       </ion-button>
     </ion-item>
     <ion-item-group lines="none" *ngIf="base64_2 !== ''">
@@ -13,16 +14,15 @@
         </button>
         <img [src]="base64_2" class="photo_user">
       </ion-item>
-
       <ion-item lines="none">
-        <ion-button class="option-button" fill="solid" [disabled]="base64_2 === ''" (click)="sendUser()">
-          SUBIR FOTO
+        <ion-button class="option-button" fill="solid" [disabled]="base64_2 === ''" (click)="sendUser()" mode="ios">
+          Registrar
         </ion-button>
       </ion-item>
 
       <ion-item lines="none">
-        <ion-button class="option-button" fill="solid" (click)="takePhoto()">
-          REPETIR FOTO
+        <ion-button class="option-button" fill="solid" (click)="takePhoto()" mode="ios">
+          Repetir foto
         </ion-button>
       </ion-item>
     </ion-item-group>

@@ -18,8 +18,12 @@ import { EnroladosService } from '@services/enrolados.service';
 import { DatabaseService, User } from '@services/database.service';
 import { AuthService } from '@services/auth.service';
 import UserProvider from '@services/api/user';
+import { Network } from '@ionic-native/network/ngx';
 
 const URL_PATH = 'src/app/pages/user-data/user-data.page.ts';
+const STOEMPRESA = 'empresas';
+const STOREGIONAL = 'regionales';
+const STOINSTALACION = 'instalaciones';
 
 @Component({
   selector: "app-user-data",
@@ -51,17 +55,28 @@ export class UserDataPage implements OnInit {
     hL: number;
   };
 
+  baseUrl = `https://bio01.qaingenieros.com/api/enrol/`;
+  apiKey = `?apiKey=cfdc7593-7124-4e9e-b078-f44c18cacef4`;
+  empresas = `get-empresas`;
+  regionales = `get-regionales`;
+  instalaciones = `get-instalaciones`;
   base64 = "data:image/png;base64,";
-  userData = {};
   usersT: User[] = [];
   documentTypes: TypeDocument[];
+  empresasArr: any;
+  regionalesArr: any;
+  instalacionesArr: any;
+  instalacionShow = false;
 
   datasForm = this.formBuilder.group({
     FirstName: ["", [Validators.required]],
     LastName: ["", [Validators.required]],
     tipo_documento: ["", [Validators.required]],
     documento: ["", [Validators.required]],
-    badgeId: ["", [Validators.required]],
+    ssno: ["", [Validators.required]],
+    regional: ["", [Validators.required]],
+    instalacion: ["", [Validators.required]],
+    empresa: ["", [Validators.required]],
   });
 
   constructor(
@@ -73,7 +88,8 @@ export class UserDataPage implements OnInit {
     private http: HttpClient,
     private animationCtrl: AnimationController,
     private enrolamientos: EnroladosService,
-    private storage: Storage
+    private storage: Storage,
+    private network: Network
   ) {
     this.documentTypes = [];
     this.styleSvgs = {
@@ -88,6 +104,18 @@ export class UserDataPage implements OnInit {
     };
   }
 
+  userData = {
+    firstName: '',
+    lastName: '',
+    tipoDoc: '',
+    documento: '',
+    ssno: '',
+    empresa: '',
+    regional: '',
+    instalacion: '',
+    origen: 2,
+    step_enrol: 1
+  };
   // Start lifecycle events
   ngOnInit() {
     this.loadData();
@@ -96,13 +124,58 @@ export class UserDataPage implements OnInit {
   ionViewWillEnter() {
     this.animationStart();
     // this.enrolamientos.enrol();
+    if (this.network.type !== 'none') {
+      console.log('this.network.type : ', this.network.type);
+      this.http.get(`${this.baseUrl}${this.empresas}${this.apiKey}`).subscribe((company: any) => {
+        this.empresasArr = company.data;
+        this.storage.set(STOEMPRESA, this.empresasArr);
+        console.log('this.empresasArr: ', this.empresasArr);
+      });
+      this.http.get(`${this.baseUrl}${this.regionales}${this.apiKey}`).subscribe((region: any) => {
+        this.regionalesArr = region.data;
+        this.storage.set(STOREGIONAL, this.regionalesArr);
+        console.log('this.regionalesArr: ', this.regionalesArr);
+      });
+      this.http.get(`${this.baseUrl}${this.instalaciones}${this.apiKey}&regional=`).subscribe((region: any) => {
+        this.storage.set(STOINSTALACION, region.data);
+      });
+    } else {
+      this.storage.get(STOEMPRESA).then((empresa: any) => {
+        this.empresasArr = empresa;
+        console.log('this.empresasArr: ', this.empresasArr);
+      });
+      this.storage.get(STOREGIONAL).then((regional: any) => {
+        this.regionalesArr = regional;
+        console.log('this.regionalesArr: ', this.regionalesArr);
+      });
+    }
   }
 
   ionViewWillLeave() {
     this.animationEnd();
   }
   // End lifecycle events
-
+  EventRegional(event) {
+    this.instalacionShow = true;
+    this.userData.instalacion = '';
+    console.log('Seleccionaste la regional', event.target.value);
+    if (this.network.type !== 'none') {
+      this.http.get(`${this.baseUrl}${this.instalaciones}${this.apiKey}&regional=${event.target.value}`).subscribe((instalacion: any) => {
+        this.instalacionesArr = instalacion.data; 
+        console.log('this.instalacionesArr: ', this.instalacionesArr);
+      });
+    } else {
+      this.storage.get(STOINSTALACION).then((instalacion: any) => {
+        let arregloInstalacion2 = [];
+        arregloInstalacion2 = instalacion;
+        this.instalacionesArr = arregloInstalacion2.filter(inst => inst.Regional === event.target.value);
+        console.log('this.instalacionesArr: ', this.instalacionesArr);
+      });
+      /* arregloInstalacion2.filter(inst => {
+        console.log('inst: ', inst);
+      }) */
+    }
+  }
   /**
    * @description Se encarga de correr las animaciones de entrada de los
    * elementos del login.page
@@ -179,10 +252,12 @@ export class UserDataPage implements OnInit {
         console.log(URL_PATH, 'loadData()', '{ data, status }', { data, status });
       }
     } catch (err) {
-      const { documentTypesS } = await this.storage.get("documentTypes");
+      const documentTypesS  = await this.storage.get("documentTypes");
       if (documentTypesS) {
         this.documentTypes = documentTypesS.map((documentType: TypeDocumentStorage) => new TypeDocument(documentType.data));
       }
+      console.log('this.documentTypes: ', this.documentTypes);
+
       console.log(URL_PATH, 'loadData()', 'err', err);
     }
   }
@@ -194,7 +269,18 @@ export class UserDataPage implements OnInit {
       },
     };
     this.router.navigate(["policy-question"], navigationExtras);
-    this.userData = {};
+    this.userData = {
+      firstName: '',
+      lastName: '',
+      tipoDoc: '',
+      documento: '',
+      ssno: '',
+      empresa: '',
+      instalacion: '',
+      regional: '',
+      origen: 2,
+      step_enrol: 1
+    };
   }
 
   logOut() {

@@ -15,7 +15,7 @@ class PolicyQuestionProvider {
    * o no en la APP.
    */
   static async getPolicyEnrol(): Promise<AxiosResponse<any>> {
-    return await api().get('enrol/get-politicas');
+    return await api().get('enrol/get-preguntas');
   }
 }
 

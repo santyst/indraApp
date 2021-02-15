@@ -3,14 +3,14 @@ import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/n
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
-import { DatabaseService, User } from './../../services/database.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import * as moment from 'moment';
+import { DatabaseService } from '@app/services/database.service';
+import { FormBuilder } from '@angular/forms';
+import { Network } from '@ionic-native/network/ngx';
 
 @Component({
   selector: "app-private-data",
@@ -47,7 +47,7 @@ export class PrivateDataPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private alertCtrl: AlertController,
-    private formBuilder: FormBuilder,
+    private network: Network,
     private loadingController: LoadingController,
     private auth: AuthService,
     private appVersion: AppVersion,
@@ -74,22 +74,44 @@ export class PrivateDataPage implements OnInit {
         console.log(this.user);
         // Se recomienda manejar esto con una clase o una interfaz
         this.userData = {
-          FirstName: this.user.FirstName,
-          LastName: this.user.LastName,
-          tipo_documento: this.user.tipo_documento,
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          tipoDoc: this.user.tipoDoc,
           documento: this.user.documento,
-          acepta_terminos: this.user.policyQuestions,
-          badgeId: this.user.badgeId,
-          imageUrl: "",
-          empresa: "Ecopetrol",
+          aceptaTerminos: this.user.policyQuestions,
+          ssno: this.user.ssno,
+          image: '',
+          metadatos: '', 
+          empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion,
+          origen: this.user.origen,
+          step_enrol: this.user.step_enrol
+        };
+        this.userPost = {
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          tipoDoc: this.user.tipoDoc,
+          documento:  this.user.documento,
+          aceptaTerminos: this.user.policyQuestions,
+          ssno: this.user.ssno,
+          image: '',
+          metadatos: '',
+          empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion,
+          origen: 2,
+          step_enrol: 1
+          /* ciudadOrigen: 'Bogota',
+          ciudad: 'Bogota',
+          ssno: `${this.user.tipo_documento}${this.user.documento.toString()}`,
+          idStatus: '',
+          status: '', */
         };
       }
     });
   }
 
-  datasForm = this.formBuilder.group({
-    badgeId: ["", [Validators.required]],
-  });
   logOut() {
     this.auth.logout();
   }
@@ -125,40 +147,56 @@ export class PrivateDataPage implements OnInit {
     });
   }*/
 
-  takePhoto() {
-    const options: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      correctOrientation: true,
-      targetWidth: 1152,
-      targetHeight: 2048,
-    };
+  takePhoto() {  
+    if(this.network.type !== 'none'){
+      console.log(': hay conexión: ', this.network.type);
 
-    this.camera.getPicture(options).then(
-      (imageData) => {
-        this.userData.imageUrl = imageData;
-        this.uploadImage();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+      const options: CameraOptions = {
+        quality: 50,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        sourceType: this.camera.PictureSourceType.CAMERA,
+        correctOrientation: true,
+        targetWidth: 1152,
+        targetHeight: 2048,
+      };
+  
+      this.camera.getPicture(options).then(
+        (imageData) => {
+          this.userData.image = imageData;
+          this.uploadImage();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }else{
+      
+console.log(': no hay conexión: ', this.network.type);
+      const options: CameraOptions = {
+        quality: 50,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        sourceType: this.camera.PictureSourceType.CAMERA,
+        correctOrientation: true,
+        targetWidth: 1152,
+        targetHeight: 2048,
+      };
+  
+      this.camera.getPicture(options).then(
+        (imageData) => {
+          this.base64_2 = 'data:image/jpeg;base64,' + imageData;          
+          console.log('this.base64_2: ', this.base64_2);
+         this.uploadImageOFFLINE();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
-
-  addUserDetails() {
-    this.userData.imageUrl = this.base64_2;
-    this.userData.imagensinbase64 = this.base64_3;
-    let navigationExtras: NavigationExtras = {
-      state: {
-        user: this.userData,
-      },
-    };
-    this.router.navigate(["confirm-data"], navigationExtras);
-  }
-
   /*uploadImage(){
     let imageUrl = `https://testsanti.000webhostapp.com/phpserver/json1.php`;
     let postData = new FormData();
@@ -169,13 +207,22 @@ export class PrivateDataPage implements OnInit {
       console.log(res);
     })
   }*/
+  async uploadImageOFFLINE(){
+    const alert = await this.alertCtrl.create({
+      header: 'Se procesará la imagen cuando tenga acceso a internet.',
+      buttons: ["OK"],
+      mode: "ios",
+    });
+    await alert.present();
+    }
   async uploadImage() {
-    console.log(this.userData.imageUrl);
+    console.log(this.userData.image);
     const Transfer: FileTransferObject = this.fileTransfer.create();
     let options: FileUploadOptions = {
       fileKey: "file",
       fileName: ".jpg",
       chunkedMode: false,
+      params: {doc: this.userData.documento}
       //httpMethod: 'post',
       //mimeType: "image/jpeg",
       //headers: {},
@@ -189,7 +236,7 @@ export class PrivateDataPage implements OnInit {
     await loading.present();
 
     Transfer.upload(
-      this.userData.imageUrl,
+      this.userData.image,
       `https://bio01.qaingenieros.com/api/img?apiKey=${this.apiKey}`,
       options
     ).then(
@@ -233,6 +280,28 @@ export class PrivateDataPage implements OnInit {
     );
   }
 
+  addUserDetails() {
+    if(this.network.type !== 'none'){
+    this.userData.image = this.base64_2;
+    this.userData.imagensinbase64 = this.base64_3;
+    let navigationExtras: NavigationExtras = {
+      state: {
+        user: this.userData,
+      },
+    };
+    this.router.navigate(["confirm-data"], navigationExtras);
+  }else{
+    this.userData.image = this.base64_2 ;
+    let navigationExtras: NavigationExtras = {
+      state: {
+        user: this.userData,
+      },
+    };
+    this.router.navigate(["confirm-data"], navigationExtras);
+  }
+  }
+
+
   async sendUser() {
     const fecha = moment().format("YYYY-MM-DD");
     const hora = moment().format("LTS");
@@ -245,35 +314,45 @@ export class PrivateDataPage implements OnInit {
       app_version: this.appV,
       udid: this.uniqueDeviceId
     };
-    this.userData.metaDatos = JSON.stringify(metaDatos);
-    this.userPost.Metadatos = JSON.stringify(metaDatos);
-    console.log(this.userPost);
+    this.userData.metadatos = JSON.stringify(metaDatos);
+    this.userPost.metadatos = JSON.stringify(metaDatos);
+    this.userPost.image = this.base64_3;
+    console.log(this.userData);
     /*this.http.post('https://bio01.qaingenieros.com/api/enrol/create_enrol', this.userPost).subscribe(res => {
       console.log(res);
     })*/
+    if(this.network.type !== 'none'){
     this.db
       .addUserData(
-        this.userData.FirstName,
-        this.userData.LastName,
-        this.userData.tipo_documento,
+        this.userData.firstName,
+        this.userData.lastName,
+        this.userData.tipoDoc,
         this.userData.documento,
-        this.userData.acepta_terminos,
-        this.userData.badgeId,
-        this.userData.imagen,
-        this.userData.metaDatos,
-        this.userData.empresa
+        JSON.stringify(this.userData.aceptaTerminos),
+        this.userData.ssno,
+        this.base64_3,
+        this.userData.metadatos,
+        this.userData.empresa,
+        this.userData.regional,
+        this.userData.instalacion,
+        this.userData.origen,
+        this.userData.step_enrol
       )
       .then((_) => {
         this.userData = {
-          FirstName: "",
-          LastName: "",
-          tipo_documento: "",
+          firstName: "",
+          lastName: "",
+          tipoDoc: "",
           documento: "",
-          acepta_terminos: "",
-          badgeId: "",
-          imageUrl: "",
-          metaDatos: {},
+          aceptaTerminos: "",
+          ssno: "",
+          image: "",
+          metadatos: {},
           empresa: "",
+          regional: '',
+          instalacion: '',
+          origen: "",
+          step_enrol: ''
         };
         this.userPost = {
           firstName: "",
@@ -281,20 +360,66 @@ export class PrivateDataPage implements OnInit {
           tipoDocumento: "",
           documento: "",
           aceptaTerminos: "",
-          badgeId: "",
+          ssno: "",
           image: "",
           metadatos: "",
           empresa: "",
-          ssno: "",
-          idStatus: "",
-          status: "",
           regional: "",
           instalacion: "",
-          ciudad: "",
           origen: "",
-          ciudadOrigen: "",
+          step_enrol: ''
         };
       });
+    }else{
+      this.db
+      .addUserData(
+        this.userData.firstName,
+        this.userData.lastName,
+        this.userData.tipoDoc,
+        this.userData.documento,
+        JSON.stringify(this.userData.aceptaTerminos),
+        this.userData.ssno,
+        this.base64_2,
+        this.userData.metadatos,
+        this.userData.empresa,
+        this.userData.regional,
+        this.userData.instalacion,
+        this.userData.origen,
+        this.userData.step_enrol
+      )
+      .then((_) => {
+        this.userData = {
+          firstName: "",
+          lastName: "",
+          tipoDoc: "",
+          documento: "",
+          aceptaTerminos: "",
+          ssno: "",
+          image: "",
+          metadatos: {},
+          empresa: "",
+          regional: '',
+          instalacion: '',
+          origen: "",
+          step_enrol: ''
+        };
+        this.userPost = {
+          firstName: "",
+          lastName: "",
+          tipoDocumento: "",
+          documento: "",
+          aceptaTerminos: "",
+          ssno: "",
+          image: "",
+          metadatos: "",
+          empresa: "",
+          regional: "",
+          instalacion: "",
+          origen: "",
+          step_enrol: ''
+        };
+      });
+      }
     const alert = await this.alertCtrl.create({
       header: "Los datos han sido registrados, muchas gracias.",
       buttons: ["OK"],
