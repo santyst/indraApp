@@ -27,7 +27,8 @@
 
 :root {
     .popover-content {
-        width: 60%;
+      width: 82%;
+      left: 37.1953px;
     }
     .sc-ion-select-popover-h ion-label.sc-ion-select-popover {
         margin-left: 0;
@@ -35,11 +36,19 @@
         margin-top: 0;
         margin-bottom: 0;
         font-size: 20px;
+        color: white;
     }
-
+    .sc-ion-select-popover-h ion-list.sc-ion-select-popover {
+      margin-left: -12px;
+      margin-right: 0;
+      margin-top: -1px;
+      margin-bottom: -1px;
+      width: 112%;
+  }
     @media (min-width: 650px) and (min-height: 850px) {
         .popover-content {
-            width: 60%;
+            width: 79%;
+            left: 83.594px;
         }
         .sc-ion-select-popover-h ion-label.sc-ion-select-popover {
             margin-left: 0;
@@ -47,6 +56,7 @@
             margin-top: 0;
             margin-bottom: 0;
             font-size: 34px;
+            color: white;
         }
     }
 

@@ -7,6 +7,7 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
+import { EnroladosService } from '../../services/enrolados.service';
 
 // DataBase
 import { DatabaseService } from '@services/database.service';
@@ -84,15 +85,19 @@ export class PolicyQuestionPage implements OnInit {
    * data que se envia al siguiente screen para se evaluada.
    */
   userData: {
-    FirstName: string;
-    LastName: string;
-    tipo_documento: string;
+    firstName: string;
+    lastName: string;
+    tipoDoc: string;
     documento: number | string;
     policyQuestions: any;
-    badgeId: string;
+    ssno: string;
     imageUrl: string;
-    metaDatos: any;
-    empresa: string;
+    metadatos: any;
+    empresa: number;
+    instalacion: number;
+    regional: number;
+    origen: number;
+    step_enrol: number;
   };
   /**
    * version de la app
@@ -112,7 +117,8 @@ export class PolicyQuestionPage implements OnInit {
     private db: DatabaseService,
     private udid: UniqueDeviceID,
     private storage: Storage,
-    private auth: AuthService
+    private auth: AuthService,
+    private enroladosService: EnroladosService
   ) {
     this.questions = [];
     this.questionCurrent = undefined;
@@ -144,15 +150,19 @@ export class PolicyQuestionPage implements OnInit {
         // console.log(URL_PATH, 'ngOnInit()', 'this.user', this.user);
         // Se recomienda manejar esto con una clase o una interfaz
         this.userData = {
-          FirstName: this.user.FirstName,
-          LastName: this.user.LastName,
-          tipo_documento: this.user.tipo_documento,
-          documento: this.user.documento,
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          tipoDoc: this.user.tipoDoc,
+          documento: JSON.stringify(this.user.documento),
           policyQuestions: "",
-          badgeId: this.user.badgeId,
+          ssno: JSON.stringify(this.user.ssno),
           imageUrl: "",
-          metaDatos: {},
-          empresa: "Ecopetrol",
+          metadatos: {},
+          empresa: this.user.empresa,
+          regional: this.user.regional,
+          instalacion: this.user.instalacion,
+          origen: this.user.origen,
+          step_enrol: this.user.step_enrol
         };
         // console.log(URL_PATH, 'ngOnInit()', 'this.userData', this.userData);
       }
@@ -367,8 +377,6 @@ export class PolicyQuestionPage implements OnInit {
     const alert = await this.alertCtrl.create({
       cssClass: "alerta1",
       header: "Registramos su decisión, muchas gracias.",
-      message:
-        '<img src = "../../assets/images/avatar-profile.png" class="alertimg">',
       buttons: [
         {
           text: "OK",
@@ -391,7 +399,8 @@ export class PolicyQuestionPage implements OnInit {
     this.userData.policyQuestions = this.questions.map((res) =>
       res.reponseServer()
     );
-    const isAcceptAllPolicyQuestions = this.questions.every(
+
+    const isAcceptAllPolicyQuestions = this.questions.filter(question => question.data.type !== 1).every(
       (question) => question.data.accept === true
     );
     // this.userData.acepta_terminos = JSON.parse(this.terminos);
@@ -416,22 +425,28 @@ export class PolicyQuestionPage implements OnInit {
         udid: this.uniqueDeviceId,
       };
 
-      this.userData.metaDatos = JSON.stringify(metaDatos);
+      this.userData.metadatos = JSON.stringify(metaDatos);
 
       // this.router.navigate(['user-data']);
       this.db
         .addUserData(
-          this.userData.FirstName,
-          this.userData.LastName,
-          this.userData.tipo_documento,
+          this.userData.firstName,
+          this.userData.lastName,
+          this.userData.tipoDoc,
           this.userData.documento,
           JSON.stringify(this.userData.policyQuestions),
-          this.userData.badgeId,
+          this.userData.ssno,
           this.userData.imageUrl,
-          this.userData.metaDatos,
-          this.userData.empresa
+          this.userData.metadatos,
+          this.userData.empresa,
+          this.userData.regional,
+          this.userData.instalacion,
+          this.userData.origen,
+          this.userData.step_enrol
         )
-        .then((_) => {});
+        .then((_) => {
+          this.enroladosService.enrol();
+        });
 
       this.alert();
       this.router.navigate(["user-data"]);

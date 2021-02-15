@@ -86,8 +86,8 @@ class PolicyQuestion {
 
   reponseServer() {
     return {
-      tipoTexto: this.data.text,
-      versionTexto: this.data.version,
+      tipoTexto: this.data.type,
+      versionTexto: JSON.stringify(this.data.version),
       aceptaTexto: this.data.accept
     };
   }
