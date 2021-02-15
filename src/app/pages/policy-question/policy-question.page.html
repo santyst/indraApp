@@ -37,7 +37,7 @@
         </div>
 
         <div *ngIf="index == 0">
-          <ion-button expand="full" fill="solid" (click)="handleIndex(true)" disabled="{{isDisableNext}}">Siguiente</ion-button>
+          <ion-button expand="full" fill="solid" (click)="handleIndex(true)">Siguiente</ion-button>
         </div>
         <div class="button-navigation" *ngIf="index + 1 != questions.length && index != 0">
           <ion-button class="btn-line" fill="solid" (click)="handleIndex(false)">Anterior</ion-button>

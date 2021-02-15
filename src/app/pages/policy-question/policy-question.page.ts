@@ -391,7 +391,8 @@ export class PolicyQuestionPage implements OnInit {
     this.userData.policyQuestions = this.questions.map((res) =>
       res.reponseServer()
     );
-    const isAcceptAllPolicyQuestions = this.questions.every(
+
+    const isAcceptAllPolicyQuestions = this.questions.filter(question => question.data.type !== 1).every(
       (question) => question.data.accept === true
     );
     // this.userData.acepta_terminos = JSON.parse(this.terminos);
