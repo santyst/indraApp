@@ -11,25 +11,25 @@
         <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
         <form [formGroup]="datasForm" class="form-user-data">
           <ion-item lines="none">
-            <ion-input formControlName="FirstName" placeholder="Nombre:" [(ngModel)]="userData.firstName" type="text">
+            <ion-input formControlName="FirstName" placeholder="Nombres:" [(ngModel)]="userData.firstName" type="text">
             </ion-input>
           </ion-item>
           <ion-item lines="none">
-            <ion-input formControlName="LastName" placeholder="Apellido:" [(ngModel)]="userData.lastName" type="text">
+            <ion-input formControlName="LastName" placeholder="Apellidos:" [(ngModel)]="userData.lastName" type="text">
             </ion-input>
           </ion-item>
           <ion-item lines="none">
-            <ion-select placeholder="Tipo de documento" formControlName="tipo_documento"
+            <ion-input formControlName="ssno" placeholder="Número de registro de Ecopetrol:" [(ngModel)]="userData.ssno" type="text"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-select placeholder="Tipo de documento de identidad" formControlName="tipo_documento"
               interface="popover" [(ngModel)]="userData.tipoDoc">
               <ion-select-option *ngFor="let type of documentTypes">{{type.data.code}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item lines="none">
-            <ion-input formControlName="documento" placeholder="Número de documento:" [(ngModel)]="userData.documento" type="number">
+            <ion-input formControlName="documento" placeholder="Número de documento de identidad:" [(ngModel)]="userData.documento" type="number">
             </ion-input>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-input formControlName="ssno" placeholder="Número de registro de Ecopetrol:" [(ngModel)]="userData.ssno" type="text"></ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-select placeholder="Empresa" formControlName="empresa"
@@ -49,7 +49,7 @@
               <ion-select-option *ngFor="let instalacion of instalacionesArr" [value]="instalacion.codigo">{{instalacion.descripcion}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-button expand="block" [disabled]="!datasForm.valid" class="boton-register" (click)="sendUser()">Registrar
+          <ion-button expand="block" [disabled]="!datasForm.valid" class="boton-register" (click)="sendUser()">Continuar
           </ion-button>
         </form>
       </ion-col>
