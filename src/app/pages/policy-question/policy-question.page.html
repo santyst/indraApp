@@ -21,7 +21,7 @@
 
           <strong #versionQuestion>v. {{questionCurrent.data.version }}</strong>
 
-          <ion-radio-group allowEmptySelection="true" value="{{questionCurrent.data.accept}}" (ionChange)="handleAccept($event)">
+          <ion-radio-group allowEmptySelection="true" value="{{questionCurrent.data.accept}}" (ionChange)="handleAccept($event)" *ngIf="index !== 0">
             <ion-item slot="start" lines="none">
               <ion-radio slot="start" value=true mode="md"></ion-radio>
               <p>Si acepto</p>
