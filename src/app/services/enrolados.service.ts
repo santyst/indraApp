@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { Subject, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Network } from '@ionic-native/network/ngx';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DatabaseService, User } from './database.service';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -15,45 +18,95 @@ export class EnroladosService {
   userPost: any;
   respuesta1: any;
   statusRequest = true;
+  cameraPhoto = false; 
   respuesta: any;
+  imgStatus: any;
   apiKey = 'cfdc7593-7124-4e9e-b078-f44c18cacef4';
+  imgURL = `http://bio01.qaingenieros.com:5000/base64`;
+  base64: any;
+  base64_1: any;
+  motivos: any;
+  estado: any;
   constructor(private db: DatabaseService,
     public network: Network,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private alertCtrl: AlertController,
+    private camera: Camera,
+    private fileTransfer: FileTransfer,
+    private loadingController: LoadingController) { }
 
-  enrol() {
-      if (this.network.type !== 'none' && this.statusRequest) {
+    enrol() {
+      if (this.network.type !== 'none' && this.statusRequest && this.cameraPhoto == false) {
         console.log(this.network.type)
-       this.db.getDatabaseState().subscribe(rdy => {
+       let sub = this.db.getDatabaseState().subscribe(rdy => {
           if (rdy) {
             this.statusRequest = false;
-            this.db.getUsers().subscribe(async usuarios => {
+            let sub2 = this.db.getUsers().subscribe(async usuarios => {
               this.users = usuarios;
               console.log(this.users);
               if (this.users.length > 0 && this.network.type !== 'none') {
+                setTimeout(function() {
+                  sub.unsubscribe();
+                sub2.unsubscribe();
+                }, 1000);
                 this.statusRequest = false;
                 for await (let us of this.users) {
+                  var n = us.imageUrl.includes('base64');
+                  if(n === true) {
+                    console.log(': ',us);
+                    let postImg = {
+                      img: us.imageUrl,
+                      doc: us.documento
+                    }
+                    this.http.post(`${this.imgURL}`, postImg).subscribe(async (res: any) => {
+                      this.imgStatus = res.status;
+                       if(this.imgStatus === 'rechazado'){
+                          const alert = await this.alertCtrl.create({
+                            backdropDismiss: false,
+                            header: `La fotografía de ${us.firstName} ${us.lastName} con ${us.tipoDoc} #${us.documento} ha sido rechazada, por favor tome una nueva.`,
+                            buttons: [
+                            {text: 'Capturar',
+                             handler: (data) => {
+                               this.captureAgain(us);  
+                             }
+                            },
+                            {text: 'Posponer'}],
+                            mode: "ios",
+                          });
+                          await alert.present();
+                      }else{
+                        us.imageUrl = res.image;
+                        this.db.updateUser(us);
+                        setTimeout(function() {
+                          sub.unsubscribe();
+                        sub2.unsubscribe();
+                        }, 1000);
+                      } 
+                    });
+                  }else{
+
                   this.userPost = {
-                    firstName: us.FirstName,
-                    lastName: us.LastName,
-                    tipoDocumento: us.tipo_documento,
-                    documento: us.documento.toString(),
-                    aceptaTerminos: false,
-                    badgeId: us.badgeId.toString(),
+                    firstName: us.firstName,
+                    lastName: us.lastName,
+                    tipoDoc: us.tipoDoc,
+                    documento: us.documento,
+                    aceptaTerminos: JSON.parse(us.aceptaTerminos),
+                    ssno: us.ssno,
                     image: us.imageUrl,
-                    metadatos: us.metaDatos,
+                    metadatos: us.metadatos,
                     empresa: us.empresa,
+                    regional: us.regional,
+                    instalacion: us.instalacion,
+                    origen: us.origen,
+                    step_enrol: us.step_enrol
+                   /*  ciudadOrigen: 'Bogota',
+                    ciudad: 'Bogota',
                     ssno: `${us.tipo_documento}${us.documento.toString()}`,
                     idStatus: '',
-                    status: '',
-                    regional: 1,
-                    instalacion: 1,
-                    ciudad: 'Bogota',
-                    origen: 'App',
-                    ciudadOrigen: 'Bogota'
+                    status: '', */
                   };
                   console.log(this.userPost);
-                  this.http.post(`https://bio01.qaingenieros.com/api/enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(async res => {
+                   this.http.post(`https://bio01.qaingenieros.com/api/enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(async res => {
                     this.respuesta = res;
                     this.respuesta1 = this.respuesta.success;
                     console.log(this.respuesta);
@@ -62,9 +115,11 @@ export class EnroladosService {
                       console.log('datos subidos');
                       this.userPost = {};
                       this.db.deleteUser(us.userId).then(_ => {
+
                       });
                     }
-                  });
+                  }); 
+                  }
                  // break;
                 }
                this.statusRequest = true;
@@ -81,4 +136,98 @@ export class EnroladosService {
       }
   }
 
+  captureAgain(user: User){
+    this.cameraPhoto = true;
+  console.log('user: ', user);
+  const options: CameraOptions = {
+    quality: 50,
+    destinationType: this.camera.DestinationType.FILE_URI,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    sourceType: this.camera.PictureSourceType.CAMERA,
+    correctOrientation: true,
+    targetWidth: 1152,
+    targetHeight: 2048,
+  };
+
+  this.camera.getPicture(options).then(
+    (imageData) => {
+      let imagenFile = imageData;
+      this.uploadImage(imagenFile, user);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+  }
+
+  async uploadImage(imagenFile, user: User){
+    const Transfer: FileTransferObject = this.fileTransfer.create();
+    let options: FileUploadOptions = {
+      fileKey: "file",
+      fileName: ".jpg",
+      chunkedMode: false,
+      //httpMethod: 'post',
+      //mimeType: "image/jpeg",
+      //headers: {},
+    };
+    const loading = await this.loadingController.create({
+      cssClass: "loading",
+      message: "Por favor espere...",
+      spinner: "dots",
+      mode: "ios",
+    });
+    await loading.present();
+
+    Transfer.upload(
+      imagenFile,
+      `https://bio01.qaingenieros.com/api/img?apiKey=${this.apiKey}`,
+      options
+    ).then(
+      async (data) => {
+        loading.dismiss();
+        this.base64 = data.response;
+
+        this.base64_1 = JSON.parse(this.base64);
+        console.log(this.base64_1);
+        this.motivos = this.base64_1.motivos;
+        this.estado = this.base64_1.status;
+
+        if (this.estado === "rechazado") {
+          const alert = await this.alertCtrl.create({
+            header:
+              "Imagen rechazada, por favor tome una nueva fotografía.\n" +
+              this.motivos,
+            buttons: [{
+              text: 'Repetir',
+              handler: d => {
+                this.captureAgain(user);
+              }
+            },
+            {
+             text: 'Cancelar',
+             handler: data => {
+               this.cameraPhoto = false;
+             }
+          }],
+            mode: "ios",
+          });
+          await alert.present();
+        } else {
+          const alert = await this.alertCtrl.create({
+            header: "La imagen ha sido aprobada.",
+            buttons: ["OK"],
+            mode: "ios",
+          });
+          await alert.present();
+          user.imageUrl = this.base64_1.image;
+          this.cameraPhoto = false;
+          this.db.updateUser(user);
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 }

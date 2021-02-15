@@ -30,7 +30,7 @@ export class HerramientasPage implements OnInit {
         documento: this.user.documento,
         acepta_bioseguridad: this.user.acepta_bioseguridad,
         acepta_herramientas: '',
-        badgeId: '',
+        ssno: '',
         imageUrl: '',
         metaDatos: {},
         empresa: 'Ecopetrol'

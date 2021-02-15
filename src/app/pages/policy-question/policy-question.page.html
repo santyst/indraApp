@@ -37,15 +37,15 @@
         </div>
 
         <div *ngIf="index == 0">
-          <ion-button expand="full" fill="solid" (click)="handleIndex(true)">Siguiente</ion-button>
+          <ion-button expand="full" fill="solid" (click)="handleIndex(true)" mode="ios">Siguiente</ion-button>
         </div>
         <div class="button-navigation" *ngIf="index + 1 != questions.length && index != 0">
-          <ion-button class="btn-line" fill="solid" (click)="handleIndex(false)">Anterior</ion-button>
-          <ion-button class="btn-line" fill="solid" disabled="{{isDisableNext}}" (click)="handleIndex(true)">Siguiente</ion-button>
+          <ion-button class="btn-line" fill="solid" (click)="handleIndex(false)" mode="ios">Anterior</ion-button>
+          <ion-button class="btn-line" fill="solid" disabled="{{isDisableNext}}" (click)="handleIndex(true)" mode="ios">Siguiente</ion-button>
         </div>
         <div  *ngIf="index + 1 == questions.length">
-          <ion-button class="btn-line" fill="solid" (click)="handleIndex(false)">Anterior</ion-button>
-          <ion-button class="btn-line" fill="solid" disabled="{{isDisableNext}}" (click)="processForm()"> Enviar</ion-button>
+          <ion-button class="btn-line" fill="solid" (click)="handleIndex(false)" mode="ios">Anterior</ion-button>
+          <ion-button class="btn-line" fill="solid" disabled="{{isDisableNext}}" (click)="processForm()" mode="ios"> Enviar</ion-button>
         </div>
       </ion-col>
 
