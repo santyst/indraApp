@@ -21,7 +21,7 @@ const api = (params?: ApiParams) => {
     baseURL: params?.url ? params.url : URL_API,
     timeout: 60000,
     headers: { Accept: 'application/vnd.github.v3+json' },
-    params: {  apiKey: 'cfdc7593-7124-4e9e-b078-f44c18cacef4' }
+    params: {  apiKey: 'KErCGXtKF-MGFBe1zwvuhokNVTcyLaOTjwitc4AXsuj6rvDto3yDPjhUpRHOuU1SMjSw2jCztkANGxtwC7IbTg' }
   });
 
   if (params?.headers) {

@@ -1,7 +1,7 @@
 /**
  * @description URL de la api de qaingenieros
  */
-export const URL_API = 'https://bio01.qaingenieros.com/api/';
+export const URL_API = 'https://tstbio01.ecopetrol.com.co/api/';
 
 /**
  * @description este tiempo esta dado en milisegundos y es usado por las
