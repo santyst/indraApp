@@ -7,7 +7,7 @@ import { NgStyle } from '@angular/common';
 import { AuthService } from '@services/auth.service';
 
 // Constants
-import { TIME_ANIMATION_GENERAL, TIME_DELAY_GENERAL } from '@constantsAPP';
+import { TIME_ANIMATION_GENERAL, TIME_DELAY_GENERAL } from '@app/configs/constants';
 
 @Component({
   selector: 'app-container',

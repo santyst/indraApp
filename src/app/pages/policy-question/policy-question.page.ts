@@ -20,7 +20,7 @@ import { AuthService } from '@services/auth.service';
 import PolicyQuestionProvider from '@services/api/policyQuestion';
 
 // Constants
-import { TIME_ANIMATION_GENERAL } from '@constantsAPP';
+import { TIME_ANIMATION_GENERAL } from '@app/configs/constants';
 
 const URL_PATH = 'src/app/pages/policy-question/policy-question.page.ts';
 
