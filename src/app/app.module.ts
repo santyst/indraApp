@@ -17,7 +17,7 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { Network } from '@ionic-native/network/ngx';
-
+import { Device } from '@ionic-native/device/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +30,7 @@ import { Network } from '@ionic-native/network/ngx';
     Camera,
     SQLitePorter,
     SQLite,
+    Device,
     UniqueDeviceID,
     Network,
     AppVersion,
