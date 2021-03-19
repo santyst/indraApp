@@ -5,9 +5,12 @@
   --ion-text-color: black;
 }
 
-h1 {
-  font-size: 39px;
+h2 {
+  font-size: 30px;
   text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  color: white;
 }
 
 ion-content {
@@ -87,8 +90,13 @@ ion-item {
 }
 
 @media (min-width: 600px) and (min-height: 850px) {
-  h1 {
-    font-size: 50px;
+  h2 {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 5px;
+    color: white;
+    font-weight: bold;
+    font-style: italic;
   }
   ion-item {
     margin: 0 50px;
