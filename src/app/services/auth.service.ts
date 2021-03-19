@@ -4,9 +4,10 @@ import { Storage } from '@ionic/storage';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { take, map, switchMap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { UrlBaseService } from './url-base.service';
 
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'jwt-token';
@@ -21,11 +22,14 @@ export class AuthService {
   respuesta: any;
   respuestaF = false;
   userInfo: any;
-  AuthUrl = `https://bio01.qaingenieros.com/api/sec/autenticar_usuario`;
+  AuthUrl = `sec/autenticar_usuario`;
+  BaseUrl: any;
+  VerifyUrl = `sec/verificar_usuario`;
 
   constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router,
-              private alertCtrl: AlertController) { 
+              private alertCtrl: AlertController, private url: UrlBaseService) { 
     this.loadStoredToken();
+    this.BaseUrl = this.url.getUrlBase();
   }
 
   loadStoredToken() {
@@ -49,14 +53,14 @@ export class AuthService {
 
   login(credenciales: {client_id: string, client_secret: string }) {
    let data: Observable<any>;
-    data = this.http.post(`${this.AuthUrl}`, credenciales);
+    data = this.http.post(`${this.BaseUrl}${this.AuthUrl}`, credenciales);
     data.subscribe((res: any) => {
       this.respuestaF = res.success;
       this.respuesta = {
         token: res.token,
         expiresin: res.expiresin
       }
-      this.userInfo = this.respuesta;
+     this.userInfo = this.respuesta;
     }, res => {}, async() => {
       if (this.respuestaF === false || credenciales.client_id === '' || credenciales.client_secret === '') {
         console.log(': ', this.respuestaF);
@@ -69,12 +73,12 @@ export class AuthService {
         await alert.present();
         return of(null);
       }else{
-        this.respuestaF = true; 
+        this.respuestaF = true;
         console.log('this.respuesta: ', this.respuesta, this.respuestaF);
       }
     });
     
-    return this.http.post(`${this.AuthUrl}`, credenciales).pipe(
+    return this.http.post(`${this.BaseUrl}${this.AuthUrl}`, credenciales).pipe(
       take(1),
       map((res: any) => {
         return `${res.token}`;
@@ -92,11 +96,11 @@ export class AuthService {
       
     );
   }
- 
+
   getUser() {
     return this.userInfo;
   }
- 
+
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
       this.router.navigateByUrl('/login');
