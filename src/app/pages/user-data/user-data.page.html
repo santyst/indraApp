@@ -4,59 +4,85 @@
       <ion-col size="12">
         <button (click)="logOut()" class="logout">Salir</button>
         <div class="header" #headerLogin>
-          <ion-icon src="assets/svg/logoEcopetrolLight.svg" [ngStyle]="{ 'height.px': styleSvgs.heightLogo, 'width.px': styleSvgs.widthLogo }" class="svg-ecopetrol"></ion-icon>
+          <ion-icon src="assets/svg/logoEcopetrolLight.svg"
+            [ngStyle]="{ 'height.px': styleSvgs.heightLogo, 'width.px': styleSvgs.widthLogo }" class="svg-ecopetrol">
+          </ion-icon>
         </div>
       </ion-col>
       <ion-col size="11" class="container" #containerLogin>
-        <ion-icon src="assets/svg/loginHeader.svg" class="svg-header-form" [ngStyle]="{ 'height.px': styleSvgs.heightHeader, 'width.px': styleSvgs.widthHeader }"></ion-icon>
+        <h2>INICIA TU REGISTRO BIOMÉTRICO</h2>
         <form [formGroup]="datasForm" class="form-user-data">
+
           <ion-item lines="none">
-            <ion-input formControlName="FirstName" placeholder="Nombre:" [(ngModel)]="userData.firstName" type="text">
+            <ion-input formControlName="FirstName" placeholder="Nombres:" [(ngModel)]="userData.firstName" type="text"
+              [ngClass]="{input1: FirstName.hasError('required') && (FirstName.dirty || FirstName.touched)}">
             </ion-input>
           </ion-item>
+
           <ion-item lines="none">
-            <ion-input formControlName="LastName" placeholder="Apellido:" [(ngModel)]="userData.lastName" type="text">
+            <ion-input formControlName="LastName" placeholder="Apellidos:" [(ngModel)]="userData.lastName" type="text"
+              [ngClass]="{input1: LastName.hasError('required') && (LastName.dirty || LastName.touched)}">
             </ion-input>
           </ion-item>
+
           <ion-item lines="none">
-            <ion-select placeholder="Tipo de documento" formControlName="tipo_documento"
-              interface="popover" [(ngModel)]="userData.tipoDoc">
+            <ion-input  maxlength="13" formControlName="ssno" placeholder="Número de registro de Ecopetrol:"
+              [(ngModel)]="userData.ssno" type="text" autocapitalize="characters"
+              [ngClass]="{input1: ssno.hasError('required') && (ssno.dirty || ssno.touched)}">
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-select placeholder="Tipo de documento de identidad" formControlName="tipo_documento" interface="alert"
+              [(ngModel)]="userData.tipoDoc" cancelText="Cancelar" okText="Ok"
+              [ngClass]="{select1: tipo_documento.hasError('required') && (tipo_documento.dirty || tipo_documento.touched)}">
               <ion-select-option *ngFor="let type of documentTypes">{{type.data.code}}</ion-select-option>
             </ion-select>
           </ion-item>
+
           <ion-item lines="none">
-            <ion-input formControlName="documento" placeholder="Número de documento:" [(ngModel)]="userData.documento" type="number">
+            <ion-input formControlName="documento" placeholder="Número de documento de identidad:"
+              [(ngModel)]="userData.documento" type="number"
+              [ngClass]="{input1: documento.hasError('required') && (documento.dirty || documento.touched)}">
             </ion-input>
           </ion-item>
-          <ion-item lines="none">
-            <ion-input formControlName="ssno" placeholder="Número de registro de Ecopetrol:" [(ngModel)]="userData.ssno" type="text"></ion-input>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-select placeholder="Empresa" formControlName="empresa"
-              interface="popover" [(ngModel)]="userData.empresa">
-              <ion-select-option *ngFor="let empresa of empresasArr" [value]="empresa.codigo">{{empresa.descripcion}}</ion-select-option>
+
+          <!-- <ion-item lines="none">
+            <ion-select placeholder="Empresa" formControlName="empresa" interface="alert" [(ngModel)]="userData.empresa"
+              cancelText="Cancelar" okText="Ok"
+              [ngClass]="{select1: empresa.hasError('required') && (empresa.dirty || empresa.touched)}">
+              <ion-select-option *ngFor="let empresa of empresasArr" [value]="empresa.codigo">{{empresa.descripcion}}
+              </ion-select-option>
             </ion-select>
           </ion-item>
+
           <ion-item lines="none">
-            <ion-select placeholder="Regional" formControlName="regional"
-              interface="popover" [(ngModel)]="userData.regional" (ionChange)="EventRegional($event)">
-              <ion-select-option *ngFor="let region of regionalesArr" [value]="region.codigo">{{region.descripcion}}</ion-select-option>
+            <ion-select placeholder="Regional" formControlName="regional" cancelText="Cancelar" okText="Ok"
+              interface="alert" [(ngModel)]="userData.regional" (ionChange)="EventRegional($event)"
+              [ngClass]="{select1: regional.hasError('required') && (regional.dirty || regional.touched)}">
+              <ion-select-option *ngFor="let region of regionalesArr" [value]="region.codigo">{{region.descripcion}}
+              </ion-select-option>
             </ion-select>
           </ion-item>
+
           <ion-item lines="none">
-            <ion-select placeholder="Instalación" formControlName="instalacion"
-              interface="popover" [(ngModel)]="userData.instalacion" [disabled]="instalacionShow === false">
-              <ion-select-option *ngFor="let instalacion of instalacionesArr" [value]="instalacion.codigo">{{instalacion.descripcion}}</ion-select-option>
+            <ion-select placeholder="Instalación" formControlName="instalacion" cancelText="Cancelar" okText="Ok"
+              interface="alert" [(ngModel)]="userData.instalacion" [disabled]="instalacionShow === false"
+              [ngClass]="{select1: instalacion.hasError('required') && (instalacion.dirty || instalacion.touched)}">
+              <ion-select-option *ngFor="let instalacion of instalacionesArr" [value]="instalacion.codigo">
+                {{instalacion.descripcion}}</ion-select-option>
             </ion-select>
-          </ion-item>
-          <ion-button expand="block" [disabled]="!datasForm.valid" class="boton-register" (click)="sendUser()">Registrar
+          </ion-item> -->
+
+          <ion-button expand="block" [disabled]="!datasForm.valid" class="boton-register" (click)="sendUser()">Continuar
           </ion-button>
         </form>
       </ion-col>
       <ion-col size="12">
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="documentTypes.length === 0" class="spinner-container" [ngStyle]="{ 'height.px': styleSvgs.windowH, 'width.px': styleSvgs.windowW }">
+    <ion-row *ngIf="documentTypes.length === 0" class="spinner-container"
+      [ngStyle]="{ 'height.px': styleSvgs.windowH, 'width.px': styleSvgs.windowW }">
       <div class="spinner" [ngStyle]="{ 'height.px': styleSvgs.hL, 'width.px': styleSvgs.wL }"></div>
     </ion-row>
   </ion-grid>

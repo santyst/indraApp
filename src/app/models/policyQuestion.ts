@@ -63,7 +63,7 @@ class PolicyQuestion {
         version: data.version,
         question: data.pregunta,
         type: data.tipo,
-        accept: undefined
+        accept: data.tipo === 1 ? true: undefined
       };
       return formattedData;
     } catch (err) {

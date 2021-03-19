@@ -7,6 +7,8 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { HttpClient } from '@angular/common/http';
 import { Network } from '@ionic-native/network/ngx';
+import { UrlBaseService } from '@app/services/url-base.service';
+import { EnroladosService } from '@app/services/enrolados.service';
 
 
 @Component({
@@ -23,9 +25,13 @@ export class ConfirmDataPage implements OnInit {
   documentType = [];
   uniqueDeviceId: any
   protected app_version: string;
+  BaseUrl: any;
 
   constructor(private db: DatabaseService, private route: ActivatedRoute, private router: Router, private alertCtrl: AlertController,
-              private appVersion: AppVersion, private udid: UniqueDeviceID, private http: HttpClient, private network: Network) { }
+              private appVersion: AppVersion, private udid: UniqueDeviceID, private http: HttpClient, private network: Network,
+              private url: UrlBaseService, private enrolamientosService: EnroladosService) { 
+                this.BaseUrl = this.url.getUrlBase();
+              }
 
   ngOnInit() {
     this.appVersion.getVersionNumber().then(versionNumber => {
@@ -85,6 +91,8 @@ export class ConfirmDataPage implements OnInit {
   }
 
   async sendUser() {
+    let user = window.localStorage.getItem('active-user');
+    console.log('user: ', user);
     let fecha = moment().format('YYYY-MM-DD');
     let hora = moment().format('LTS');
 
@@ -92,95 +100,28 @@ export class ConfirmDataPage implements OnInit {
       Fecha: fecha,
       Hora: hora,
       versionTxt: '0.1',
-      Usuario_activo: 'Santiago',
+      Usuario_activo: user,
       app_version: this.app_version,
       udid: this.uniqueDeviceId
     }
     this.userData.metadatos = JSON.stringify(metaDatos);
     this.userPost.Metadatos = JSON.stringify(metaDatos);
     console.log(this.userPost);
-    /*this.http.post('https://bio01.qaingenieros.com/api/enrol/create_enrol', this.userPost).subscribe(res => {
+    /*this.http.post(`${this.BaseUrl}enrol/create_enrol`, this.userPost).subscribe(res => {
       console.log(res);
     })*/
     if(this.network.type !== 'none'){
     this.db.addUserData(this.userData.firstName, this.userData.lastName, this.userData.tipoDoc, this.userData.documento, JSON.stringify(this.userData.aceptaTerminos),
       this.userData.ssno, this.userData.imagen, this.userData.metadatos, this.userData.empresa, this.userData.regional, this.userData.instalacion, this.userData.origen, this.userData.step_enrol).then(_ => {
-        
-        this.userData = {
-          firstName: '',
-          lastName: '',
-          tipoDoc: '',
-          documento: '',
-          aceptaTerminos: '',
-          ssno: '',
-          image: '',
-          metadatos: {},
-          empresa: '',
-          regional: '',
-          instalacion: '',
-          origen: '',
-          step_enrol: ''
-        };
-        this.userPost = {
-          firstName: '',
-          lastName: '',
-          tipoDocumento: '',
-          documento: '',
-          aceptaTerminos: '',
-          ssno: '',
-          image: '',
-          metadatos: '',
-          empresa: '',
-          regional: '',
-          instalacion: '',
-          origen: '',
-          step_enrol: ''
-          /* ciudadOrigen: '',
-          ssno: '',
-          ciudad: '',
-          idStatus: '',
-          status: '', */
-        };
+        this.userData = {};
+        this.userPost = {};
+        this.enrolamientosService.enrol();
       });
     }else{
       this.db.addUserData(this.userData.firstName, this.userData.lastName, this.userData.tipoDoc, this.userData.documento, JSON.stringify(this.userData.aceptaTerminos),
       this.userData.ssno, this.userData.image, this.userData.metadatos, this.userData.empresa, this.userData.regional, this.userData.instalacion, this.userData.origen, this.userData.step_enrol).then(_ => {
-        
-        this.userData = {
-          firstName: '',
-          lastName: '',
-          tipoDoc: '',
-          documento: '',
-          aceptaTerminos: '',
-          ssno: '',
-          image: '',
-          metadatos: {},
-          empresa: '',
-          regional: '',
-          instalacion: '',
-          origen: '',
-          step_enrol: ''
-        };
-        this.userPost = {
-          firstName: '',
-          lastName: '',
-          tipoDocumento: '',
-          documento: '',
-          aceptaTerminos: '',
-          ssno: '',
-          image: '',
-          metadatos: '',
-          empresa: '',
-          regional: '',
-          instalacion: '',
-          origen: '',
-          step_enrol: ''
-          /* ciudadOrigen: '',
-          ssno: '',
-          ciudad: '',
-          idStatus: '',
-          status: '', */
-        };
+        this.userData = {};
+        this.userPost = {};
       });
     }
     const alert = await this.alertCtrl.create({
@@ -193,20 +134,6 @@ export class ConfirmDataPage implements OnInit {
   }
   dontSendUser() {
     this.router.navigate(['user-data']);
-    this.userData = {
-      FirstName: '',
-      LastName: '',
-      tipo_documento: '',
-      documento: '',
-      acepta_terminos: '',
-      ssno: '',
-      imageUrl: '',
-      metaDatos: {},
-      empresa: '',
-      regional: '',
-      instalacion: '',
-      origen: '',
-      step_enrol: ''
-    };
+    this.userData = {};
   }
 }

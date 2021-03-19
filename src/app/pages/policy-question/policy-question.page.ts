@@ -4,10 +4,11 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AnimationController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { AppVersion } from '@ionic-native/app-version/ngx';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
-import { Storage } from '@ionic/storage';
+/* import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+ */import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
 import { EnroladosService } from '../../services/enrolados.service';
+import { Device } from '@ionic-native/device/ngx';
 
 // DataBase
 import { DatabaseService } from '@services/database.service';
@@ -115,7 +116,8 @@ export class PolicyQuestionPage implements OnInit {
     private animationCtrl: AnimationController,
     private appVersion: AppVersion,
     private db: DatabaseService,
-    private udid: UniqueDeviceID,
+/*     private udid: UniqueDeviceID,
+ */    private device: Device,
     private storage: Storage,
     private auth: AuthService,
     private enroladosService: EnroladosService
@@ -140,9 +142,10 @@ export class PolicyQuestionPage implements OnInit {
       this.appV = versionNumber;
     });
 
-    this.udid.get().then((uuid: any) => {
+    /* this.udid.get().then((uuid: any) => {
       this.uniqueDeviceId = uuid;
-    });
+    }); */
+    this.uniqueDeviceId = this.device.uuid;
 
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -155,7 +158,7 @@ export class PolicyQuestionPage implements OnInit {
           tipoDoc: this.user.tipoDoc,
           documento: JSON.stringify(this.user.documento),
           policyQuestions: "",
-          ssno: JSON.stringify(this.user.ssno),
+          ssno: this.user.ssno,
           imageUrl: "",
           metadatos: {},
           empresa: this.user.empresa,
@@ -399,7 +402,8 @@ export class PolicyQuestionPage implements OnInit {
     this.userData.policyQuestions = this.questions.map((res) =>
       res.reponseServer()
     );
-    const isAcceptAllPolicyQuestions = this.questions.every(
+
+    const isAcceptAllPolicyQuestions = this.questions.filter(question => question.data.type !== 1).every(
       (question) => question.data.accept === true
     );
     // this.userData.acepta_terminos = JSON.parse(this.terminos);
@@ -412,14 +416,16 @@ export class PolicyQuestionPage implements OnInit {
       this.router.navigate(["private-data"], navigationExtras);
       console.log(URL_PATH, "processForm()", "this.userData", this.userData);
     } else {
+      let user = window.localStorage.getItem('active-user');
+      console.log('user: ', user);
+      
       const fecha = moment().format("YYYY-MM-DD");
       const hora = moment().format("LTS");
 
       const metaDatos = {
         Fecha: fecha,
         Hora: hora,
-        versionTxt: "0.1",
-        Usuario_activo: "Santiago",
+        Usuario_activo: user,
         app_version: this.appV,
         udid: this.uniqueDeviceId,
       };
@@ -444,6 +450,21 @@ export class PolicyQuestionPage implements OnInit {
           this.userData.step_enrol
         )
         .then((_) => {
+          this.userData = {
+            firstName: '',
+            lastName: '',
+            tipoDoc: '',
+            documento: '',
+            policyQuestions: '',
+            ssno: '',
+            imageUrl: '',
+            metadatos: '',
+            empresa: 0,
+            instalacion: 0,
+            regional: 0,
+            origen: 0,
+            step_enrol: 0,
+          }
           this.enroladosService.enrol();
         });
 
@@ -453,7 +474,7 @@ export class PolicyQuestionPage implements OnInit {
     }
   }
 
-  logOut(){
+  logOut() {
     this.auth.logout();
   }
 }

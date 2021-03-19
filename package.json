@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "5.2.11",
     "@angular/common": "~10.0.0",
     "@angular/core": "~10.0.0",
     "@angular/forms": "~10.0.0",
@@ -23,6 +24,7 @@
     "@ionic-native/app-version": "^5.30.0",
     "@ionic-native/camera": "^5.30.0",
     "@ionic-native/core": "^5.0.0",
+    "@ionic-native/device": "^5.31.1",
     "@ionic-native/file-transfer": "^5.30.0",
     "@ionic-native/network": "^5.30.0",
     "@ionic-native/splash-screen": "^5.0.0",
