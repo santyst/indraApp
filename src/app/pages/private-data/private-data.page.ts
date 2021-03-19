@@ -11,6 +11,8 @@ import * as moment from 'moment';
 import { DatabaseService } from '@app/services/database.service';
 import { FormBuilder } from '@angular/forms';
 import { Network } from '@ionic-native/network/ngx';
+import { UrlBaseService } from '@app/services/url-base.service';
+import { EnroladosService } from '@app/services/enrolados.service';
 
 @Component({
   selector: "app-private-data",
@@ -37,9 +39,10 @@ export class PrivateDataPage implements OnInit {
   appV: string;
   uniqueDeviceId: string;
   userPost: any;
+  BaseUrl: any;
 
   constructor(
-    private toast: ToastController,
+    private enrolamientosService: EnroladosService,
     private camera: Camera,
     private http: HttpClient,
     private fileTransfer: FileTransfer,
@@ -51,8 +54,11 @@ export class PrivateDataPage implements OnInit {
     private loadingController: LoadingController,
     private auth: AuthService,
     private appVersion: AppVersion,
-    private udid: UniqueDeviceID
-  ) {}
+    private udid: UniqueDeviceID,
+    private url: UrlBaseService
+  ) {
+    this.BaseUrl = this.url.getUrlBase();
+  }
 
   ngOnInit() {
     this.appVersion.getVersionNumber().then((versionNumber) => {
@@ -237,7 +243,7 @@ console.log(': no hay conexión: ', this.network.type);
 
     Transfer.upload(
       this.userData.image,
-      `https://bio01.qaingenieros.com/api/img?apiKey=${this.apiKey}`,
+      `${this.BaseUrl}img`,
       options
     ).then(
       async (data) => {
@@ -303,6 +309,8 @@ console.log(': no hay conexión: ', this.network.type);
 
 
   async sendUser() {
+    let user = window.localStorage.getItem('active-user');
+    console.log('user: ', user);
     const fecha = moment().format("YYYY-MM-DD");
     const hora = moment().format("LTS");
 
@@ -310,7 +318,7 @@ console.log(': no hay conexión: ', this.network.type);
       Fecha: fecha,
       Hora: hora,
       versionTxt: "0.1",
-      Usuario_activo: "Santiago",
+      Usuario_activo: user,
       app_version: this.appV,
       udid: this.uniqueDeviceId
     };
@@ -318,7 +326,7 @@ console.log(': no hay conexión: ', this.network.type);
     this.userPost.metadatos = JSON.stringify(metaDatos);
     this.userPost.image = this.base64_3;
     console.log(this.userData);
-    /*this.http.post('https://bio01.qaingenieros.com/api/enrol/create_enrol', this.userPost).subscribe(res => {
+    /*this.http.post(`${this.BaseUrl}enrol/create_enrol`, this.userPost).subscribe(res => {
       console.log(res);
     })*/
     if(this.network.type !== 'none'){
@@ -339,36 +347,9 @@ console.log(': no hay conexión: ', this.network.type);
         this.userData.step_enrol
       )
       .then((_) => {
-        this.userData = {
-          firstName: "",
-          lastName: "",
-          tipoDoc: "",
-          documento: "",
-          aceptaTerminos: "",
-          ssno: "",
-          image: "",
-          metadatos: {},
-          empresa: "",
-          regional: '',
-          instalacion: '',
-          origen: "",
-          step_enrol: ''
-        };
-        this.userPost = {
-          firstName: "",
-          lastName: "",
-          tipoDocumento: "",
-          documento: "",
-          aceptaTerminos: "",
-          ssno: "",
-          image: "",
-          metadatos: "",
-          empresa: "",
-          regional: "",
-          instalacion: "",
-          origen: "",
-          step_enrol: ''
-        };
+        this.userData = {};
+        this.userPost = {};
+        this.enrolamientosService.enrol();
       });
     }else{
       this.db
@@ -388,36 +369,8 @@ console.log(': no hay conexión: ', this.network.type);
         this.userData.step_enrol
       )
       .then((_) => {
-        this.userData = {
-          firstName: "",
-          lastName: "",
-          tipoDoc: "",
-          documento: "",
-          aceptaTerminos: "",
-          ssno: "",
-          image: "",
-          metadatos: {},
-          empresa: "",
-          regional: '',
-          instalacion: '',
-          origen: "",
-          step_enrol: ''
-        };
-        this.userPost = {
-          firstName: "",
-          lastName: "",
-          tipoDocumento: "",
-          documento: "",
-          aceptaTerminos: "",
-          ssno: "",
-          image: "",
-          metadatos: "",
-          empresa: "",
-          regional: "",
-          instalacion: "",
-          origen: "",
-          step_enrol: ''
-        };
+        this.userData = {};
+        this.userPost = {};
       });
       }
     const alert = await this.alertCtrl.create({

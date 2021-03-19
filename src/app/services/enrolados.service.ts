@@ -7,6 +7,7 @@ import { DatabaseService, User } from './database.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { UrlBaseService } from './url-base.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,21 +22,33 @@ export class EnroladosService {
   cameraPhoto = false; 
   respuesta: any;
   imgStatus: any;
-  apiKey = 'cfdc7593-7124-4e9e-b078-f44c18cacef4';
+  apiKey = 'KErCGXtKF-MGFBe1zwvuhokNVTcyLaOTjwitc4AXsuj6rvDto3yDPjhUpRHOuU1SMjSw2jCztkANGxtwC7IbTg';
   imgURL = `http://bio01.qaingenieros.com:5000/base64`;
   base64: any;
   base64_1: any;
   motivos: any;
   estado: any;
+  BaseUrl: any;
+
   constructor(private db: DatabaseService,
     public network: Network,
     private http: HttpClient,
     private alertCtrl: AlertController,
     private camera: Camera,
     private fileTransfer: FileTransfer,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController, 
+    private url: UrlBaseService) { 
+      this.BaseUrl = this.url.getUrlBase();
+      this.db.getDatabaseState().subscribe((ready: any) => {
+        if(ready){
+          this.db.getUsers().subscribe((usuarios) => {
+          this.users = usuarios;
+          });
+        }
+      })
+    }
 
-    enrol() {
+     /* enrol() {
       if (this.network.type !== 'none' && this.statusRequest && this.cameraPhoto == false) {
         console.log(this.network.type)
        let sub = this.db.getDatabaseState().subscribe(rdy => {
@@ -103,10 +116,10 @@ export class EnroladosService {
                     ciudad: 'Bogota',
                     ssno: `${us.tipo_documento}${us.documento.toString()}`,
                     idStatus: '',
-                    status: '', */
+                    status: '',
                   };
                   console.log(this.userPost);
-                   this.http.post(`https://bio01.qaingenieros.com/api/enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(async res => {
+                   this.http.post(`${this.BaseUrl}enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(async res => {
                     this.respuesta = res;
                     this.respuesta1 = this.respuesta.success;
                     console.log(this.respuesta);
@@ -134,7 +147,93 @@ export class EnroladosService {
       } else {
         console.log('no hay conexion');
       }
-  }
+  } */
+
+  enrol(){
+    setTimeout(async() => {
+      console.log(': users', this.users);
+      if (this.network.type !== 'none' && this.statusRequest && this.cameraPhoto == false) {
+        console.log(this.network.type);
+        if (this.users.length > 0 && this.network.type !== 'none'){
+          this.statusRequest = false;
+          for await (let us of this.users) {
+            var n = us.imageUrl.includes('base64');
+            if(n === true) {
+              console.log(': ',us);
+              let postImg = {
+                img: us.imageUrl,
+                doc: us.documento
+              }
+              this.http.post(`${this.imgURL}`, postImg).subscribe(async (res: any) => {
+                this.imgStatus = res.status;
+                 if(this.imgStatus === 'rechazado'){
+                    const alert = await this.alertCtrl.create({
+                      backdropDismiss: false,
+                      header: `La fotografía de ${us.firstName} ${us.lastName} con ${us.tipoDoc} #${us.documento} ha sido rechazada, por favor tome una nueva.`,
+                      buttons: [
+                      {text: 'Capturar',
+                       handler: (data) => {
+                         this.captureAgain(us);  
+                       }
+                      },
+                      {text: 'Posponer'}],
+                      mode: "ios",
+                    });
+                    await alert.present();
+                }else{
+                  us.imageUrl = res.image;
+                  this.db.updateUser(us);
+                } 
+              });
+            }else{
+  
+            this.userPost = {
+              firstName: us.firstName,
+              lastName: us.lastName,
+              tipoDoc: us.tipoDoc,
+              documento: us.documento,
+              aceptaTerminos: JSON.parse(us.aceptaTerminos),
+              ssno: us.ssno,
+              image: us.imageUrl,
+              metadatos: us.metadatos,
+              empresa: us.empresa,
+              regional: us.regional,
+              instalacion: us.instalacion,
+              origen: us.origen,
+              step_enrol: us.step_enrol
+             /*  ciudadOrigen: 'Bogota',
+              ciudad: 'Bogota',
+              ssno: `${us.tipo_documento}${us.documento.toString()}`,
+              idStatus: '',
+              status: '',*/
+            };
+            console.log(this.userPost);
+             this.http.post(`${this.BaseUrl}enrol/create_enrol?apiKey=${this.apiKey}`, this.userPost).subscribe(async res => {
+              this.respuesta = res;
+              this.respuesta1 = this.respuesta.success;
+              console.log(this.respuesta);
+  
+              if (this.respuesta1 === true) {
+                console.log('datos subidos');
+                this.userPost = {};
+                this.db.deleteUser(us.userId).then(_ => {
+  
+                });
+              }
+            }); 
+            }
+           // break;
+          }
+          this.statusRequest = true;
+        }else {
+          this.statusRequest = true;
+          console.log('el arreglo local es vacio');
+        } 
+      }else{
+        console.log('No hay conexión');
+      }
+    }, 2000);
+    }
 
   captureAgain(user: User){
     this.cameraPhoto = true;
@@ -181,7 +280,7 @@ export class EnroladosService {
 
     Transfer.upload(
       imagenFile,
-      `https://bio01.qaingenieros.com/api/img?apiKey=${this.apiKey}`,
+      `${this.BaseUrl}img?apiKey=${this.apiKey}`,
       options
     ).then(
       async (data) => {
@@ -230,4 +329,5 @@ export class EnroladosService {
       }
     );
   }
+  
 }
