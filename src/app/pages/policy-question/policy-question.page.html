@@ -15,13 +15,12 @@
 
       <ion-col size="10" class="container" #headerPolicyQuestion>
         <div class="ion-padding">
-          <h2 class="ion-text-justify" #titleQuestion>{{questionCurrent.data.question}}</h2>
-
-          <p class="ion-text-justify" #descriptionQuestion>{{questionCurrent.data.text}}</p>
+          <div [innerHTML]="questionCurrent.data.question"></div>
+          <div class="div-question" [innerHTML]="questionCurrent.data.text | sanitizeHtml"></div>
 
           <strong #versionQuestion>v. {{questionCurrent.data.version }}</strong>
 
-          <ion-radio-group allowEmptySelection="true" value="{{questionCurrent.data.accept}}" (ionChange)="handleAccept($event)" *ngIf="index !== 0">
+          <ion-radio-group allowEmptySelection="true" value="{{questionCurrent.data.accept}}" (ionChange)="handleAccept($event)" *ngIf="index === 0">
             <ion-item slot="start" lines="none">
               <ion-radio slot="start" value=true mode="md"></ion-radio>
               <p>Si acepto</p>
@@ -36,16 +35,19 @@
           </ion-radio-group>
         </div>
 
-        <div *ngIf="index == 0">
+        <div *ngIf="index == 0 && questions.length !== 1">
           <ion-button expand="full" fill="solid" (click)="handleIndex(true)" mode="ios">Siguiente</ion-button>
         </div>
-        <div class="button-navigation" *ngIf="index + 1 != questions.length && index != 0">
+        <div class="button-navigation" *ngIf="index + 1 != questions.length && index != 0 && questions.length !== 1">
           <ion-button class="btn-line" fill="solid" (click)="handleIndex(false)" mode="ios">Anterior</ion-button>
           <ion-button class="btn-line" fill="solid" disabled="{{isDisableNext}}" (click)="handleIndex(true)" mode="ios">Siguiente</ion-button>
         </div>
-        <div  *ngIf="index + 1 == questions.length">
+        <div  *ngIf="index + 1 == questions.length && questions.length !== 1">
           <ion-button class="btn-line" fill="solid" (click)="handleIndex(false)" mode="ios">Anterior</ion-button>
           <ion-button class="btn-line" fill="solid" disabled="{{isDisableNext}}" (click)="processForm()" mode="ios"> Enviar</ion-button>
+        </div>
+        <div *ngIf="questions.length === 1">
+          <ion-button expand="full" fill="solid" disabled="{{isDisableNext}}" (click)="processForm()" mode="ios"> Enviar</ion-button>
         </div>
       </ion-col>
 

@@ -108,3 +108,40 @@
     font-size: 20px;
     color: white;
   }
+
+// usado styles policy-question para el html de las preguntas que llegan
+.div-question {
+  color: white;
+  font-size: 20px !important;
+  h1 {
+    font-size: 20px !important;
+    strong {
+      span {
+        font-size: 20px !important;
+      }
+    }
+  }
+
+  p {
+    font-size: 18px !important;
+  }
+}
+
+@media (min-width: 600px) and (min-height: 850px) {
+  .div-question {
+    color: white;
+    font-size: 28px !important;
+    h1 {
+      font-size: 30px !important;
+      strong {
+        span {
+          font-size: 30px !important;
+        }
+      }
+    }
+
+    p {
+      font-size: 28px !important;
+    }
+  }
+}

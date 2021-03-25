@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
+import { SanitizeHtmlPipeModule } from '../../pipes/sanitize-html/sanitize-html-pipe.module';
+
 import { PolicyQuestionPageRoutingModule } from './policy-question-routing.module';
 
 import { PolicyQuestionPage } from './policy-question.page';
@@ -14,7 +16,8 @@ import { PolicyQuestionPage } from './policy-question.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    PolicyQuestionPageRoutingModule
+    PolicyQuestionPageRoutingModule,
+    SanitizeHtmlPipeModule
   ],
   declarations: [PolicyQuestionPage]
 })
