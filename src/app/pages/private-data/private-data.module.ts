@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 // Components
-import { ContainerComponent } from '@components/container/container.component';
+import { ContainerModule } from '@components/container/container.module';
 
 import { PrivateDataPageRoutingModule } from './private-data-routing.module';
 
@@ -18,8 +18,9 @@ import { PrivateDataPage } from './private-data.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
+    ContainerModule,
     PrivateDataPageRoutingModule
   ],
-  declarations: [PrivateDataPage, ContainerComponent]
+  declarations: [PrivateDataPage]
 })
 export class PrivateDataPageModule {}

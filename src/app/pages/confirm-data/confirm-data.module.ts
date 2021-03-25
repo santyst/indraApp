@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 // Components
-import { ContainerComponent } from '@components/container/container.component';
+import { ContainerModule } from '@components/container/container.module';
 
 import { ConfirmDataPageRoutingModule } from './confirm-data-routing.module';
 
@@ -16,8 +16,9 @@ import { ConfirmDataPage } from './confirm-data.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ConfirmDataPageRoutingModule
+    ContainerModule,
+    ConfirmDataPageRoutingModule,
   ],
-  declarations: [ConfirmDataPage, ContainerComponent]
+  declarations: [ConfirmDataPage],
 })
 export class ConfirmDataPageModule {}
