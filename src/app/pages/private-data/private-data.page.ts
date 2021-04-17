@@ -39,7 +39,7 @@ export class PrivateDataPage implements OnInit {
   appV: string;
   uniqueDeviceId: string;
   userPost: any;
-  BaseUrl: any;
+  BaseUrl: any; 
 
   constructor(
     private enrolamientosService: EnroladosService,
