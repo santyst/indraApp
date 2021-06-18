@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { AnimationController } from '@ionic/angular';
 import { EnroladosService } from '@app/services/enrolados.service';
 import * as moment from 'moment';
+import { DatabaseService } from '@app/services/database.service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,7 @@ export class LoginPage implements OnInit {
     client_secret: ''
   };
 
-  constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController, public network: Network,
+  constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController, public network: Network, public db: DatabaseService,
               private loadingController: LoadingController, private animationCtrl: AnimationController, private enrolamientos: EnroladosService) {
                 this.styleSvgs = {
                   widthLogo: (window.innerWidth / 4) * 3,
@@ -115,7 +116,24 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    this.auth.login(this.credenciales).
+    this.db.getUsersCred(this.credenciales.client_id, this.credenciales.client_secret).then(respuesta => {
+    console.log('respuesta: ', respuesta);
+    this.router.navigate(['user-data']);
+        this.credenciales = {
+          client_secret: '',
+          client_id: ''
+        };
+    window.localStorage.setItem('active-user', respuesta.nombre);
+    }).catch(async error => {
+      const alert = await this.alertCtrl.create({
+        header: 'Login Failed',
+        message: 'Credenciales invalidas',
+        buttons: ['OK'],
+        mode: 'ios'
+      });
+      await alert.present();
+    });
+    /* this.auth.login(this.credenciales).
     subscribe(async res => {
       if (res) {
         this.router.navigate(['user-data']);
@@ -151,7 +169,7 @@ export class LoginPage implements OnInit {
         });
         await alert.present();
       }
-    });
+    }); */
   }
 
 }
