@@ -59,7 +59,7 @@ export class UserDataPage implements OnInit {
   
   BaseUrl: any;
   VerifyUrl = `sec/verificar_usuario`;
-  empresas = `enrol/get-empresas?apiKey=`;
+/*   empresas = `enrol/get-empresas?apiKey=`; */
   regionales = `enrol/get-regionales?apiKey=`;
   instalaciones = `enrol/get-instalaciones?apiKey=`;
   base64 = "data:image/png;base64,";
@@ -71,6 +71,7 @@ export class UserDataPage implements OnInit {
   instalacionesArr: any;
   instalacionShow = false;
   userInfo: any;
+  Conectivity: any = false;
 
   get FirstName(){
     return this.datasForm.get('FirstName');
@@ -155,13 +156,30 @@ export class UserDataPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    setInterval(() => {
+     if(this.network.type !== 'none'){
+       this.Conectivity = true;
+     }else{
+       this.Conectivity = false;
+     }
+    }, 5000);
+    this.network.type
     this.instalacionShow = false;
-    this.userInfo = this.auth.getUser();
-    console.log('this.userInfo: ', this.userInfo);
+    this.db.getUsers().subscribe((usuarios) => {
+      this.userInfo = usuarios.length;
+      console.log('this.userInfo: ', this.userInfo);
+      });
+    this.network.onConnect().subscribe(connecting => {
+      this.db.getUsers().subscribe((usuarios) => {
+        this.userInfo = usuarios.length;
+        console.log('this.userInfo: ', this.userInfo);
+        });
+    })
     this.animationStart();
     if(this.network.type !== 'none'){
     console.log('this.network.type : ', this.network.type);
-    let jsonVoid = {};
+    
+    /* let jsonVoid = {};
     const headers1 = new HttpHeaders({
       'Authorization': 'Bearer ' + this.userInfo.token
     });
@@ -169,31 +187,31 @@ export class UserDataPage implements OnInit {
     this.userInfo.apiKey = res1.apiKey;
     console.log('res1: ', res1);
     window.localStorage.setItem('active-user', res1.name);
-    this.http.get(`${this.BaseUrl}${this.empresas}${this.apiKey}`).subscribe((company: any) => {
+    /* this.http.get(`${this.BaseUrl}${this.empresas}${this.apiKey}`).subscribe((company: any) => {
       this.empresasArr = company.data;
       this.storage.set(STOEMPRESA, this.empresasArr);
       console.log('this.empresasArr: ', this.empresasArr);
-    });
-    this.http.get(`${this.BaseUrl}${this.regionales}${this.apiKey}`).subscribe((region: any) => {
+    }); 
+     this.http.get(`${this.BaseUrl}${this.regionales}${this.apiKey}`).subscribe((region: any) => {
       this.regionalesArr = region.data;
       this.storage.set(STOREGIONAL, this.regionalesArr);
       console.log('this.regionalesArr: ', this.regionalesArr);
     });
     this.http.get(`${this.BaseUrl}${this.instalaciones}${this.apiKey}&regional=`).subscribe((region: any) => {
       this.storage.set(STOINSTALACION, region.data);
-    });
-  });
+    }); 
+  }); */
   }
     // this.enrolamientos.enrol();
      else {
-      this.storage.get(STOEMPRESA).then((empresa: any) => {
+      /* this.storage.get(STOEMPRESA).then((empresa: any) => {
         this.empresasArr = empresa;
         console.log('this.empresasArr: ', this.empresasArr);
-      });
-      this.storage.get(STOREGIONAL).then((regional: any) => {
+      }); */
+      /* this.storage.get(STOREGIONAL).then((regional: any) => {
         this.regionalesArr = regional;
         console.log('this.regionalesArr: ', this.regionalesArr);
-      });
+      }); */
     }
   }
 
@@ -208,7 +226,7 @@ export class UserDataPage implements OnInit {
     }
   } */
   // End lifecycle events
-  EventRegional(event) {
+ /*  EventRegional(event) {
     this.instalacionShow = true;
     this.userData.instalacion = 0;
     console.log('Seleccionaste la regional', event.target.value);
@@ -226,9 +244,9 @@ export class UserDataPage implements OnInit {
       });
       /* arregloInstalacion2.filter(inst => {
         console.log('inst: ', inst);
-      }) */
+      }) 
     }
-  }
+  } */
   /**
    * @description Se encarga de correr las animaciones de entrada de los
    * elementos del login.page
@@ -313,7 +331,7 @@ export class UserDataPage implements OnInit {
 
       console.log(URL_PATH, 'loadData()', 'err', err);
     }
-  }
+  } 
 
   sendUser() {
     const navigationExtras: NavigationExtras = {
