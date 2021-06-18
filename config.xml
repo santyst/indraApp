@@ -16,6 +16,7 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
+    <preference name="android-minSdkVersion" value="23" />
     <preference name="SplashScreen" value="none" />
     <preference name="SplashScreenDelay" value="0" />
     <platform name="android">
