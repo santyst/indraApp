@@ -1,7 +1,7 @@
 
 <app-container [styleContent]="stylesContainer" [conditionalContent]="this.userData">
   <div class="content">
-    <h2>Captura de datos</h2>
+    <h2>Imagen biométrica</h2>
     <ion-item class="options-container" size="11" lines="none" *ngIf="base64_2 === ''">
       <ion-button class="option-button" expand="block" fill="solid" (click)="takePhoto()" mode="ios">
         Tomar fotografía

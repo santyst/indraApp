@@ -44,6 +44,9 @@ export class EnroladosService {
           this.db.getUsers().subscribe((usuarios) => {
           this.users = usuarios;
           });
+          this.db.getCred().subscribe((cred) => {
+          console.log('cred: ', cred);
+          });
         }
       })
     }
@@ -157,7 +160,7 @@ export class EnroladosService {
         if (this.users.length > 0 && this.network.type !== 'none'){
           this.statusRequest = false;
           for await (let us of this.users) {
-            var n = us.imageUrl.includes('base64');
+            /* var n = us.imageUrl.includes('base64');
             if(n === true) {
               console.log(': ',us);
               let postImg = {
@@ -185,7 +188,7 @@ export class EnroladosService {
                   this.db.updateUser(us);
                 } 
               });
-            }else{
+            } *///else{
   
             this.userPost = {
               firstName: us.firstName,
@@ -221,7 +224,7 @@ export class EnroladosService {
                 });
               }
             }); 
-            }
+            //}
            // break;
           }
           this.statusRequest = true;
@@ -235,7 +238,7 @@ export class EnroladosService {
     }, 2000);
     }
 
-  captureAgain(user: User){
+ /*  captureAgain(user: User){
     this.cameraPhoto = true;
   console.log('user: ', user);
   const options: CameraOptions = {
@@ -259,8 +262,8 @@ export class EnroladosService {
     }
   );
   }
-
-  async uploadImage(imagenFile, user: User){
+ */
+  /* async uploadImage(imagenFile, user: User){
     const Transfer: FileTransferObject = this.fileTransfer.create();
     let options: FileUploadOptions = {
       fileKey: "file",
@@ -328,6 +331,6 @@ export class EnroladosService {
         console.log(err);
       }
     );
-  }
+  } */
   
 }

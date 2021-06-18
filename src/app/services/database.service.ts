@@ -24,6 +24,12 @@ export interface User {
   step_enrol: number;
 }
 
+export interface UserCred {
+  user: string;
+  pass: string;
+  nombre: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +38,7 @@ export class DatabaseService {
   private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   users = new BehaviorSubject([]);
+  usersCred = new BehaviorSubject([]);
   constructor(private plt: Platform, private sqlitePorter: SQLitePorter, private sqlite: SQLite, private http: HttpClient,
               ) {
     this.plt.ready().then(() => {
@@ -52,6 +59,7 @@ export class DatabaseService {
         this.sqlitePorter.importSqlToDb(this.database, sql)
           .then(_ => {
             this.loadUsers();
+            this.loadUsersCred();
             this.dbReady.next(true);
           })
           .catch(e => console.error(e));
@@ -65,6 +73,11 @@ export class DatabaseService {
   getUsers(): Observable<User[]> {
     return this.users.asObservable();
   }
+
+  getCred(): Observable<UserCred[]>{
+    return this.usersCred.asObservable();
+  }
+
   loadUsers() {
     return this.database.executeSql('SELECT * FROM Users', []).then(data => {
       let users: User[] = [];
@@ -92,6 +105,24 @@ export class DatabaseService {
       this.users.next(users);
     });
   }
+
+  loadUsersCred() {
+    return this.database.executeSql('SELECT * FROM Usuarios', []).then(data => {
+      let usersCred: UserCred[] = [];
+
+      if (data.rows.length > 0) {
+        for (let i = 0; i < data.rows.length; i++) {
+          usersCred.push({
+            user: data.rows.item(i).user,
+            pass: data.rows.item(i).pass,
+            nombre: data.rows.item(i).nombre,      
+          });
+        }
+      }
+      this.usersCred.next(usersCred);
+    });
+  }
+
   addUserData(userfirstName, userlastName, usertipoDoc, userdocumento, useraceptaTerminos, userssno, userimageUrl, usermetadatos, userempresa, userregional, userinstalacion, userorigen, userstep_enrol) {
     let data = [userfirstName, userlastName, usertipoDoc, userdocumento, useraceptaTerminos, userssno, userimageUrl, usermetadatos, userempresa, userregional, userinstalacion, userorigen, userstep_enrol];
     return this.database.executeSql('INSERT INTO Users (firstName, lastName, tipoDoc, documento, aceptaTerminos, ssno, imageUrl, metadatos, empresa, regional, instalacion, origen, step_enrol) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', data).then(data => {
@@ -117,6 +148,15 @@ export class DatabaseService {
         step_enrol: data.rows.item(0).step_enrol
       };
     });
+  }
+  getUsersCred(user,pass): Promise<UserCred> {
+   return this.database.executeSql('SELECT * FROM Usuarios WHERE user = ? AND pass = ?', [user,pass]).then(data => {
+     return {
+       user: data.rows.item(0).user,
+       pass: data.rows.item(0).pass,
+       nombre: data.rows.item(0).nombre
+     };
+   });
   }
   updateUser(user: User) {
     let data = [user.firstName, user.lastName, user.tipoDoc, user.documento, user.aceptaTerminos, user.ssno, user.imageUrl, user.metadatos, user.empresa, user.regional, user.instalacion, user.origen, user.step_enrol];

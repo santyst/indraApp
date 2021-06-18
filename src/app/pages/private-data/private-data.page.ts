@@ -193,7 +193,8 @@ console.log(': no hay conexión: ', this.network.type);
   
       this.camera.getPicture(options).then(
         (imageData) => {
-          this.base64_2 = 'data:image/jpeg;base64,' + imageData;          
+          this.base64_2 = 'data:image/jpeg;base64,' + imageData;  
+          this.base64_3 = imageData;         
           console.log('this.base64_2: ', this.base64_2);
          this.uploadImageOFFLINE();
         },
@@ -228,7 +229,7 @@ console.log(': no hay conexión: ', this.network.type);
       fileKey: "file",
       fileName: ".jpg",
       chunkedMode: false,
-      params: {doc: this.userData.documento}
+      params: {doc: this.userData.documento},
       //httpMethod: 'post',
       //mimeType: "image/jpeg",
       //headers: {},
@@ -243,8 +244,9 @@ console.log(': no hay conexión: ', this.network.type);
 
     Transfer.upload(
       this.userData.image,
-      `${this.BaseUrl}img`,
-      options
+      `https://tstbio02.ecopetrol.com.co/api/img`,
+      options,
+      true
     ).then(
       async (data) => {
         loading.dismiss();
@@ -360,7 +362,7 @@ console.log(': no hay conexión: ', this.network.type);
         this.userData.documento,
         JSON.stringify(this.userData.aceptaTerminos),
         this.userData.ssno,
-        this.base64_2,
+        this.base64_3,
         this.userData.metadatos,
         this.userData.empresa,
         this.userData.regional,
