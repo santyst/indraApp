@@ -26,6 +26,7 @@ export class ConfirmDataPage implements OnInit {
   uniqueDeviceId: any
   protected app_version: string;
   BaseUrl: any;
+  Right = false;
 
   constructor(private db: DatabaseService, private route: ActivatedRoute, private router: Router, private alertCtrl: AlertController,
               private appVersion: AppVersion, private udid: UniqueDeviceID, private http: HttpClient, private network: Network,
@@ -132,8 +133,7 @@ export class ConfirmDataPage implements OnInit {
     await alert.present();
     this.router.navigate(['user-data']);
   }
-  dontSendUser() {
-    this.router.navigate(['user-data']);
-    this.userData = {};
+  EditUser() {
+    this.Right = true;
   }
 }

@@ -67,19 +67,19 @@
     <ion-col size="12">
       <div class="form-group">
         <ion-label>Nombres</ion-label>
-        <ion-input class="form-control" [(ngModel)]="userData.firstName" type="text"></ion-input>
+        <ion-input class="form-control" [(ngModel)]="userData.firstName" type="text" [disabled]="!Right"></ion-input>
       </div>
     </ion-col>
     <ion-col size="12">
       <div class="form-group">
         <ion-label>Apellidos</ion-label>
-        <ion-input class="form-control" [(ngModel)]="userData.lastName" type="text"></ion-input>
+        <ion-input class="form-control" [(ngModel)]="userData.lastName" type="text" [disabled]="!Right"></ion-input>
       </div>
     </ion-col>
     <ion-col size="5">
       <div class="form-group">
         <ion-label>Tipo de Doc.</ion-label>
-        <ion-select placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipoDoc">
+        <ion-select [disabled]="!Right" placeholder="Tipo de documento" class="form-control" mode="ios" interface="popover" [(ngModel)]="userData.tipoDoc">
           <ion-select-option *ngFor="let type of documentType" [value]="type">{{type}}</ion-select-option>
         </ion-select>
       </div>
@@ -87,13 +87,13 @@
     <ion-col size="7">
       <div class="form-group">
         <ion-label>Número de documento</ion-label>
-        <ion-input class="form-control" [(ngModel)]="userData.documento" type="number"></ion-input>
+        <ion-input class="form-control" [(ngModel)]="userData.documento" type="number" [disabled]="!Right"></ion-input>
       </div>
     </ion-col>
     <ion-col size="12">
       <div class="form-group">
         <ion-label>Número de registro de Ecopetrol</ion-label>
-        <ion-input class="form-control" [(ngModel)]="userData.ssno" type="text"></ion-input>
+        <ion-input class="form-control" [(ngModel)]="userData.ssno" type="text" [disabled]="!Right"></ion-input>
       </div>
     </ion-col>
 
@@ -103,6 +103,6 @@
   </ion-row>
   <div class="option-button">
     <ion-button class="boton1" (click)="sendUser()" mode="ios">Si</ion-button>
-    <ion-button class="boton1" (click)="dontSendUser()" mode="ios">No</ion-button>
+    <ion-button class="boton1" (click)="EditUser()" mode="ios" [disabled]="Right">No</ion-button>
   </div>
 </app-container>
