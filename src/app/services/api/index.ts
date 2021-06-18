@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // Config
-import { URL_API } from '@constantsAPP';
+import { URL_API } from '@app/configs/constants';
 
 // Params API
 interface ApiParams {

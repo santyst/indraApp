@@ -8,7 +8,7 @@ import { AnimationController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 // Constants
-import { TIME_ANIMATION_GENERAL } from '@constantsAPP';
+import { TIME_ANIMATION_GENERAL } from '@app/configs/constants';
 
 // Models
 import TypeDocument, { TypeDocumentRServer, TypeDocumentStorage } from '@models/user/typeDocument';
